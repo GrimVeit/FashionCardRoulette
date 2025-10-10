@@ -95,11 +95,6 @@ public class FirebaseDatabasePresenter : IDatabaseRecordsEvents
         _model.SetNickname(nickname);
     }
 
-    public void SetAvatar(int avatar)
-    {
-        _model.SetAvatar(avatar);
-    }
-
     public void GetUserFromPlace(int place)
     {
         _model.GetUserFromPlace(place);

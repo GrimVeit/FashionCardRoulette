@@ -14,7 +14,7 @@ public class MovePanel : Panel
     [SerializeField] protected CanvasGroup canvasGroup;
     protected Tween tween;
 
-    private bool isActive;
+    private bool isActive = false;
 
     public override void ActivatePanel()
     {

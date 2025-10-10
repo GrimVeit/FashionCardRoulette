@@ -41,7 +41,6 @@ public class MainMenuEntryPoint : MonoBehaviour
     private HandPointerPresenter handPointerPresenter;
 
     private NicknamePresenter nicknamePresenter;
-    private AvatarPresenter avatarPresenter;
     private FirebaseAuthenticationPresenter firebaseAuthenticationPresenter;
     private FirebaseDatabasePresenter firebaseDatabasePresenter;
     private LeaderboardPresenter leaderboardPresenter;
@@ -107,7 +106,6 @@ public class MainMenuEntryPoint : MonoBehaviour
                 handPointerPresenter = new HandPointerPresenter(new HandPointerModel(), viewContainer.GetView<HandPointerView>());
 
                 nicknamePresenter = new NicknamePresenter(new NicknameModel(PlayerPrefsKeys.NICKNAME, soundPresenter), viewContainer.GetView<NicknameView>());
-                avatarPresenter = new AvatarPresenter(new AvatarModel(PlayerPrefsKeys.AVATAR), viewContainer.GetView<AvatarView>());
                 firebaseAuthenticationPresenter = new FirebaseAuthenticationPresenter(new FirebaseAuthenticationModel(firebaseAuth, soundPresenter), viewContainer.GetView<FirebaseAuthenticationView>());
                 firebaseDatabasePresenter = new FirebaseDatabasePresenter(new FirebaseDatabaseModel(firebaseAuth, databaseReference, bankPresenter));
                 leaderboardPresenter = new LeaderboardPresenter(new LeaderboardModel(firebaseDatabasePresenter), viewContainer.GetView<LeaderboardView>());
@@ -126,17 +124,7 @@ public class MainMenuEntryPoint : MonoBehaviour
                 metric_WinCountPresenter = new Metric_WinCountPresenter(new Metric_WinCountModel(PlayerPrefsKeys.METRIC_WIN_ROW_COUNTS, 3, timerDailyPresenter, storeTaskPresenter));
                 metric_BetNumberPresenter = new Metric_BetNumberPresenter(new Metric_BetNumberModel(PlayerPrefsKeys.METRIC_BET_NUMBER_COUNTS, 1, timerDailyPresenter, storeTaskPresenter));
 
-                //stateMachine = new StateMachine_Menu
-                //(sceneRoot, 
-                //nicknamePresenter,
-                //avatarPresenter,
-                //firebaseAuthenticationPresenter,
-                //firebaseDatabasePresenter,
-                //dialoguePresenter, 
-                //handPointerPresenter, 
-                //storeGameProgressPresenter, 
-                //storeGameProgressPresenter, 
-                //storeGameProgressPresenter);
+                stateMachine = new StateMachine_Menu(sceneRoot, nicknamePresenter, firebaseAuthenticationPresenter, firebaseDatabasePresenter);
 
                 sceneRoot.SetSoundProvider(soundPresenter);
                 sceneRoot.Activate();
@@ -170,7 +158,6 @@ public class MainMenuEntryPoint : MonoBehaviour
                 handPointerPresenter.Initialize();
 
                 nicknamePresenter.Initialize();
-                avatarPresenter.Initialize();
                 leaderboardPresenter.Initialize();
                 firebaseAuthenticationPresenter.Initialize();
                 firebaseDatabasePresenter.Initialize();
@@ -227,22 +214,12 @@ public class MainMenuEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-        sceneRoot.OnClickToChecked += HandleGoToRoulette_Mini;
-        sceneRoot.OnClickToChess += HandleGoToRoulette_Euro;
-        sceneRoot.OnClickToDominoes += HandleGoToRoulette_America;
-        sceneRoot.OnClickToSolitaire += HandleGoToRoulette_AmericaMulti;
-        sceneRoot.OnClickToLudo += HandleGoToRoulette_French;
-        sceneRoot.OnClickToLotto += HandleGoToRoulette_AmericaTracker;
+
     }
 
     private void DeactivateTransitions()
     {
-        sceneRoot.OnClickToChecked -= HandleGoToRoulette_Mini;
-        sceneRoot.OnClickToChess -= HandleGoToRoulette_Euro;
-        sceneRoot.OnClickToDominoes -= HandleGoToRoulette_America;
-        sceneRoot.OnClickToSolitaire -= HandleGoToRoulette_AmericaMulti;
-        sceneRoot.OnClickToLudo -= HandleGoToRoulette_French;
-        sceneRoot.OnClickToLotto -= HandleGoToRoulette_AmericaTracker;
+
     }
 
     private void Deactivate()
@@ -282,7 +259,6 @@ public class MainMenuEntryPoint : MonoBehaviour
         handPointerPresenter?.Dispose();
 
         nicknamePresenter?.Dispose();
-        avatarPresenter?.Dispose();
         leaderboardPresenter?.Dispose();
         firebaseAuthenticationPresenter?.Dispose();
         firebaseDatabasePresenter?.Dispose();
@@ -300,83 +276,12 @@ public class MainMenuEntryPoint : MonoBehaviour
         stateMachine?.Dispose();
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    storeGameProgressPresenter.OpenGame(2);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    storeGameProgressPresenter.OpenGame(4);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    storeGameProgressPresenter.OpenGame(1);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    storeGameProgressPresenter.OpenGame(6);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    storeGameProgressPresenter.OpenGame(5);
-        //}
-    }
-
     private void OnDestroy()
     {
         Dispose();
     }
 
     #region Output
-
-    public event Action OnGoToRoulette_Mini;
-    public event Action OnGoToRoulette_Euro;
-    public event Action OnGoToRoulette_America;
-    public event Action OnGoToRoulette_AmericaMulti;
-    public event Action OnGoToRoulette_French;
-    public event Action OnGoToRoulette_AmericaTracker;
-
-    private void HandleGoToRoulette_Mini()
-    {
-        Deactivate();
-        OnGoToRoulette_Mini?.Invoke();
-    }
-
-    private void HandleGoToRoulette_Euro()
-    {
-        Deactivate();
-        OnGoToRoulette_Euro?.Invoke();
-    }
-
-    private void HandleGoToRoulette_America()
-    {
-        Deactivate();
-        OnGoToRoulette_America?.Invoke();
-    }
-
-    private void HandleGoToRoulette_AmericaMulti()
-    {
-        Deactivate();
-        OnGoToRoulette_AmericaMulti?.Invoke();
-    }
-
-    private void HandleGoToRoulette_French()
-    {
-        Deactivate();
-        OnGoToRoulette_French?.Invoke();
-    }
-
-    private void HandleGoToRoulette_AmericaTracker()
-    {
-        Deactivate();
-        OnGoToRoulette_AmericaTracker?.Invoke();
-    }
 
     #endregion
 }

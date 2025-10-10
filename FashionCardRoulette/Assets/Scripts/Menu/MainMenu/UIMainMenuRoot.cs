@@ -5,9 +5,10 @@ public class UIMainMenuRoot : UIRoot
 {
     [SerializeField] private IntroPanel_Menu introPanel;
     [SerializeField] private MainPanel_Menu mainPanel;
+    [SerializeField] private CoinsPanel_Menu coinsPanel;
     [SerializeField] private LeaderboardPanel_Menu leaderboardPanel;
 
-    [Header("Others")]
+    [Header("Registration")]
     [SerializeField] private NicknamePanel_Menu nicknamePanel;
     [SerializeField] private RegistrationPanel_Menu registrationPanel;
     [SerializeField] private LoadingPanel_Menu loadRegistrationPanel;
@@ -23,6 +24,7 @@ public class UIMainMenuRoot : UIRoot
     {
         introPanel.Initialize();
         mainPanel.Initialize();
+        coinsPanel.Initialize();
         leaderboardPanel.Initialize();
 
         nicknamePanel.Initialize();
@@ -36,17 +38,7 @@ public class UIMainMenuRoot : UIRoot
 
         leaderboardPanel.OnClickToBack += HandleClickToBack_Leaderboard;
 
-        introPanel.OnClickToPlay += HandleClickToPlay_Intro;
-
         mainPanel.OnClickToLeaderboard += HandleClickToLeaderboard_Main;
-
-        mainPanel.OnClickToChecked += HandleClickToChecked;
-        mainPanel.OnClickToChess += HandleClickToChess;
-        mainPanel.OnClickToDominoes += HandleClickToDominoes;
-        mainPanel.OnClickToSolitaire += HandleClickToSolitaire;
-        mainPanel.OnClickToLudo += HandleClickToLudo;
-        mainPanel.OnClickToLotto += HandleClickToLotto;
-        mainPanel.OnClickToRoulette += HandleClickToRoulette;
     }
 
 
@@ -56,26 +48,25 @@ public class UIMainMenuRoot : UIRoot
 
         leaderboardPanel.OnClickToBack -= HandleClickToBack_Leaderboard;
 
-        introPanel.OnClickToPlay -= HandleClickToPlay_Intro;
-
         mainPanel.OnClickToLeaderboard -= HandleClickToLeaderboard_Main;
-
-        mainPanel.OnClickToChecked -= HandleClickToChecked;
-        mainPanel.OnClickToChess -= HandleClickToChess;
-        mainPanel.OnClickToDominoes -= HandleClickToDominoes;
-        mainPanel.OnClickToSolitaire -= HandleClickToSolitaire;
-        mainPanel.OnClickToLudo -= HandleClickToLudo;
-        mainPanel.OnClickToLotto -= HandleClickToLotto;
-        mainPanel.OnClickToRoulette -= HandleClickToRoulette;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
+
+        CloseCoinsPanel();
+        CloseIntroPanel();
+        CloseLeaderboardPanel();
+        CloseLoadRegistrationPanel();
+        CloseMainPanel();
+        CloseNicknamePanel();
+        CloseRegistrationPanel();
     }
 
     public void Dispose()
     {
         introPanel.Dispose();
         mainPanel.Dispose();
+        coinsPanel.Dispose();
         leaderboardPanel.Dispose();
 
         nicknamePanel.Dispose();
@@ -83,26 +74,68 @@ public class UIMainMenuRoot : UIRoot
         loadRegistrationPanel.Dispose();
     }
 
+    #region OTHERS
 
     public void OpenMainPanel()
     {
-        OpenPanel(mainPanel);
+        if (mainPanel.IsActive) return;
+
+        OpenOtherPanel(mainPanel);
     }
+
+    public void CloseMainPanel()
+    {
+        if (!mainPanel.IsActive) return;
+
+        CloseOtherPanel(mainPanel);
+    }
+
+
+    public void OpenCoinsPanel()
+    {
+        if(coinsPanel.IsActive) return;
+
+        OpenOtherPanel(coinsPanel);
+    }
+
+    public void CloseCoinsPanel()
+    {
+        if (!coinsPanel.IsActive) return;
+
+        CloseOtherPanel(coinsPanel);
+    }
+
+
+
 
     public void OpenLeaderboardPanel()
     {
-        OpenPanel(leaderboardPanel);
+        if (leaderboardPanel.IsActive) return;
+
+        OpenOtherPanel(leaderboardPanel);
     }
 
-    #region OTHERS
+    public void CloseLeaderboardPanel()
+    {
+        if (!leaderboardPanel.IsActive) return;
+
+        CloseOtherPanel(leaderboardPanel);
+    }
+
+
+
 
     public void OpenNicknamePanel()
     {
+        if (nicknamePanel.IsActive) return;
+
         OpenOtherPanel(nicknamePanel);
     }
 
     public void CloseNicknamePanel()
     {
+        if (!nicknamePanel.IsActive) return;
+
         CloseOtherPanel(nicknamePanel);
     }
 
@@ -110,22 +143,30 @@ public class UIMainMenuRoot : UIRoot
 
     public void OpenRegistrationPanel()
     {
+        if (registrationPanel.IsActive) return;
+
         OpenOtherPanel(registrationPanel);
     }
 
     public void CloseRegistrationPanel()
     {
+        if (!registrationPanel.IsActive) return;
+
         CloseOtherPanel(registrationPanel);
     }
 
 
     public void OpenLoadRegistrationPanel()
     {
+        if (loadRegistrationPanel.IsActive) return;
+
         OpenOtherPanel(loadRegistrationPanel);
     }
 
     public void CloseLoadRegistrationPanel()
     {
+        if (!loadRegistrationPanel.IsActive) return;
+
         CloseOtherPanel(loadRegistrationPanel);
     }
 
@@ -133,11 +174,15 @@ public class UIMainMenuRoot : UIRoot
 
     public void OpenIntroPanel()
     {
+        if (introPanel.IsActive) return;
+
         OpenOtherPanel(introPanel);
     }
 
     public void CloseIntroPanel()
     {
+        if (!introPanel.IsActive) return;
+
         CloseOtherPanel(introPanel);
     }
 
@@ -168,68 +213,6 @@ public class UIMainMenuRoot : UIRoot
         OnClickToLeaderboard?.Invoke();
     }
 
-
-
-
-
-
-    public event Action OnClickToChecked;
-    public event Action OnClickToChess;
-    public event Action OnClickToDominoes;
-    public event Action OnClickToSolitaire;
-    public event Action OnClickToLudo;
-    public event Action OnClickToLotto;
-    public event Action OnClickToRoulette;
-
-    private void HandleClickToChecked()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToChecked?.Invoke();
-    }
-
-    private void HandleClickToChess()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToChess?.Invoke();
-    }
-
-    private void HandleClickToDominoes()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToDominoes?.Invoke();
-    }
-
-    private void HandleClickToSolitaire()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToSolitaire?.Invoke();
-    }
-
-    private void HandleClickToLudo()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToLudo?.Invoke();
-    }
-
-    private void HandleClickToLotto()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToLotto?.Invoke();
-    }
-
-    private void HandleClickToRoulette()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToRoulette?.Invoke();
-    }
-
     #endregion
 
     #region LeaderboardPanel
@@ -241,19 +224,6 @@ public class UIMainMenuRoot : UIRoot
         _soundProvider.PlayOneShot("Click");
 
         OnClickToBack_Leaderboard?.Invoke();
-    }
-
-    #endregion
-
-    #region IntroPanel
-
-    public event Action OnClickToPlay_Intro;
-
-    private void HandleClickToPlay_Intro()
-    {
-        _soundProvider.PlayOneShot("Click");
-
-        OnClickToPlay_Intro?.Invoke();
     }
 
     #endregion

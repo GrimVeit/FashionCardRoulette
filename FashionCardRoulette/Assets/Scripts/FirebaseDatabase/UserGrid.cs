@@ -9,14 +9,12 @@ public class UserGrid : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textNumber;
     [SerializeField] private TextMeshProUGUI textNickname;
-    [SerializeField] private Image imageAvatar;
     [SerializeField] private TextMeshProUGUI textRecord;
 
-    public void SetData(int number, string nickname, int record, Sprite avatar)
+    public void SetData(int number, string nickname, int record)
     {
         textNumber.text = number.ToString();
         textNickname.text = nickname;
-        imageAvatar.sprite = avatar;
         textRecord.text = record.ToString();
     }
 }

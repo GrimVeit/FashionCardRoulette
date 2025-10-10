@@ -20,11 +20,14 @@ public class MainState_Menu : IState
         _sceneRoot.OnClickToLeaderboard += ChangeStateToLeaderboard;
 
         _sceneRoot.OpenMainPanel();
+        _sceneRoot.OpenCoinsPanel();
     }
 
     public void ExitState()
     {
         _sceneRoot.OnClickToLeaderboard -= ChangeStateToLeaderboard;
+
+        _sceneRoot.CloseMainPanel();
     }
 
     private void ChangeStateToLeaderboard()

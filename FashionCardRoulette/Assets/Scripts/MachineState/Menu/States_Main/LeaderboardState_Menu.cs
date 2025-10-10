@@ -25,6 +25,8 @@ public class LeaderboardState_Menu : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToBack_Leaderboard -= ChangeStateToMain;
+
+        _sceneRoot.CloseLeaderboardPanel();
     }
 
     private void ChangeStateToMain()

@@ -20,7 +20,6 @@ public class MenuEntryPoint : MonoBehaviour
     private SoundPresenter soundPresenter;
 
     private NicknamePresenter nicknamePresenter;
-    private AvatarPresenter avatarPresenter;
     private FirebaseAuthenticationPresenter firebaseAuthenticationPresenter;
     private FirebaseDatabasePresenter firebaseDatabasePresenter;
     private LeaderboardPresenter leaderboardPresenter;
@@ -57,15 +56,14 @@ public class MenuEntryPoint : MonoBehaviour
                 bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
                 nicknamePresenter = new NicknamePresenter(new NicknameModel(PlayerPrefsKeys.NICKNAME, soundPresenter), viewContainer.GetView<NicknameView>());
-                avatarPresenter = new AvatarPresenter(new AvatarModel(PlayerPrefsKeys.AVATAR), viewContainer.GetView<AvatarView>());
                 firebaseAuthenticationPresenter = new FirebaseAuthenticationPresenter(new FirebaseAuthenticationModel(firebaseAuth, soundPresenter), viewContainer.GetView<FirebaseAuthenticationView>());
+
                 firebaseDatabasePresenter = new FirebaseDatabasePresenter(new FirebaseDatabaseModel(firebaseAuth, databaseReference, bankPresenter));
                 leaderboardPresenter = new LeaderboardPresenter(new LeaderboardModel(firebaseDatabasePresenter), viewContainer.GetView<LeaderboardView>());
 
                 stateMachine = new StateMachine_Menu
                 (sceneRoot,
                 nicknamePresenter,
-                avatarPresenter,
                 firebaseAuthenticationPresenter,
                 firebaseDatabasePresenter);
 
@@ -74,16 +72,25 @@ public class MenuEntryPoint : MonoBehaviour
 
                 ActivateEvents();
 
-                soundPresenter.Initialize();
-                particleEffectPresenter.Initialize();
-                sceneRoot.Initialize();
-                bankPresenter.Initialize();
+                Debug.Log("LOL");
 
+                soundPresenter.Initialize();
+                Debug.Log("LOL");
+                particleEffectPresenter.Initialize();
+                Debug.Log("LOL");
+                sceneRoot.Initialize();
+                Debug.Log("LOL");
+                bankPresenter.Initialize();
+                Debug.Log("LOL");
                 nicknamePresenter.Initialize();
-                avatarPresenter.Initialize();
+                Debug.Log("LOL");
                 leaderboardPresenter.Initialize();
+                Debug.Log("LOL");
                 firebaseAuthenticationPresenter.Initialize();
+                Debug.Log("LOL");
                 firebaseDatabasePresenter.Initialize();
+
+                Debug.Log("LOL");
 
                 stateMachine.Initialize();
             }
@@ -132,7 +139,6 @@ public class MenuEntryPoint : MonoBehaviour
         bankPresenter?.Dispose();
 
         nicknamePresenter?.Dispose();
-        avatarPresenter?.Dispose();
         leaderboardPresenter?.Dispose();
         firebaseAuthenticationPresenter?.Dispose();
         firebaseDatabasePresenter?.Dispose();

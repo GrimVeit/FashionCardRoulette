@@ -1,20 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MainPanel_Menu : MovePanel
+public class CoinsPanel_Menu : MovePanel
 {
-    [SerializeField] private Button buttonLeaderboard;
-
     [SerializeField] private List<UIEffectCombination> uIEffectCombinations = new List<UIEffectCombination>();
 
     public override void Initialize()
     {
         base.Initialize();
-
-        buttonLeaderboard.onClick.AddListener(() => OnClickToLeaderboard?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Initialize());
     }
@@ -22,8 +16,6 @@ public class MainPanel_Menu : MovePanel
     public override void Dispose()
     {
         base.Dispose();
-
-        buttonLeaderboard.onClick.RemoveListener(() => OnClickToLeaderboard?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Dispose());
     }
@@ -41,10 +33,4 @@ public class MainPanel_Menu : MovePanel
 
         uIEffectCombinations.ForEach(data => data.DeactivateEffect());
     }
-
-    #region Output
-
-    public event Action OnClickToLeaderboard;
-
-    #endregion
 }

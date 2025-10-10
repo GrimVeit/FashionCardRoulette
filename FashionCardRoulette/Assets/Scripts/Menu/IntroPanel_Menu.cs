@@ -24,16 +24,14 @@ public class IntroPanel_Menu : MovePanel
     public override void ActivatePanel()
     {
         base.ActivatePanel();
+
+        uIEffectCombinations.ForEach(data => data.ActivateEffect());
     }
 
     public override void DeactivatePanel()
     {
         base.DeactivatePanel();
+
+        uIEffectCombinations.ForEach(data => data.DeactivateEffect());
     }
-
-    #region Output
-
-    public event Action OnClickToPlay;
-
-    #endregion
 }

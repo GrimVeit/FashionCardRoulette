@@ -37,11 +37,6 @@ public class BankPresenter : IMoneyProvider
         _model.SendMoney(money);
     }
 
-    public void SendMoney(float money)
-    {
-        _model.SendMoney(money);
-    }
-
     public bool CanAfford(float bet)
     {
         return _model.CanAfford(bet);
@@ -61,7 +56,7 @@ public interface IMoneyProvider
     float GetMoney();
 
     event Action<float> OnChangeMoney;
-    void SendMoney(float money);
+    void SendMoney(int money);
     bool CanAfford(float money);
 }
 

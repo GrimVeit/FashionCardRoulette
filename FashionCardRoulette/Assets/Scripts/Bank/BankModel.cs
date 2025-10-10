@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BankModel
 {
-    public float Money => money;
+    public int Money => money;
 
-    private float money;
+    private int money;
     public event Action OnAddMoney;
     public event Action OnRemoveMoney;
     public event Action<float> OnChangeMoney;
@@ -14,15 +14,15 @@ public class BankModel
 
     public void Initialize()
     {
-        money = PlayerPrefs.GetFloat(BANK_MONEY, 20);
+        money = PlayerPrefs.GetInt(BANK_MONEY, 20);
     }
 
     public void Destroy()
     {
-        PlayerPrefs.SetFloat(BANK_MONEY, money);
+        PlayerPrefs.SetInt(BANK_MONEY, money);
     }
 
-    public void SendMoney(float money)
+    public void SendMoney(int money)
     {
         Debug.Log(money);
 
@@ -35,7 +35,7 @@ public class BankModel
             OnRemoveMoney?.Invoke();
         }
         this.money += money;
-        this.money = Mathf.Round(this.money * 10f) / 10f;
+        //this.money = Mathf.Round(this.money * 10f) / 10f;
         MathF.Round(this.money, 1);
         OnChangeMoney?.Invoke(this.money);
 
