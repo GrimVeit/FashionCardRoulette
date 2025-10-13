@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class ChooseGenderModel
 {
+    private IStoreCharacterProvider _storeCharacterProvider;
+
+    public ChooseGenderModel(IStoreCharacterProvider storeCharacterProvider)
+    {
+        _storeCharacterProvider = storeCharacterProvider;
+    }
+
     private int _currentGender = 0;
 
     public void SetGender(int id)
@@ -20,10 +27,10 @@ public class ChooseGenderModel
         switch (_currentGender)
         {
             case 0:
-                OnChooseGender?.Invoke(Gender.Man);
+                _storeCharacterProvider.SelectPersonsByGender(Gender.Man);
                 break;
             case 1:
-                OnChooseGender?.Invoke(Gender.Woman);
+                _storeCharacterProvider.SelectPersonsByGender(Gender.Woman);
                 break;
         }
 
@@ -34,8 +41,6 @@ public class ChooseGenderModel
 
     public event Action<int> OnActivate;
     public event Action<int> OnDeactivate;
-
-    public event Action<Gender> OnChooseGender;
 
     #endregion
 }

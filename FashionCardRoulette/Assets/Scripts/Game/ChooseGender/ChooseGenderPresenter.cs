@@ -45,16 +45,6 @@ public class ChooseGenderPresenter
         _model.OnActivate -= _view.Activate;
         _model.OnDeactivate -= _view.Deactivate;
     }
-
-    #region Output
-
-    public event Action<Gender> OnChooseGender
-    {
-        add => _model.OnChooseGender += value;
-        remove => _model.OnChooseGender -= value;
-    }
-
-    #endregion
 }
 
 public enum Gender

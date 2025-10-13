@@ -29,6 +29,11 @@ public class ToggleCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         tweenScale = transformHandle.DOScale(0, durationChange);
     }
 
+    public void SetData(int id)
+    {
+        this.id = id;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
 
