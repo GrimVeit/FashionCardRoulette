@@ -16,7 +16,9 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
         states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot);
+
         states[typeof(ShopWardrobeState_Game)] = new ShopWardrobeState_Game(this, sceneRoot);
+        states[typeof(ShopTypeState_Game)] = new ShopTypeState_Game(this, sceneRoot);
     }
 
     public void Initialize()

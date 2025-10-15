@@ -23,6 +23,10 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChooseGenderPresenter chooseGenderPresenter;
     private ChooseCharacterPresenter chooseCharacterPresenter;
 
+    private ChooseGenderClothesPresenter chooseGenderClothesPresenter;
+    private CharacterVisualPresenter characterVisualPresenter;
+    private ChooseShopClothesPresenter chooseShopClothesPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -48,6 +52,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderPresenter = new ChooseGenderPresenter(new ChooseGenderModel(storeCharacterPresenter), viewContainer.GetView<ChooseGenderView>());
         chooseCharacterPresenter = new ChooseCharacterPresenter(new ChooseCharacterModel(storeCharacterPresenter), viewContainer.GetView<ChooseCharacterView>());
 
+        chooseGenderClothesPresenter = new ChooseGenderClothesPresenter(new ChooseGenderClothesModel(chooseGenderPresenter));
+        characterVisualPresenter = new CharacterVisualPresenter(new CharacterVisualModel(chooseCharacterPresenter), viewContainer.GetView<CharacterVisualView>());
+        chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter), viewContainer.GetView<ChooseShopClothesView>());
+
         stateMachine = new StateMachine_Game(sceneRoot);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -64,6 +72,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderPresenter.Initialize();
         chooseCharacterPresenter.Initialize();
 
+        chooseGenderClothesPresenter.Initialize();
+        characterVisualPresenter.Initialize();
+        chooseShopClothesPresenter.Initialize();
+
         stateMachine.Initialize();
     }
 
@@ -79,12 +91,12 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-        sceneRoot.OnClickToExit_Main += HandleClickToMenu;
+        sceneRoot.OnClickToExit_Exit += HandleClickToMenu;
     }
 
     private void DeactivateTransitions()
     {
-        sceneRoot.OnClickToExit_Main -= HandleClickToMenu;
+        sceneRoot.OnClickToExit_Exit -= HandleClickToMenu;
     }
 
     private void Deactivate()
@@ -105,6 +117,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeCharacterPresenter?.Dispose();
         chooseGenderPresenter?.Dispose();
         chooseCharacterPresenter?.Dispose();
+
+        chooseGenderClothesPresenter.Dispose();
+        characterVisualPresenter?.Dispose();
+        chooseShopClothesPresenter?.Dispose();
+
+        stateMachine?.Dispose();
     }
 
     private void OnDestroy()

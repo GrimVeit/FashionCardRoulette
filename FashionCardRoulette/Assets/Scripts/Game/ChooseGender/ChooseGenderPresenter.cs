@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChooseGenderPresenter
+public class ChooseGenderPresenter : IChooseGenderEventsProvider
 {
     private readonly ChooseGenderModel _model;
     private readonly ChooseGenderView _view;
@@ -45,10 +45,25 @@ public class ChooseGenderPresenter
         _model.OnActivate -= _view.Activate;
         _model.OnDeactivate -= _view.Deactivate;
     }
+
+    #region Output
+
+    public event Action<Gender> OnChooseGender
+    {
+        add => _model.OnChooseGender += value;
+        remove => _model.OnChooseGender -= value;
+    }
+
+    #endregion
 }
 
 public enum Gender
 {
     Man, Woman
+}
+
+public interface IChooseGenderEventsProvider
+{
+    public event Action<Gender> OnChooseGender;
 }
 

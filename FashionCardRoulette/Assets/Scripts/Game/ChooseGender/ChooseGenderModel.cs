@@ -28,9 +28,11 @@ public class ChooseGenderModel
         {
             case 0:
                 _storeCharacterProvider.SelectPersonsByGender(Gender.Man);
+                OnChooseGender?.Invoke(Gender.Man);
                 break;
             case 1:
                 _storeCharacterProvider.SelectPersonsByGender(Gender.Woman);
+                OnChooseGender?.Invoke(Gender.Woman);
                 break;
         }
 
@@ -41,6 +43,8 @@ public class ChooseGenderModel
 
     public event Action<int> OnActivate;
     public event Action<int> OnDeactivate;
+
+    public event Action<Gender> OnChooseGender;
 
     #endregion
 }

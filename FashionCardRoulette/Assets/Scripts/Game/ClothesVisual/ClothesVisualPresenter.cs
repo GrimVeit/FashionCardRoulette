@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterVisualPresenter
+public class ClothesVisualPresenter
 {
-    private readonly CharacterVisualModel _model;
-    private readonly CharacterVisualView _view;
+    private readonly ClothesVisualModel _model;
+    private readonly ClothesVisualView _view;
 
-    public CharacterVisualPresenter(CharacterVisualModel model, CharacterVisualView view)
+    public ClothesVisualPresenter(ClothesVisualModel model, ClothesVisualView view)
     {
         _model = model;
         _view = view;
@@ -15,12 +15,12 @@ public class CharacterVisualPresenter
 
     public void Initialize()
     {
-
+        ActivateEvents();
     }
 
     public void Dispose()
     {
-
+        DeactivateEvents();
     }
 
     private void ActivateEvents()

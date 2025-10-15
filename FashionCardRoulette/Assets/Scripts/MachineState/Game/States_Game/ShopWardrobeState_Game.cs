@@ -16,6 +16,7 @@ public class ShopWardrobeState_Game : IState
     public void EnterState()
     {
         _sceneRoot.OnClickToBack_ShopWardrobe += ChangeStateToMain;
+        _sceneRoot.OnClickToShop_ShopWardrobe += ChangeStateToShopType;
 
         _sceneRoot.OpenShopWardrobePanel();
     }
@@ -23,6 +24,7 @@ public class ShopWardrobeState_Game : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToBack_ShopWardrobe -= ChangeStateToMain;
+        _sceneRoot.OnClickToShop_ShopWardrobe -= ChangeStateToShopType;
 
         _sceneRoot.CloseShopWardrobePanel();
     }
@@ -30,5 +32,10 @@ public class ShopWardrobeState_Game : IState
     private void ChangeStateToMain()
     {
         _machineProvider.SetState(_machineProvider.GetState<MainState_Game>());
+    }
+
+    private void ChangeStateToShopType()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<ShopTypeState_Game>());
     }
 }

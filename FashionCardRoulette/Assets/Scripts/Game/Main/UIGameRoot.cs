@@ -13,7 +13,10 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MainPanel_Game mainPanel;
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
+
+    [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;
+    [SerializeField] private ShopTypePanel_Game shopTypePanel;
 
     private ISoundProvider _soundProvider;
 
@@ -30,7 +33,9 @@ public class UIGameRoot : UIRoot
         mainPanel.Initialize();
         coinsPanel.Initialize();
         exitPanel.Initialize();
+
         shopWardrobePanel.Initialize();
+        shopTypePanel.Initialize();
     }
 
     public void Activate()
@@ -40,12 +45,14 @@ public class UIGameRoot : UIRoot
         chooseCharacterPanel.OnClickToContinue += HandleClickToContinue_ChooseCharacter;
         chooseCharacterPanel.OnClickToBack += HandleClickToBack_ChooseCharacter;
 
-        exitPanel.OnClickToExit += HandleClickToExit_Main;
+        exitPanel.OnClickToExit += HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter += HandleClickToCharacter_Main;
 
         shopWardrobePanel.OnClickToBack += HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop += HandleClickToShop_ShopWardrobe;
         shopWardrobePanel.OnClickToWardrobe += HandleClickToWardrobe_ShopWardrobe;
+
+        shopTypePanel.OnClickToBack += HandleClickToBack_ShopType;
     }
 
 
@@ -56,12 +63,14 @@ public class UIGameRoot : UIRoot
         chooseCharacterPanel.OnClickToContinue -= HandleClickToContinue_ChooseCharacter;
         chooseCharacterPanel.OnClickToBack -= HandleClickToBack_ChooseCharacter;
 
-        exitPanel.OnClickToExit -= HandleClickToExit_Main;
+        exitPanel.OnClickToExit -= HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter -= HandleClickToCharacter_Main;
 
         shopWardrobePanel.OnClickToBack -= HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop -= HandleClickToShop_ShopWardrobe;
         shopWardrobePanel.OnClickToWardrobe -= HandleClickToWardrobe_ShopWardrobe;
+
+        shopTypePanel.OnClickToBack -= HandleClickToBack_ShopType;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -82,7 +91,9 @@ public class UIGameRoot : UIRoot
         mainPanel.Dispose();
         coinsPanel.Dispose();
         exitPanel.Dispose();
+
         shopWardrobePanel.Dispose();
+        shopTypePanel.Dispose();
     }
 
     #region Input
@@ -189,6 +200,25 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(shopWardrobePanel);
     }
 
+
+
+
+
+
+    public void OpenShopTypePanel()
+    {
+        if(shopTypePanel.IsActive) return;
+
+        OpenOtherPanel(shopTypePanel);
+    }
+
+    public void CloseShopTypePanel()
+    {
+        if(!shopTypePanel.IsActive) return;
+
+        CloseOtherPanel(shopTypePanel);
+    }
+
     #endregion
 
 
@@ -201,7 +231,7 @@ public class UIGameRoot : UIRoot
         OnClickToContinue_ChooseGender?.Invoke();
     }
 
-    //--------------------------------------------------------//
+    //------------------------------CHOOSE_CHARACTER--------------------------//
 
     public event Action OnClickToContinue_ChooseCharacter;
     public event Action OnClickToBack_ChooseCharacter;
@@ -216,7 +246,7 @@ public class UIGameRoot : UIRoot
         OnClickToBack_ChooseCharacter?.Invoke();
     }
 
-    //--------------------------------------------------------//
+    //----------------------------------MAIN----------------------//
 
     public event Action OnClickToCharacter_Main;
 
@@ -225,16 +255,16 @@ public class UIGameRoot : UIRoot
         OnClickToCharacter_Main?.Invoke();
     }
 
-    //--------------------------------------------------------//
+    //------------------------------EXIT--------------------------//
 
-    public event Action OnClickToExit_Main;
+    public event Action OnClickToExit_Exit;
 
-    private void HandleClickToExit_Main()
+    private void HandleClickToExit_Exit()
     {
-        OnClickToExit_Main?.Invoke();
+        OnClickToExit_Exit?.Invoke();
     }
 
-    //------------------------------------------------------//
+    //----------------------------SHOP_WARDROBE--------------------------//
 
     public event Action OnClickToBack_ShopWardrobe;
     public event Action OnClickToWardrobe_ShopWardrobe;
@@ -253,6 +283,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToShop_ShopWardrobe()
     {
         OnClickToShop_ShopWardrobe?.Invoke();
+    }
+
+    //-------------------------SHOP_TYPE----------------------------//
+
+    public event Action OnClickToBack_ShopType;
+
+    private void HandleClickToBack_ShopType()
+    {
+        OnClickToBack_ShopType?.Invoke();
     }
 
     #endregion
