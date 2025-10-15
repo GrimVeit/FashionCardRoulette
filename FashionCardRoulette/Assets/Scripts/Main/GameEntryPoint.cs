@@ -52,20 +52,14 @@ public class GameEntryPoint
 
         sceneEntryPoint.Run(rootView);
 
-        //sceneEntryPoint.OnGoToGame_Checkers += () => coroutines.StartCoroutine(LoadAndStartGameScene_Checkers());
-        //sceneEntryPoint.OnGoToGame_Chess += () => coroutines.StartCoroutine(LoadAndStartGameScene_Chess());
-        //sceneEntryPoint.OnGoToGame_Dominoes += () => coroutines.StartCoroutine(LoadAndStartGameScene_Dominoes());
-        //sceneEntryPoint.OnGoToGame_Solitaire += () => coroutines.StartCoroutine(LoadAndStartGameScene_Solitaire());
-        //sceneEntryPoint.OnGoToGame_Ludo += () => coroutines.StartCoroutine(LoadAndStartGameScene_Ludo());
-        //sceneEntryPoint.OnGoToGame_Lotto += () => coroutines.StartCoroutine(LoadAndStartGameScene_Lotto());
-        //sceneEntryPoint.OnGoToGame_Roulette += () => coroutines.StartCoroutine(LoadAndStartGameScene_Roulette());
+        sceneEntryPoint.OnClickToGame += () => coroutines.StartCoroutine(LoadAndStartGame());
 
         yield return rootView.HideLoadingScreen(0);
     }
 
     private IEnumerator LoadAndStartGame()
     {
-        yield return rootView.ShowLoadingScreen(0);
+        yield return rootView.ShowLoadingScreen(1);
 
         yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.GAME);
@@ -76,15 +70,9 @@ public class GameEntryPoint
 
         sceneEntryPoint.Run(rootView);
 
-        //sceneEntryPoint.OnGoToGame_Checkers += () => coroutines.StartCoroutine(LoadAndStartGameScene_Checkers());
-        //sceneEntryPoint.OnGoToGame_Chess += () => coroutines.StartCoroutine(LoadAndStartGameScene_Chess());
-        //sceneEntryPoint.OnGoToGame_Dominoes += () => coroutines.StartCoroutine(LoadAndStartGameScene_Dominoes());
-        //sceneEntryPoint.OnGoToGame_Solitaire += () => coroutines.StartCoroutine(LoadAndStartGameScene_Solitaire());
-        //sceneEntryPoint.OnGoToGame_Ludo += () => coroutines.StartCoroutine(LoadAndStartGameScene_Ludo());
-        //sceneEntryPoint.OnGoToGame_Lotto += () => coroutines.StartCoroutine(LoadAndStartGameScene_Lotto());
-        //sceneEntryPoint.OnGoToGame_Roulette += () => coroutines.StartCoroutine(LoadAndStartGameScene_Roulette());
+        sceneEntryPoint.OnClickToMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
 
-        yield return rootView.HideLoadingScreen(0);
+        yield return rootView.HideLoadingScreen(1);
     }
 
     private IEnumerator LoadScene(string scene)

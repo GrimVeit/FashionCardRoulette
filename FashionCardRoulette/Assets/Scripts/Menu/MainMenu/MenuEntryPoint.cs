@@ -72,25 +72,14 @@ public class MenuEntryPoint : MonoBehaviour
 
                 ActivateEvents();
 
-                Debug.Log("LOL");
-
                 soundPresenter.Initialize();
-                Debug.Log("LOL");
                 particleEffectPresenter.Initialize();
-                Debug.Log("LOL");
                 sceneRoot.Initialize();
-                Debug.Log("LOL");
                 bankPresenter.Initialize();
-                Debug.Log("LOL");
                 nicknamePresenter.Initialize();
-                Debug.Log("LOL");
                 leaderboardPresenter.Initialize();
-                Debug.Log("LOL");
                 firebaseAuthenticationPresenter.Initialize();
-                Debug.Log("LOL");
                 firebaseDatabasePresenter.Initialize();
-
-                Debug.Log("LOL");
 
                 stateMachine.Initialize();
             }
@@ -115,12 +104,12 @@ public class MenuEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-
+        sceneRoot.OnClickToPlay += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
-
+        sceneRoot.OnClickToPlay -= HandleClickToGame;
     }
 
     private void Deactivate()
@@ -153,6 +142,14 @@ public class MenuEntryPoint : MonoBehaviour
 
     #region Output
 
+    public event Action OnClickToGame;
+
+    private void HandleClickToGame()
+    {
+        Deactivate();
+
+        OnClickToGame?.Invoke();
+    }
 
     #endregion
 }

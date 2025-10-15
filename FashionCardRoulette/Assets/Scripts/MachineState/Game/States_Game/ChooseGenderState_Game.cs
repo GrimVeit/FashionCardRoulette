@@ -18,6 +18,7 @@ public class ChooseGenderState_Game : IState
         _sceneRoot.OnClickToContinue_ChooseGender += ChangeStateToChooseCharacter;
 
         _sceneRoot.OpenChooseGenderPanel();
+        _sceneRoot.OpenExitPanel();
     }
 
     public void ExitState()

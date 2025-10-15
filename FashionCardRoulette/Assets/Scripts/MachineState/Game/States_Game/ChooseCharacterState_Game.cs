@@ -19,6 +19,7 @@ public class ChooseCharacterState_Game : IState
         _sceneRoot.OnClickToBack_ChooseCharacter += ChangeStateToChooseGender;
 
         _sceneRoot.OpenChooseCharacterPanel();
+        _sceneRoot.OpenExitPanel();
     }
 
     public void ExitState()
@@ -36,6 +37,6 @@ public class ChooseCharacterState_Game : IState
 
     private void ChangeStateToMain()
     {
-        //_machineProvider.SetState(_machineProvider.GetState<ChooseCharacter>)
+        _machineProvider.SetState(_machineProvider.GetState<MainState_Game>());
     }
 }

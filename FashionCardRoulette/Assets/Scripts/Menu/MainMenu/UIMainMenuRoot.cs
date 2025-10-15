@@ -39,6 +39,7 @@ public class UIMainMenuRoot : UIRoot
         leaderboardPanel.OnClickToBack += HandleClickToBack_Leaderboard;
 
         mainPanel.OnClickToLeaderboard += HandleClickToLeaderboard_Main;
+        mainPanel.OnClickToPlay += HandleClickToPlay_Main;
     }
 
 
@@ -49,6 +50,7 @@ public class UIMainMenuRoot : UIRoot
         leaderboardPanel.OnClickToBack -= HandleClickToBack_Leaderboard;
 
         mainPanel.OnClickToLeaderboard -= HandleClickToLeaderboard_Main;
+        mainPanel.OnClickToPlay -= HandleClickToPlay_Main;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -205,12 +207,20 @@ public class UIMainMenuRoot : UIRoot
     #region MainPanel
 
     public event Action OnClickToLeaderboard;
+    public event Action OnClickToPlay;
 
     private void HandleClickToLeaderboard_Main()
     {
         _soundProvider.PlayOneShot("Click");
 
         OnClickToLeaderboard?.Invoke();
+    }
+
+    private void HandleClickToPlay_Main()
+    {
+        _soundProvider.PlayOneShot("Click");
+
+        OnClickToPlay?.Invoke();
     }
 
     #endregion

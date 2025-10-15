@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Firebase;
@@ -78,12 +79,12 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-
+        sceneRoot.OnClickToExit_Main += HandleClickToMenu;
     }
 
     private void DeactivateTransitions()
     {
-
+        sceneRoot.OnClickToExit_Main -= HandleClickToMenu;
     }
 
     private void Deactivate()
@@ -97,7 +98,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         DeactivateEvents();
 
         soundPresenter?.Dispose();
-        sceneRoot?.Dispose();
+        sceneRoot.Dispose();
         particleEffectPresenter?.Dispose();
         bankPresenter?.Dispose();
 
@@ -113,6 +114,15 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     #region Output
 
+
+    public event Action OnClickToMenu;
+
+    private void HandleClickToMenu()
+    {
+        Deactivate();
+
+        OnClickToMenu?.Invoke();
+    }
 
     #endregion
 }
