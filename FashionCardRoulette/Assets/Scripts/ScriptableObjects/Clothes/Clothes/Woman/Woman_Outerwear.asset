@@ -12,5 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d356f1ab012f85489a4bdf1153056af, type: 3}
   m_Name: Woman_Outerwear
   m_EditorClassIdentifier: 
-  ClothesType: 0
-  Clothes: []
+  ClothesType: 1
+  Clothes:
+  - {fileID: 11400000, guid: e1b71c97ab2ba8040b9f2a2005c42125, type: 2}
+  - {fileID: 11400000, guid: 1c8374e2fa3b9214680748b0aaabd7e2, type: 2}
+  - {fileID: 11400000, guid: 025534f115231d548864d09ba78485d8, type: 2}
+  - {fileID: 11400000, guid: e575189083a78ab43be823c971cd12d4, type: 2}
+  - {fileID: 11400000, guid: f6f859b6a293a214c975bcf648b996e9, type: 2}
+  - {fileID: 11400000, guid: 1ede86fa35badd340a6a2ebec30bb776, type: 2}
+  - {fileID: 11400000, guid: 420a5670cd998b248afecc76b017af2e, type: 2}
+  - {fileID: 11400000, guid: 3f4f9e8716d10c247b2018f6deb8afd3, type: 2}
+  - {fileID: 11400000, guid: efcce113f3671c04185f55baeaf43dae, type: 2}
+  - {fileID: 11400000, guid: 47de31571b8a152439822c1b90b885d6, type: 2}
+  - {fileID: 11400000, guid: 85d73e9135225594cbcc19da993c6dec, type: 2}
+  - {fileID: 11400000, guid: a131928ac2aab0e43b542de9b516460c, type: 2}

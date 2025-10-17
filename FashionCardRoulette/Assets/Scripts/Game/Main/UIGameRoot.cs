@@ -17,6 +17,7 @@ public class UIGameRoot : UIRoot
     [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;
     [SerializeField] private ShopTypePanel_Game shopTypePanel;
+    [SerializeField] private ShopPanel_Game shopPanel;
 
     private ISoundProvider _soundProvider;
 
@@ -36,6 +37,7 @@ public class UIGameRoot : UIRoot
 
         shopWardrobePanel.Initialize();
         shopTypePanel.Initialize();
+        shopPanel.Initialize();
     }
 
     public void Activate()
@@ -53,6 +55,7 @@ public class UIGameRoot : UIRoot
         shopWardrobePanel.OnClickToWardrobe += HandleClickToWardrobe_ShopWardrobe;
 
         shopTypePanel.OnClickToBack += HandleClickToBack_ShopType;
+        shopPanel.OnClickToBack += HandleClickToBack_Shop;
     }
 
 
@@ -71,6 +74,7 @@ public class UIGameRoot : UIRoot
         shopWardrobePanel.OnClickToWardrobe -= HandleClickToWardrobe_ShopWardrobe;
 
         shopTypePanel.OnClickToBack -= HandleClickToBack_ShopType;
+        shopPanel.OnClickToBack -= HandleClickToBack_Shop;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -80,7 +84,10 @@ public class UIGameRoot : UIRoot
         CloseMainPanel();
         CloseCoinsPanel();
         CloseExitPanel();
+
         CloseShopWardrobePanel();
+        CloseShopTypePanel();
+        CloseShopPanel();
     }
 
     public void Dispose()
@@ -94,6 +101,7 @@ public class UIGameRoot : UIRoot
 
         shopWardrobePanel.Dispose();
         shopTypePanel.Dispose();
+        shopPanel.Dispose();
     }
 
     #region Input
@@ -219,6 +227,26 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(shopTypePanel);
     }
 
+
+
+
+
+
+
+    public void OpenShopPanel()
+    {
+        if(shopPanel.IsActive) return;
+
+        OpenOtherPanel(shopPanel);
+    }
+
+    public void CloseShopPanel()
+    {
+        if(!shopPanel.IsActive) return;
+
+        CloseOtherPanel(shopPanel);
+    }
+
     #endregion
 
 
@@ -292,6 +320,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_ShopType()
     {
         OnClickToBack_ShopType?.Invoke();
+    }
+
+    //-------------------------SHOP----------------------------//
+
+    public event Action OnClickToBack_Shop;
+
+    private void HandleClickToBack_Shop()
+    {
+        OnClickToBack_Shop?.Invoke();
     }
 
     #endregion

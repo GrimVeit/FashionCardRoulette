@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothesChooseProvider
+public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothesChooseProvider, IStoreClothesActivatorProvider
 {
     private readonly StoreClothesModel _model;
 
@@ -40,6 +40,12 @@ public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothes
         remove => _model.OnChangeChooseClothes -= value;
     }
 
+    public event Action OnEndChangeChooseClothes
+    {
+        add => _model.OnEndChangeChooseClothes += value;
+        remove => _model.OnEndChangeChooseClothes -= value; 
+    }
+
     #endregion
 
     #region Input
@@ -47,6 +53,11 @@ public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothes
     public void ChooseByClothesType(ClothesType clothesType)
     {
         _model.ChooseByClothesType(clothesType);
+    }
+
+    public void OpenClothes(int id)
+    {
+        _model.OpenClothes(id);
     }
 
     #endregion
@@ -57,9 +68,15 @@ public interface IStoreClothesEventsProvider
     public event Action<Clothes> OnChooseOpenClothes;
     public event Action<Clothes> OnChooseCloseClothes;
     public event Action<ClothesType> OnChangeChooseClothes;
+    public event Action OnEndChangeChooseClothes;
 }
 
 public interface IStoreClothesChooseProvider
 {
     public void ChooseByClothesType(ClothesType clothesType);
+}
+
+public interface IStoreClothesActivatorProvider
+{
+    public void OpenClothes(int id);
 }

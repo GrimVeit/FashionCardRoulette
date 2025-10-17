@@ -29,6 +29,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CharacterVisualPresenter characterVisualPresenter;
 
     private ChooseShopClothesPresenter chooseShopClothesPresenter;
+    private ShopClothesPresenter shopClothesPresenter;
     private ShopClothesVisualPresenter shopClothesVisualPresenter;
 
     private StateMachine_Game stateMachine;
@@ -60,10 +61,11 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderClothesPresenter = new ChooseGenderClothesPresenter(new ChooseGenderClothesModel(chooseGenderPresenter));
         characterVisualPresenter = new CharacterVisualPresenter(new CharacterVisualModel(chooseCharacterPresenter), viewContainer.GetView<CharacterVisualView>());
 
-        chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter), viewContainer.GetView<ChooseShopClothesView>());
-        shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter), viewContainer.GetView<ShopClothesVisualView>());
+        chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ChooseShopClothesView>());
+        shopClothesPresenter = new ShopClothesPresenter(new ShopClothesModel(bankPresenter, storeClothesPresenter), viewContainer.GetView<ShopClothesView>());
+        shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter, shopClothesPresenter, shopClothesPresenter), viewContainer.GetView<ShopClothesVisualView>());
 
-        stateMachine = new StateMachine_Game(sceneRoot);
+        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -84,6 +86,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         characterVisualPresenter.Initialize();
 
         chooseShopClothesPresenter.Initialize();
+        shopClothesPresenter.Initialize();
         shopClothesVisualPresenter.Initialize();
 
         stateMachine.Initialize();
@@ -133,6 +136,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         characterVisualPresenter?.Dispose();
 
         chooseShopClothesPresenter?.Dispose();
+        shopClothesPresenter?.Dispose();
         shopClothesVisualPresenter?.Dispose();
 
         stateMachine?.Dispose();

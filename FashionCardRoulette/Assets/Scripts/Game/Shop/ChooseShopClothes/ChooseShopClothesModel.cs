@@ -10,9 +10,10 @@ public class ChooseShopClothesModel
 
     private GenderClothesTypes _genderClothesTypes;
 
-    public ChooseShopClothesModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider)
+    public ChooseShopClothesModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider, IStoreClothesChooseProvider storeClothesChooseProvider)
     {
         _chooseGenderClothesEventsProvider = chooseGenderClothesEventsProvider;
+        _storeClothesChooseProvider = storeClothesChooseProvider;
         _chooseGenderClothesEventsProvider.OnChooseGenderClothesType += SetGenderClothesTypes;
     }
 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d356f1ab012f85489a4bdf1153056af, type: 3}
+  m_Name: Woman_Jewerly
+  m_EditorClassIdentifier: 
+  ClothesType: 3
+  Clothes:
+  - {fileID: 11400000, guid: 309ae40737d5fcc4cb602d6fc6f64a6d, type: 2}
+  - {fileID: 11400000, guid: f554255f40d54ad419b725f4ef88d376, type: 2}
+  - {fileID: 11400000, guid: 65a3c71b3771a21478ffade1d5325fce, type: 2}
+  - {fileID: 11400000, guid: 1b295592aa5235748bf1ae8d8aecdc67, type: 2}

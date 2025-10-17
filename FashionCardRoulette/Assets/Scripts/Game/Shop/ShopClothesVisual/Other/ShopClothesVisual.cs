@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopClothesVisual : MonoBehaviour
 {
-    public int Id => toggle.Id;
-    public ClothesType ClothesType => clothesType;
+    public int Id => _clothes.Id;
+    public ClothesType ClothesType => _clothes.ClothesType;
 
     [SerializeField] private ToggleCustom toggle;
     [SerializeField] private GameObject buyed;
-    [SerializeField] private Image imageCharacter;
-    private ClothesType clothesType;
+    [SerializeField] private Image imageClothes;
+    [SerializeField] private TextMeshProUGUI textPrice;
+    private Clothes _clothes;
 
     public void Initialize()
     {
@@ -24,11 +26,13 @@ public class ShopClothesVisual : MonoBehaviour
         toggle.OnChooseToggle -= ChooseToggle;
     }
 
-    public void SetData(ClothesType type, int id, Sprite sprite)
+    public void SetData(Clothes clothes)
     {
-        clothesType = type;
-        imageCharacter.sprite = sprite;
-        toggle.SetData(id);
+        _clothes = clothes;
+
+        textPrice.text = _clothes.Price.ToString();
+        imageClothes.sprite = _clothes.Sprite;
+        toggle.SetData(_clothes.Id);
     }
 
     public void ActivateToggle()
@@ -45,21 +49,23 @@ public class ShopClothesVisual : MonoBehaviour
     {
         toggle.gameObject.SetActive(true);
         buyed.SetActive(false);
+        textPrice.gameObject.SetActive(true);
     }
 
     public void DeactivateBuy()
     {
         toggle.gameObject.SetActive(false);
         buyed.SetActive(true);
+        textPrice.gameObject.SetActive(false);
     }
 
     #region Output
 
-    public event Action<ClothesType, int> OnChooseClothes;
+    public event Action<Clothes> OnChooseClothes;
 
     private void ChooseToggle(int id)
     {
-        OnChooseClothes?.Invoke(clothesType, toggle.Id);
+        OnChooseClothes?.Invoke(_clothes);
     }
 
     #endregion

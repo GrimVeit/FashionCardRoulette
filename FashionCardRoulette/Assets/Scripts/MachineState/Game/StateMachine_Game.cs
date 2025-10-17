@@ -10,7 +10,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
     private IState _currentState;
 
     public StateMachine_Game
-        (UIGameRoot sceneRoot)
+        (UIGameRoot sceneRoot,
+        IStoreClothesEventsProvider storeClothesEventsProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
@@ -18,7 +19,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot);
 
         states[typeof(ShopWardrobeState_Game)] = new ShopWardrobeState_Game(this, sceneRoot);
-        states[typeof(ShopTypeState_Game)] = new ShopTypeState_Game(this, sceneRoot);
+        states[typeof(ShopTypeState_Game)] = new ShopTypeState_Game(this, sceneRoot, storeClothesEventsProvider);
+        states[typeof(ShopState_Game)] = new ShopState_Game(this, sceneRoot);
     }
 
     public void Initialize()

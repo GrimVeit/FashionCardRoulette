@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8f7d3fd9beeb6d4c9867b696f5cc33d, type: 3}
-  m_Name: Outerwear_9
+  m_Name: Jewerly_4
   m_EditorClassIdentifier: 
-  type: 1
-  id: 8
+  type: 3
+  id: 3
   description: 
-  sprite: {fileID: 21300000, guid: c07d00dac4001ec4597aa27dc2dce7c0, type: 3}
+  sprite: {fileID: 21300000, guid: 1572c047f74bc9441bab2c5cdf6eccf9, type: 3}
   price: 1

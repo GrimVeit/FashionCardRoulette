@@ -10,6 +10,7 @@ public class StoreClothesModel
     public event Action<Clothes> OnChooseOpenClothes;
     public event Action<Clothes> OnChooseCloseClothes;
     public event Action<ClothesType> OnChangeChooseClothes;
+    public event Action OnEndChangeChooseClothes;
 
 
 
@@ -46,7 +47,7 @@ public class StoreClothesModel
 
                 for (int j = 0; j < _clothesAllGroup.Groups[i].Clothes.Count; j++)
                 {
-                    if(i == 0)
+                    if(j == 0)
                     {
                         var data = new ClothesData(true, true);
 
@@ -71,9 +72,17 @@ public class StoreClothesModel
 
     public void Initialize()
     {
-        for (int i = 0; i < _clothesAllGroup.Groups.Count; i++)
+        for (int i = 0; i < clothesGroupDatas.Count; i++)
         {
-            _clothesAllGroup.Groups[i].Clothes[0].Data.IsSelect = true;
+            for (int j = 0; j < clothesGroupDatas[i].Datas.Length; j++)
+            {
+                if(j == 0)
+                {
+                    clothesGroupDatas[i].Datas[j].IsSelect = true;
+                }
+
+                _clothesAllGroup.Groups[i].Clothes[j].SetData(clothesGroupDatas[i].Datas[j]);
+            }
         }
     }
 
@@ -100,6 +109,8 @@ public class StoreClothesModel
                 OnChooseCloseClothes?.Invoke(data);
             }
         });
+
+        OnEndChangeChooseClothes?.Invoke();
     }
 
     public void OpenClothes(int id)
