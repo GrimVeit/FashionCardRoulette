@@ -22,14 +22,18 @@ public class ChooseShopClothesView : View
             Destroy(transformContent.GetChild(i).gameObject);
         }
 
+        shopClothes.Clear();
+
         for (int i = 0; i < types.Count; i++)
         {
-            var shopClothes = Instantiate(chooseShopClothesPrefab, transformContent);
+            var clothes = Instantiate(chooseShopClothesPrefab, transformContent);
 
-            shopClothes.OnChooseType += ChooseType;
+            clothes.OnChooseType += ChooseType;
 
-            shopClothes.SetData(types[i], clothesTypeNames.GetNameByClothesType(types[i]));
-            shopClothes.Initialize();
+            clothes.SetData(types[i], clothesTypeNames.GetNameByClothesType(types[i]));
+            clothes.Initialize();
+
+            shopClothes.Add(clothes);
         }
     }
 

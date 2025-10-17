@@ -6,6 +6,7 @@ using UnityEngine;
 public class ChooseShopClothesModel
 {
     private readonly IChooseGenderClothesEventsProvider _chooseGenderClothesEventsProvider;
+    private readonly IStoreClothesChooseProvider _storeClothesChooseProvider;
 
     private GenderClothesTypes _genderClothesTypes;
 
@@ -38,7 +39,7 @@ public class ChooseShopClothesModel
 
     public void ChooseType(ClothesType type)
     {
-
+        _storeClothesChooseProvider.ChooseByClothesType(type);
     }
 
     #region Output

@@ -7,16 +7,10 @@ using UnityEngine;
 
 public class StoreClothesModel
 {
-    public event Action<Clothes> OnChooseClothes;
+    public event Action<Clothes> OnChooseOpenClothes;
+    public event Action<Clothes> OnChooseCloseClothes;
+    public event Action<ClothesType> OnChangeChooseClothes;
 
-    public event Action<Clothes> OnOpenClothes;
-
-    //public event Action<Chip> OnOpenChip;
-    //public event Action<Chip> OnOpenNewChip;
-    //public event Action<Chip> OnCloseChip;
-
-    //public event Action<Chip> OnDeselectChip;
-    //public event Action<Chip> OnSelectChip;
 
 
     private readonly ClothesAllGroup _clothesAllGroup;
@@ -80,7 +74,6 @@ public class StoreClothesModel
         for (int i = 0; i < _clothesAllGroup.Groups.Count; i++)
         {
             _clothesAllGroup.Groups[i].Clothes[0].Data.IsSelect = true;
-            OnOpenClothes?.Invoke(_clothesAllGroup.Groups[i].Clothes[0]);
         }
     }
 
@@ -92,12 +85,35 @@ public class StoreClothesModel
 
     public void ChooseByClothesType(ClothesType clothesType)
     {
+        OnChangeChooseClothes?.Invoke(clothesType);
+
         _currentClothes = _clothesAllGroup.Groups.FirstOrDefault(data => data.ClothesType == clothesType).Clothes.ToList();
 
         _currentClothes.ForEach(data =>
         {
-            OnChooseClothes?.Invoke(data);
+            if (data.Data.IsOpen)
+            {
+                OnChooseOpenClothes?.Invoke(data);
+            }
+            else
+            {
+                OnChooseCloseClothes?.Invoke(data);
+            }
         });
+    }
+
+    public void OpenClothes(int id)
+    {
+        var clothes = _currentClothes.FirstOrDefault(data => data.Id == id);
+
+        if(clothes == null)
+        {
+            Debug.LogError("Not found clothes for open with id - " + id);
+            return;
+        }
+
+        clothes.Data.IsOpen = true;
+        OnChooseOpenClothes?.Invoke(clothes);
     }
 
     //public void SelectChip(int number)
@@ -124,11 +140,11 @@ public class StoreClothesModel
 
     //public void UnselectAllChips()
     //{
-    //    _clothesAllGroup.Chips.ForEach(data =>
+    //    _currentClothes.ForEach(data =>
     //    {
-    //        if (data.ChipData.IsSelect)
+    //        if (data.Data.IsSelect)
     //        {
-    //            data.ChipData.IsSelect = false;
+    //            data.Data.IsSelect = false;
     //            OnDeselectChip?.Invoke(data);
     //        }
     //    });

@@ -9,6 +9,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private ClothesAllGroup clothesAllGroup;
     [SerializeField] private PersonZeroGroup personZeroGroup;
     [SerializeField] private UIGameRoot menuRootPrefab;
 
@@ -23,9 +24,12 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChooseGenderPresenter chooseGenderPresenter;
     private ChooseCharacterPresenter chooseCharacterPresenter;
 
+    private StoreClothesPresenter storeClothesPresenter;
     private ChooseGenderClothesPresenter chooseGenderClothesPresenter;
     private CharacterVisualPresenter characterVisualPresenter;
+
     private ChooseShopClothesPresenter chooseShopClothesPresenter;
+    private ShopClothesVisualPresenter shopClothesVisualPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -52,9 +56,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderPresenter = new ChooseGenderPresenter(new ChooseGenderModel(storeCharacterPresenter), viewContainer.GetView<ChooseGenderView>());
         chooseCharacterPresenter = new ChooseCharacterPresenter(new ChooseCharacterModel(storeCharacterPresenter), viewContainer.GetView<ChooseCharacterView>());
 
+        storeClothesPresenter = new StoreClothesPresenter(new StoreClothesModel(clothesAllGroup));
         chooseGenderClothesPresenter = new ChooseGenderClothesPresenter(new ChooseGenderClothesModel(chooseGenderPresenter));
         characterVisualPresenter = new CharacterVisualPresenter(new CharacterVisualModel(chooseCharacterPresenter), viewContainer.GetView<CharacterVisualView>());
+
         chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter), viewContainer.GetView<ChooseShopClothesView>());
+        shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter), viewContainer.GetView<ShopClothesVisualView>());
 
         stateMachine = new StateMachine_Game(sceneRoot);
 
@@ -72,9 +79,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderPresenter.Initialize();
         chooseCharacterPresenter.Initialize();
 
+        storeClothesPresenter.Initialize();
         chooseGenderClothesPresenter.Initialize();
         characterVisualPresenter.Initialize();
+
         chooseShopClothesPresenter.Initialize();
+        shopClothesVisualPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -118,9 +128,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseGenderPresenter?.Dispose();
         chooseCharacterPresenter?.Dispose();
 
-        chooseGenderClothesPresenter.Dispose();
+        storeClothesPresenter?.Dispose();
+        chooseGenderClothesPresenter?.Dispose();
         characterVisualPresenter?.Dispose();
+
         chooseShopClothesPresenter?.Dispose();
+        shopClothesVisualPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }
