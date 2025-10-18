@@ -21,6 +21,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private ShopPanel_Game shopPanel;
 
     [SerializeField] private WardrobeTypePanel_Game wardrobeTypePanel;
+    [SerializeField] private WardrobePanel_Game wardrobePanel;
 
     private ISoundProvider _soundProvider;
 
@@ -44,6 +45,7 @@ public class UIGameRoot : UIRoot
         shopPanel.Initialize();
 
         wardrobeTypePanel.Initialize();
+        wardrobePanel.Initialize();
     }
 
     public void Activate()
@@ -64,6 +66,7 @@ public class UIGameRoot : UIRoot
         shopPanel.OnClickToBack += HandleClickToBack_Shop;
 
         wardrobeTypePanel.OnClickToBack += HandleClickToBack_WardrobeType;
+        wardrobePanel.OnClickToBack += HandleClickToBack_Wardrobe;
     }
 
 
@@ -85,6 +88,7 @@ public class UIGameRoot : UIRoot
         shopPanel.OnClickToBack -= HandleClickToBack_Shop;
 
         wardrobeTypePanel.OnClickToBack -= HandleClickToBack_WardrobeType;
+        wardrobePanel.OnClickToBack -= HandleClickToBack_Wardrobe;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -98,6 +102,9 @@ public class UIGameRoot : UIRoot
         CloseShopWardrobePanel();
         CloseShopTypePanel();
         CloseShopPanel();
+
+        CloseWardrobeTypePanel();
+        CloseWardrobePanel();
     }
 
     public void Dispose()
@@ -115,6 +122,7 @@ public class UIGameRoot : UIRoot
         shopPanel.Dispose();
 
         wardrobeTypePanel.Dispose();
+        wardrobePanel.Dispose();
     }
 
     #region Input
@@ -280,6 +288,24 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(wardrobeTypePanel);
     }
 
+
+
+
+
+    public void OpenWardrobePanel()
+    {
+        if(wardrobePanel.IsActive) return;
+
+        OpenOtherPanel(wardrobePanel);
+    }
+
+    public void CloseWardrobePanel()
+    {
+        if(!wardrobePanel.IsActive) return;
+
+        CloseOtherPanel(wardrobePanel);
+    }
+
     #endregion
 
 
@@ -371,6 +397,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_WardrobeType()
     {
         OnClickToBack_WardrobeType?.Invoke();
+    }
+
+    //-------------------------WARDROBE----------------------------//
+
+    public event Action OnClickToBack_Wardrobe;
+
+    private void HandleClickToBack_Wardrobe()
+    {
+        OnClickToBack_Wardrobe?.Invoke();
     }
 
     #endregion

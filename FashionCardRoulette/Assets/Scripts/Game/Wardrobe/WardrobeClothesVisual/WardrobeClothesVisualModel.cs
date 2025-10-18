@@ -6,10 +6,14 @@ using UnityEngine;
 public class WardrobeClothesVisualModel
 {
     private readonly IStoreClothesEventsProvider _storeClothesEventsProvider;
+    private readonly IStoreClothesSelectorProvider _storeClothesSelectorProvider;
 
-    public WardrobeClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider)
+    private Clothes _currentSelectClothes;
+
+    public WardrobeClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider, IStoreClothesSelectorProvider storeClothesSelectorProvider)
     {
         _storeClothesEventsProvider = storeClothesEventsProvider;
+        _storeClothesSelectorProvider = storeClothesSelectorProvider;
 
         _storeClothesEventsProvider.OnSelectClothes += SetSelectClothes;
         _storeClothesEventsProvider.OnDeselectClothes += SetDeselectClothes;
@@ -34,17 +38,40 @@ public class WardrobeClothesVisualModel
 
     public void SetChooseClothes(Clothes clothes)
     {
+        if(_currentSelectClothes == null)
+        {
+            _currentSelectClothes = clothes;
+            OnActivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
+            OnActivateSubmit?.Invoke();
+            return;
+        }
+        else
+        {
+            if(clothes == _currentSelectClothes)
+            {
+                OnDeactivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
+                _currentSelectClothes = null;
+                OnDeactivateSubmit?.Invoke();
+                return;
+            }
 
+            OnDeactivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
+
+            _currentSelectClothes = clothes;
+            OnActivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
+
+            OnActivateSubmit?.Invoke();
+        }
     }
 
-    private void ActivateClothes(Clothes clothes)
+    public void SubmitChoice()
     {
-        OnActivate?.Invoke(clothes.ClothesType, clothes.Id);
-    }
+        if(_currentSelectClothes == null) return;
 
-    private void DeactivateClothes(Clothes clothes)
-    {
-        OnDeactivate?.Invoke(clothes.ClothesType, clothes.Id);
+        _storeClothesSelectorProvider.SelectClothes(_currentSelectClothes.Id);
+
+        _currentSelectClothes = null;
+        OnDeactivateSubmit?.Invoke();
     }
 
     #region Input
@@ -62,6 +89,8 @@ public class WardrobeClothesVisualModel
 
     private void ClearClothes(ClothesType type)
     {
+        _currentSelectClothes = null;
+
         OnChangeClothesType?.Invoke(type);
     }
 
@@ -80,4 +109,7 @@ public class WardrobeClothesVisualModel
 
     public event Action<ClothesType, int> OnActivate;
     public event Action<ClothesType, int> OnDeactivate;
+
+    public event Action OnActivateSubmit;
+    public event Action OnDeactivateSubmit;
 }

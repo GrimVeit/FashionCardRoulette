@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothesChooseProvider, IStoreClothesActivatorProvider
+public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothesChooseProvider, IStoreClothesActivatorProvider, IStoreClothesSelectorProvider
 {
     private readonly StoreClothesModel _model;
 
@@ -80,6 +80,11 @@ public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothes
         _model.OpenClothes(id);
     }
 
+    public void SelectClothes(int id)
+    {
+        _model.SelectClothes(id);
+    }
+
     #endregion
 }
 
@@ -103,4 +108,9 @@ public interface IStoreClothesChooseProvider
 public interface IStoreClothesActivatorProvider
 {
     public void OpenClothes(int id);
+}
+
+public interface IStoreClothesSelectorProvider
+{
+    public void SelectClothes(int id);
 }

@@ -79,11 +79,6 @@ public class StoreClothesModel
         {
             for (int j = 0; j < clothesGroupDatas[i].Datas.Length; j++)
             {
-                if(j == 0)
-                {
-                    clothesGroupDatas[i].Datas[j].IsSelect = true;
-                }
-
                 _clothesAllGroup.Groups[i].Clothes[j].SetData(clothesGroupDatas[i].Datas[j]);
             }
         }

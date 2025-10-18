@@ -17,7 +17,7 @@ public class WardrobeTypeState_Game : IState
 
     public void EnterState()
     {
-        //_clothesEventsProvider.OnChangeChooseClothes += ChangeStateToShop;
+        _clothesEventsProvider.OnChangeChooseClothes += ChangeStateToWardrobe;
         _sceneRoot.OnClickToBack_WardrobeType += ChangeStateToShopWardrobe;
 
         _sceneRoot.OpenWardrobeTypePanel();
@@ -25,7 +25,7 @@ public class WardrobeTypeState_Game : IState
 
     public void ExitState()
     {
-        //_clothesEventsProvider.OnChangeChooseClothes -= ChangeStateToShop;
+        _clothesEventsProvider.OnChangeChooseClothes -= ChangeStateToWardrobe;
         _sceneRoot.OnClickToBack_WardrobeType -= ChangeStateToShopWardrobe;
 
         _sceneRoot.CloseWardrobeTypePanel();
@@ -36,8 +36,8 @@ public class WardrobeTypeState_Game : IState
         _globalStateMachineProvider.SetState(_globalStateMachineProvider.GetState<ShopWardrobeState_Game>());
     }
 
-    //private void ChangeStateToShop(ClothesType type)
-    //{
-    //    _globalStateMachineProvider.SetState(_globalStateMachineProvider.GetState<ShopState_Game>());
-    //}
+    private void ChangeStateToWardrobe(ClothesType type)
+    {
+        _globalStateMachineProvider.SetState(_globalStateMachineProvider.GetState<WardrobeState_Game>());
+    }
 }
