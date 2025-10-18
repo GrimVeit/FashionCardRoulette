@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class ShopClothesVisual : MonoBehaviour
     [SerializeField] private Image imageClothes;
     [SerializeField] private TextMeshProUGUI textPrice;
     private Clothes _clothes;
+
+    private Tween tweenScale;
 
     public void Initialize()
     {
@@ -33,6 +36,27 @@ public class ShopClothesVisual : MonoBehaviour
         textPrice.text = _clothes.Price.ToString();
         imageClothes.sprite = _clothes.Sprite;
         toggle.SetData(_clothes.Id);
+    }
+
+    public void Show(float speed)
+    {
+        tweenScale?.Kill();
+
+        gameObject.SetActive(true);
+
+        tweenScale = transform.DOScale(1, speed);
+    }
+
+    public void Hide(float speed)
+    {
+        tweenScale?.Kill();
+
+        tweenScale = transform.DOScale(0, speed).OnComplete(() => gameObject.SetActive(false));
+    }
+
+    private void OnDestroy()
+    {
+        tweenScale?.Kill();
     }
 
     public void ActivateToggle()

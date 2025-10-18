@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -28,16 +29,20 @@ public class ScaleEffect_Fade : ScaleEffect
         scaleElement.localScale = Vector2.zero;
     }
 
-    public override void ActivateEffect()
+    public override void ActivateEffect(Action OnComplete = null)
     {
         tweenFade?.Kill();
+
+        isActive = true;
 
         tweenFade = scaleElement.DOScale(scaleNormal, duration);
     }
 
-    public override void DeactivateEffect()
+    public override void DeactivateEffect(Action OnComplete = null)
     {
         tweenFade?.Kill();
+
+        isActive = false;
 
         tweenFade = scaleElement.DOScale(Vector3.zero, duration);
     }

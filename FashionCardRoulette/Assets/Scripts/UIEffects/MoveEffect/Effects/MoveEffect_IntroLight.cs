@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -26,7 +27,7 @@ public class MoveEffect_IntroLight : MoveEffect
         tweenMove?.Kill();
     }
 
-    public override void ActivateEffect()
+    public override void ActivateEffect(Action OnComplete = null)
     {
         tweenMove?.Kill();
 
@@ -35,7 +36,7 @@ public class MoveEffect_IntroLight : MoveEffect
         tweenMove = moveElement.DOLocalMove(transformNormal.localPosition, timeMoveFromLeftToNormal).SetEase(Ease.InCubic);
     }
 
-    public override void DeactivateEffect()
+    public override void DeactivateEffect(Action OnComplete = null)
     {
         tweenMove?.Kill();
 

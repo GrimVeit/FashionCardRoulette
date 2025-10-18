@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShopWardrobeState_Game : IState
+{
+    private readonly IGlobalStateMachineProvider _machineProvider;
+    private readonly UIGameRoot _sceneRoot;
+
+    public ShopWardrobeState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot)
+    {
+        _machineProvider = machineProvider;
+        _sceneRoot = sceneRoot;
+    }
+
+    public void EnterState()
+    {
+        _sceneRoot.OnClickToBack_ShopWardrobe += ChangeStateToMain;
+        _sceneRoot.OnClickToShop_ShopWardrobe += ChangeStateToShopType;
+        _sceneRoot.OnClickToWardrobe_ShopWardrobe += ChangeStateToWardrobeType;
+
+        _sceneRoot.OpenShopWardrobePanel();
+    }
+
+    public void ExitState()
+    {
+        _sceneRoot.OnClickToBack_ShopWardrobe -= ChangeStateToMain;
+        _sceneRoot.OnClickToShop_ShopWardrobe -= ChangeStateToShopType;
+        _sceneRoot.OnClickToWardrobe_ShopWardrobe -= ChangeStateToWardrobeType;
+
+        _sceneRoot.CloseShopWardrobePanel();
+    }
+
+    private void ChangeStateToMain()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<MainState_Game>());
+    }
+
+    private void ChangeStateToShopType()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<ShopTypeState_Game>());
+    }
+
+    private void ChangeStateToWardrobeType()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<WardrobeTypeState_Game>());
+    }
+}

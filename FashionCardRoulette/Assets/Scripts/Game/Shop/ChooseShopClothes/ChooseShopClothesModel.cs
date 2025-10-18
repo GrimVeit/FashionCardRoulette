@@ -40,7 +40,7 @@ public class ChooseShopClothesModel
 
     public void ChooseType(ClothesType type)
     {
-        _storeClothesChooseProvider.ChooseByClothesType(type);
+        _storeClothesChooseProvider.ChooseByClothesTypeForShop(type);
     }
 
     #region Output

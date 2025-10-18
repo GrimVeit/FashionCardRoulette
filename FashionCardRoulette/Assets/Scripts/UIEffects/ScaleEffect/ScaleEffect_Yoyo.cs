@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -24,14 +25,14 @@ public class ScaleEffect_Yoyo : ScaleEffect
         tweenYoyo?.Kill();
     }
 
-    public override void ActivateEffect()
+    public override void ActivateEffect(Action OnComplete = null)
     {
         tweenYoyo?.Kill();
 
         tweenYoyo = scaleElement.DOScale(scaleMax, duration).SetLoops(-1, LoopType.Yoyo);
     }
 
-    public override void DeactivateEffect()
+    public override void DeactivateEffect(Action OnComplete = null)
     {
         tweenYoyo?.Kill();
 

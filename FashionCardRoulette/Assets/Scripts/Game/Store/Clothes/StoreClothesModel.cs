@@ -12,6 +12,9 @@ public class StoreClothesModel
     public event Action<ClothesType> OnChangeChooseClothes;
     public event Action OnEndChangeChooseClothes;
 
+    public event Action<Clothes> OnSelectClothes;
+    public event Action<Clothes> OnDeselectClothes;
+
 
 
     private readonly ClothesAllGroup _clothesAllGroup;
@@ -92,7 +95,7 @@ public class StoreClothesModel
         File.WriteAllText(FilePath, json);
     }
 
-    public void ChooseByClothesType(ClothesType clothesType)
+    public void ChooseByClothesTypeForShop(ClothesType clothesType)
     {
         OnChangeChooseClothes?.Invoke(clothesType);
 
@@ -113,6 +116,30 @@ public class StoreClothesModel
         OnEndChangeChooseClothes?.Invoke();
     }
 
+    public void ChooseByClothesTypeForWardrobe(ClothesType clothesType)
+    {
+        OnChangeChooseClothes?.Invoke(clothesType);
+
+        _currentClothes = _clothesAllGroup.Groups.FirstOrDefault(data => data.ClothesType == clothesType).Clothes.ToList();
+
+        _currentClothes.ForEach(data =>
+        {
+            if (data.Data.IsOpen)
+            {
+                if (data.Data.IsSelect)
+                {
+                    OnSelectClothes?.Invoke(data);
+                }
+                else
+                {
+                    OnDeselectClothes?.Invoke(data);
+                }
+            }
+        });
+
+        OnEndChangeChooseClothes?.Invoke();
+    }
+
     public void OpenClothes(int id)
     {
         var clothes = _currentClothes.FirstOrDefault(data => data.Id == id);
@@ -125,6 +152,29 @@ public class StoreClothesModel
 
         clothes.Data.IsOpen = true;
         OnChooseOpenClothes?.Invoke(clothes);
+    }
+
+    public void SelectClothes(int id)
+    {
+        _currentClothes.ForEach(data =>
+        {
+            if (data.Data.IsSelect)
+            {
+                data.Data.IsSelect = false;
+                OnDeselectClothes?.Invoke(data);
+            }
+        });
+
+        var clothes = _currentClothes.FirstOrDefault(data => data.Id == id);
+
+        if (clothes == null)
+        {
+            Debug.LogError("Not found clothes for select with id - " + id);
+            return;
+        }
+
+        clothes.Data.IsSelect = true;
+        OnSelectClothes?.Invoke(clothes);
     }
 
     //public void SelectChip(int number)

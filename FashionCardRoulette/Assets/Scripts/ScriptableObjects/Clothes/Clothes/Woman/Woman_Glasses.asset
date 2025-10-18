@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d356f1ab012f85489a4bdf1153056af, type: 3}
+  m_Name: Woman_Glasses
+  m_EditorClassIdentifier: 
+  ClothesType: 4
+  Clothes:
+  - {fileID: 11400000, guid: a99445237d51955448091a3e38963105, type: 2}
+  - {fileID: 11400000, guid: cb28bb42ab1fff24492afb245b5c1e96, type: 2}
+  - {fileID: 11400000, guid: dc96e38cafb403145bff12dcb596627b, type: 2}
+  - {fileID: 11400000, guid: 05786d6c720f8b04d9696c3d770fe001, type: 2}

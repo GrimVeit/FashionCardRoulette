@@ -31,11 +31,17 @@ public class ShopClothesPresenter : IShopClothesProvider, IShopClothesEventsProv
     private void ActivateEvents()
     {
         _view.OnBuy += _model.SubmitBuy;
+
+        _model.OnActivate += _view.Activate;
+        _model.OnDeactivate += _view.Deactivate;
     }
 
     private void DeactivateEvents()
     {
         _view.OnBuy -= _model.SubmitBuy;
+
+        _model.OnActivate -= _view.Activate;
+        _model.OnDeactivate -= _view.Deactivate;
     }
 
     #region Output

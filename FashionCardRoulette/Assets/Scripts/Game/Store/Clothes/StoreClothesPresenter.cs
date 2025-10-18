@@ -46,13 +46,33 @@ public class StoreClothesPresenter  : IStoreClothesEventsProvider, IStoreClothes
         remove => _model.OnEndChangeChooseClothes -= value; 
     }
 
+
+
+
+    public event Action<Clothes> OnSelectClothes
+    {
+        add => _model.OnSelectClothes += value;
+        remove => _model.OnSelectClothes -= value;
+    }
+
+    public event Action<Clothes> OnDeselectClothes
+    {
+        add => _model.OnDeselectClothes += value;
+        remove => _model.OnDeselectClothes -= value;
+    }
+
     #endregion
 
     #region Input
 
-    public void ChooseByClothesType(ClothesType clothesType)
+    public void ChooseByClothesTypeForShop(ClothesType clothesType)
     {
-        _model.ChooseByClothesType(clothesType);
+        _model.ChooseByClothesTypeForShop(clothesType);
+    }
+
+    public void ChooseByClothesTypeForWardrobe(ClothesType clothesType)
+    {
+        _model.ChooseByClothesTypeForWardrobe(clothesType);
     }
 
     public void OpenClothes(int id)
@@ -69,11 +89,15 @@ public interface IStoreClothesEventsProvider
     public event Action<Clothes> OnChooseCloseClothes;
     public event Action<ClothesType> OnChangeChooseClothes;
     public event Action OnEndChangeChooseClothes;
+
+    public event Action<Clothes> OnSelectClothes;
+    public event Action<Clothes> OnDeselectClothes;
 }
 
 public interface IStoreClothesChooseProvider
 {
-    public void ChooseByClothesType(ClothesType clothesType);
+    public void ChooseByClothesTypeForShop(ClothesType clothesType);
+    public void ChooseByClothesTypeForWardrobe(ClothesType clothesType);
 }
 
 public interface IStoreClothesActivatorProvider

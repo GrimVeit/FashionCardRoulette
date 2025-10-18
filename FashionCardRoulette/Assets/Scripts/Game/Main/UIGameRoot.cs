@@ -16,8 +16,11 @@ public class UIGameRoot : UIRoot
 
     [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;
+
     [SerializeField] private ShopTypePanel_Game shopTypePanel;
     [SerializeField] private ShopPanel_Game shopPanel;
+
+    [SerializeField] private WardrobeTypePanel_Game wardrobeTypePanel;
 
     private ISoundProvider _soundProvider;
 
@@ -36,8 +39,11 @@ public class UIGameRoot : UIRoot
         exitPanel.Initialize();
 
         shopWardrobePanel.Initialize();
+
         shopTypePanel.Initialize();
         shopPanel.Initialize();
+
+        wardrobeTypePanel.Initialize();
     }
 
     public void Activate()
@@ -56,6 +62,8 @@ public class UIGameRoot : UIRoot
 
         shopTypePanel.OnClickToBack += HandleClickToBack_ShopType;
         shopPanel.OnClickToBack += HandleClickToBack_Shop;
+
+        wardrobeTypePanel.OnClickToBack += HandleClickToBack_WardrobeType;
     }
 
 
@@ -75,6 +83,8 @@ public class UIGameRoot : UIRoot
 
         shopTypePanel.OnClickToBack -= HandleClickToBack_ShopType;
         shopPanel.OnClickToBack -= HandleClickToBack_Shop;
+
+        wardrobeTypePanel.OnClickToBack -= HandleClickToBack_WardrobeType;
 
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
@@ -100,8 +110,11 @@ public class UIGameRoot : UIRoot
         exitPanel.Dispose();
 
         shopWardrobePanel.Dispose();
+
         shopTypePanel.Dispose();
         shopPanel.Dispose();
+
+        wardrobeTypePanel.Dispose();
     }
 
     #region Input
@@ -247,6 +260,26 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(shopPanel);
     }
 
+
+
+
+
+
+
+    public void OpenWardrobeTypePanel()
+    {
+        if(wardrobeTypePanel.IsActive) return;
+
+        OpenOtherPanel(wardrobeTypePanel);
+    }
+
+    public void CloseWardrobeTypePanel()
+    {
+        if(!wardrobeTypePanel.IsActive) return;
+
+        CloseOtherPanel(wardrobeTypePanel);
+    }
+
     #endregion
 
 
@@ -329,6 +362,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_Shop()
     {
         OnClickToBack_Shop?.Invoke();
+    }
+
+    //-------------------------WARDROBE_TYPE----------------------------//
+
+    public event Action OnClickToBack_WardrobeType;
+
+    private void HandleClickToBack_WardrobeType()
+    {
+        OnClickToBack_WardrobeType?.Invoke();
     }
 
     #endregion

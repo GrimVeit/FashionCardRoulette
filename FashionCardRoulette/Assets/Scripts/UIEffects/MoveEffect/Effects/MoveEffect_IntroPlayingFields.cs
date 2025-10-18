@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -28,7 +29,7 @@ public class MoveEffect_IntroPlayingFields : MoveEffect
         seq?.Kill();
     }
 
-    public override void ActivateEffect()
+    public override void ActivateEffect(Action OnComplete = null)
     {
         seq?.Kill();
 
@@ -43,7 +44,7 @@ public class MoveEffect_IntroPlayingFields : MoveEffect
         seq.Append(moveElement.DOLocalMove(transformNormal.localPosition, timeMoveFromDownToNormal).SetEase(Ease.OutCubic));
     }
 
-    public override void DeactivateEffect()
+    public override void DeactivateEffect(Action OnComplete = null)
     {
         seq?.Kill();
 

@@ -8,6 +8,9 @@ public class ShopClothesModel
     public event Action<Clothes> OnChooseClothes;
     public event Action<Clothes> OnUnchooseClothes;
 
+    public event Action OnActivate;
+    public event Action OnDeactivate;
+
     private List<Clothes> _clothesBuy = new List<Clothes>();
 
     private IStoreClothesActivatorProvider _clothesActivatorProvider;
@@ -31,11 +34,22 @@ public class ShopClothesModel
             _clothesBuy.Add(clothes);
             OnChooseClothes?.Invoke(clothes);
         }
+
+        if(_clothesBuy.Count > 0)
+        {
+            OnActivate?.Invoke();
+        }
+        else
+        {
+            OnDeactivate?.Invoke();
+        }
     }
 
     public void AllDelete()
     {
         _clothesBuy.Clear();
+
+        OnDeactivate?.Invoke();
     }
 
     public void SubmitBuy()
@@ -67,7 +81,7 @@ public class ShopClothesModel
             }
         }
 
-        _clothesBuy.Clear();
+        AllDelete();
 
         Debug.Log(allPrice);
     }

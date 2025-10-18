@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d356f1ab012f85489a4bdf1153056af, type: 3}
+  m_Name: Man_Beard
+  m_EditorClassIdentifier: 
+  ClothesType: 9
+  Clothes:
+  - {fileID: 11400000, guid: ba54852848735ef499633df58f88f72a, type: 2}
+  - {fileID: 11400000, guid: b52d0fa556130d5489c7a2c36e671d20, type: 2}
+  - {fileID: 11400000, guid: 16850619f3f84974386879dc03669a6f, type: 2}
+  - {fileID: 11400000, guid: 8b15c74d3122aae41bc2fa0772b04d02, type: 2}
+  - {fileID: 11400000, guid: 2daaafa1c982fcc47b9152ef5c5a9f7f, type: 2}
+  - {fileID: 11400000, guid: be193b74a8a87ec4e98106f17124e564, type: 2}

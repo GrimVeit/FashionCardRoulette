@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class ShopClothesVisualView : View
 
     [SerializeField] private Button buttonLeft;
     [SerializeField] private Button buttonRight;
+    [SerializeField] private ScaleEffect scaleEffect_Left;
+    [SerializeField] private ScaleEffect scaleEffect_Right;
 
     private readonly List<ShopClothesVisual> shopClothesVisuals = new List<ShopClothesVisual>();
 
@@ -25,12 +28,18 @@ public class ShopClothesVisualView : View
     {
         buttonLeft.onClick.AddListener(() => Left());
         buttonRight.onClick.AddListener(() => Right());
+
+        scaleEffect_Left.Initialize();
+        scaleEffect_Right.Initialize();
     }
 
     public void Dispose()
     {
         buttonLeft.onClick.RemoveListener(() => Left());
         buttonRight.onClick.RemoveListener(() => Right());
+
+        scaleEffect_Left.Dispose();
+        scaleEffect_Right.Dispose();
     }
 
     private void Left()
@@ -53,6 +62,8 @@ public class ShopClothesVisualView : View
 
     private void UpdatePage()
     {
+        if(shopClothesVisuals.Count == 0) return;
+
         int startIndex = _currentPage * _currentShopClothesConfig.ItemsPerPage;
         int endIndex = Mathf.Min(startIndex + _currentShopClothesConfig.ItemsPerPage, shopClothesVisuals.Count);
 
@@ -61,17 +72,35 @@ public class ShopClothesVisualView : View
             if(i >= startIndex && i < endIndex)
             {
                 shopClothesVisuals[i].transform.SetParent(content);
-                shopClothesVisuals[i].gameObject.SetActive(true);
+                shopClothesVisuals[i].Show(0.2f);
             }
             else
             {
                 shopClothesVisuals[i].transform.SetParent(itemsContainer);
-                shopClothesVisuals[i].gameObject.SetActive(false);
+                shopClothesVisuals[i].Hide(0.2f);
             }
         }
 
-        buttonLeft.gameObject.SetActive(_currentPage > 0);
-        buttonRight.gameObject.SetActive((_currentPage + 1) * _currentShopClothesConfig.ItemsPerPage < shopClothesVisuals.Count);
+        if(_currentPage > 0)
+        {
+            scaleEffect_Left.ActivateEffect();
+        }
+        else
+        {
+            scaleEffect_Left.DeactivateEffect();
+        }
+
+        if((_currentPage + 1) * _currentShopClothesConfig.ItemsPerPage < shopClothesVisuals.Count)
+        {
+            scaleEffect_Right.ActivateEffect();
+        }
+        else
+        {
+            scaleEffect_Right.DeactivateEffect();
+        }
+
+        //buttonLeft.gameObject.SetActive(_currentPage > 0);
+        //buttonRight.gameObject.SetActive((_currentPage + 1) * _currentShopClothesConfig.ItemsPerPage < shopClothesVisuals.Count);
     }
 
     #region Clothes
