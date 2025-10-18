@@ -70,6 +70,8 @@ public class WardrobeClothesVisualModel
 
         _storeClothesSelectorProvider.SelectClothes(_currentSelectClothes.Id);
 
+        OnDeactivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
+
         _currentSelectClothes = null;
         OnDeactivateSubmit?.Invoke();
     }

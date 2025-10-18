@@ -35,6 +35,8 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChooseWardrobeClothesPresenter chooseWardrobeClothesPresenter;
     private WardrobeClothesVisualPresenter wardrobeClothesVisualPresenter;
 
+    private ClothesVisualPresenter clothesVisualPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -71,6 +73,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseWardrobeClothesPresenter = new ChooseWardrobeClothesPresenter(new ChooseWardrobeClothesModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ChooseWardrobeClothesView>());
         wardrobeClothesVisualPresenter = new WardrobeClothesVisualPresenter(new WardrobeClothesVisualModel(storeClothesPresenter, storeClothesPresenter), viewContainer.GetView<WardrobeClothesVisualView>());
 
+        clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
+
         stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -86,6 +90,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeCharacterPresenter.Initialize();
         chooseGenderPresenter.Initialize();
         chooseCharacterPresenter.Initialize();
+
+        clothesVisualPresenter.Initialize();
 
         storeClothesPresenter.Initialize();
         chooseGenderClothesPresenter.Initialize();
@@ -139,6 +145,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeCharacterPresenter?.Dispose();
         chooseGenderPresenter?.Dispose();
         chooseCharacterPresenter?.Dispose();
+
+        clothesVisualPresenter?.Dispose();
 
         storeClothesPresenter?.Dispose();
         chooseGenderClothesPresenter?.Dispose();

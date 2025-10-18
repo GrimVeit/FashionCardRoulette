@@ -16,20 +16,26 @@ public class ClothesVisualPresenter
     public void Initialize()
     {
         ActivateEvents();
+
+        _model.Initialize();
     }
 
     public void Dispose()
     {
         DeactivateEvents();
+
+        _model.Dispose();
     }
 
     private void ActivateEvents()
     {
-
+        _model.OnSetGenderClothesType += _view.SetClothesType;
+        _model.OnSetClothes += _view.SetClothes;
     }
 
     private void DeactivateEvents()
     {
-
+        _model.OnSetGenderClothesType -= _view.SetClothesType;
+        _model.OnSetClothes -= _view.SetClothes;
     }
 }

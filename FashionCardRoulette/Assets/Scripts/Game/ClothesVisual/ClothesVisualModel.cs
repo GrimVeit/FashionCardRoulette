@@ -7,13 +7,17 @@ using UnityEngine;
 public class ClothesVisualModel
 {
     private readonly IChooseGenderClothesEventsProvider _chooseGenderClothesEventsProvider;
+    private readonly IStoreClothesEventsProvider _storeClothesEventsProvider;
 
     private GenderClothesTypes _currentGenderClothesType;
 
-    public ClothesVisualModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider)
+    public ClothesVisualModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider, IStoreClothesEventsProvider storeClothesEventsProvider)
     {
         _chooseGenderClothesEventsProvider = chooseGenderClothesEventsProvider;
+        _storeClothesEventsProvider = storeClothesEventsProvider;
+
         _chooseGenderClothesEventsProvider.OnChooseGenderClothesType += SetGenderClothesTypes;
+        _storeClothesEventsProvider.OnSelectClothes += SetClothes;
     }
 
     public void Initialize()
@@ -24,26 +28,25 @@ public class ClothesVisualModel
     public void Dispose()
     {
         _chooseGenderClothesEventsProvider.OnChooseGenderClothesType -= SetGenderClothesTypes;
+        _storeClothesEventsProvider.OnSelectClothes -= SetClothes;
     }
 
-    public void SetClothes(ClothesType type, int id)
+    public void SetClothes(Clothes clothes)
     {
-        if(_currentGenderClothesType == null) return;
-
-        if (_currentGenderClothesType.IsHaveClothesType(type))
-        {
-            OnSetClothes?.Invoke(type, id);
-        }
+        OnSetClothes?.Invoke(clothes);
     }
 
     private void SetGenderClothesTypes(GenderClothesTypes genderClothesType)
     {
         _currentGenderClothesType = genderClothesType;
+
+        OnSetGenderClothesType?.Invoke(_currentGenderClothesType.ClothesTypes);
     }
 
     #region Output
 
-    public event Action<ClothesType, int> OnSetClothes;
+    public event Action<List<ClothesType>> OnSetGenderClothesType;
+    public event Action<Clothes> OnSetClothes;
 
     #endregion
 }

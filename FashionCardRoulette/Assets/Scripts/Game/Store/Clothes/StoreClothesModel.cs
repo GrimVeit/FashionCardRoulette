@@ -80,6 +80,11 @@ public class StoreClothesModel
             for (int j = 0; j < clothesGroupDatas[i].Datas.Length; j++)
             {
                 _clothesAllGroup.Groups[i].Clothes[j].SetData(clothesGroupDatas[i].Datas[j]);
+
+                if (clothesGroupDatas[i].Datas[j].IsSelect)
+                {
+                    OnSelectClothes?.Invoke(_clothesAllGroup.Groups[i].Clothes[j]);
+                }
             }
         }
     }
