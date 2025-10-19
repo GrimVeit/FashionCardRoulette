@@ -19,6 +19,8 @@ public class UIGameRoot : UIRoot
 
     [SerializeField] private ShopTypePanel_Game shopTypePanel;
     [SerializeField] private ShopPanel_Game shopPanel;
+    [SerializeField] private PaycheckPanel_Game paycheckPanel;
+    [SerializeField] private NotCoinsPanel_Game notCoinsPanel;
 
     [SerializeField] private WardrobeTypePanel_Game wardrobeTypePanel;
     [SerializeField] private WardrobePanel_Game wardrobePanel;
@@ -43,6 +45,8 @@ public class UIGameRoot : UIRoot
 
         shopTypePanel.Initialize();
         shopPanel.Initialize();
+        paycheckPanel.Initialize();
+        notCoinsPanel.Initialize();
 
         wardrobeTypePanel.Initialize();
         wardrobePanel.Initialize();
@@ -102,6 +106,8 @@ public class UIGameRoot : UIRoot
         CloseShopWardrobePanel();
         CloseShopTypePanel();
         CloseShopPanel();
+        ClosePaycheckPanel();
+        CloseNotCoinsPanel();
 
         CloseWardrobeTypePanel();
         CloseWardrobePanel();
@@ -120,6 +126,8 @@ public class UIGameRoot : UIRoot
 
         shopTypePanel.Dispose();
         shopPanel.Dispose();
+        paycheckPanel.Dispose();
+        notCoinsPanel.Dispose();
 
         wardrobeTypePanel.Dispose();
         wardrobePanel.Dispose();
@@ -266,6 +274,46 @@ public class UIGameRoot : UIRoot
         if(!shopPanel.IsActive) return;
 
         CloseOtherPanel(shopPanel);
+    }
+
+
+
+
+
+
+
+    public void OpenPaycheckPanel()
+    {
+        if(paycheckPanel.IsActive) return;
+
+        OpenOtherPanel(paycheckPanel);
+    }
+
+    public void ClosePaycheckPanel()
+    {
+        if(!paycheckPanel.IsActive) return;
+
+        CloseOtherPanel(paycheckPanel);
+    }
+
+
+
+
+
+
+
+    public void OpenNotCoinsPanel()
+    {
+        if(notCoinsPanel.IsActive) return;
+
+        OpenOtherPanel(notCoinsPanel);
+    }
+
+    public void CloseNotCoinsPanel()
+    {
+        if(!notCoinsPanel.IsActive) return;
+
+        CloseOtherPanel(notCoinsPanel);
     }
 
 

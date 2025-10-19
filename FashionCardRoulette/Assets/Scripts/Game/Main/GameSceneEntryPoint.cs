@@ -75,7 +75,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
 
-        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter);
+        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter, shopClothesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

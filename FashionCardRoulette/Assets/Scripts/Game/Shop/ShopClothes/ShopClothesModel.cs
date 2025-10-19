@@ -7,14 +7,23 @@ public class ShopClothesModel
 {
     public event Action<Clothes> OnChooseClothes;
     public event Action<Clothes> OnUnchooseClothes;
+    public event Action OnCanBuy;
+    public event Action OnCannotBuy;
+    public event Action OnBuy;
+    public event Action OnCancelBuy;
 
     public event Action OnActivate;
     public event Action OnDeactivate;
+
+    public event Action<List<Clothes>> OnAddClothes;
+    public event Action OnClearClothes;
 
     private List<Clothes> _clothesBuy = new List<Clothes>();
 
     private IStoreClothesActivatorProvider _clothesActivatorProvider;
     private IMoneyProvider _moneyProvider;
+
+    private int _allPrice = 0;
 
     public ShopClothesModel(IMoneyProvider moneyProvider, IStoreClothesActivatorProvider storeClothesActivatorProvider)
     {
@@ -52,26 +61,43 @@ public class ShopClothesModel
         OnDeactivate?.Invoke();
     }
 
-    public void SubmitBuy()
+    public void CancelBuy()
     {
-        if(_clothesBuy.Count == 0) return;
+        for (int i = 0; i < _clothesBuy.Count; i++)
+        {
+            OnUnchooseClothes?.Invoke(_clothesBuy[i]);
+        }
 
-        int allPrice = 0;
+        OnClearClothes?.Invoke();
+
+        AllDelete();
+
+        OnCancelBuy?.Invoke();
+    }
+
+    public void Choose()
+    {
+        OnClearClothes?.Invoke();
+
+        if (_clothesBuy.Count == 0) return;
+
+        _allPrice = 0;
 
         for (int i = 0; i < _clothesBuy.Count; i++)
         {
-            allPrice += _clothesBuy[i].Price;
+            _allPrice += _clothesBuy[i].Price;
         }
 
-        if (_moneyProvider.CanAfford(allPrice))
+        if (_moneyProvider.CanAfford(_allPrice))
         {
-            _moneyProvider.SendMoney(-allPrice);
-
             for (int i = 0; i < _clothesBuy.Count; i++)
             {
                 OnUnchooseClothes?.Invoke(_clothesBuy[i]);
-                _clothesActivatorProvider.OpenClothes(_clothesBuy[i].Id);
             }
+
+            OnAddClothes?.Invoke(_clothesBuy);
+
+            OnCanBuy?.Invoke();
         }
         else
         {
@@ -79,10 +105,30 @@ public class ShopClothesModel
             {
                 OnUnchooseClothes?.Invoke(_clothesBuy[i]);
             }
+
+            OnCannotBuy?.Invoke();
+
+            AllDelete();
+        }
+    }
+
+    public void SubmitBuy()
+    {
+        if (_moneyProvider.CanAfford(_allPrice))
+        {
+            _moneyProvider.SendMoney(-_allPrice);
+
+            for (int i = 0; i < _clothesBuy.Count; i++)
+            {
+                OnUnchooseClothes?.Invoke(_clothesBuy[i]);
+                _clothesActivatorProvider.OpenClothes(_clothesBuy[i].Id);
+            }
+
+            OnClearClothes?.Invoke();
+
+            OnBuy?.Invoke();
         }
 
         AllDelete();
-
-        Debug.Log(allPrice);
     }
 }

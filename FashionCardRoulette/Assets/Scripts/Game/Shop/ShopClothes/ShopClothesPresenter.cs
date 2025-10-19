@@ -30,18 +30,28 @@ public class ShopClothesPresenter : IShopClothesProvider, IShopClothesEventsProv
 
     private void ActivateEvents()
     {
-        _view.OnBuy += _model.SubmitBuy;
+        _view.OnChoose += _model.Choose;
+        _view.OnCancel += _model.CancelBuy;
+        _view.OnSubmitChoice += _model.SubmitBuy;
 
         _model.OnActivate += _view.Activate;
         _model.OnDeactivate += _view.Deactivate;
+
+        _model.OnAddClothes += _view.SetClothes;
+        _model.OnClearClothes += _view.Clear;
     }
 
     private void DeactivateEvents()
     {
-        _view.OnBuy -= _model.SubmitBuy;
+        _view.OnChoose -= _model.Choose;
+        _view.OnCancel -= _model.CancelBuy;
+        _view.OnSubmitChoice -= _model.SubmitBuy;
 
         _model.OnActivate -= _view.Activate;
         _model.OnDeactivate -= _view.Deactivate;
+
+        _model.OnAddClothes -= _view.SetClothes;
+        _model.OnClearClothes -= _view.Clear;
     }
 
     #region Output
@@ -56,6 +66,30 @@ public class ShopClothesPresenter : IShopClothesProvider, IShopClothesEventsProv
     {
         add => _model.OnUnchooseClothes += value;
         remove => _model.OnUnchooseClothes -= value;
+    }
+
+    public event Action OnCanBuy
+    {
+        add => _model.OnCanBuy += value;
+        remove => _model.OnCanBuy -= value;
+    }
+
+    public event Action OnCannotBuy
+    {
+        add => _model.OnCannotBuy += value;
+        remove => _model.OnCannotBuy -= value;
+    }
+
+    public event Action OnBuy
+    {
+        add => _model.OnBuy += value;
+        remove => _model.OnBuy -= value;
+    }
+
+    public event Action OnCancelBuy
+    {
+        add => _model.OnCancelBuy += value;
+        remove => _model.OnCancelBuy -= value;
     }
 
     #endregion
@@ -85,4 +119,9 @@ public interface IShopClothesEventsProvider
 {
     public event Action<Clothes> OnChooseClothes;
     public event Action<Clothes> OnUnchooseClothes;
+
+    public event Action OnCanBuy;
+    public event Action OnCannotBuy;
+    public event Action OnBuy;
+    public event Action OnCancelBuy;
 }
