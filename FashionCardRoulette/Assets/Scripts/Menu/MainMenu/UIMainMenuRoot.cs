@@ -7,6 +7,7 @@ public class UIMainMenuRoot : UIRoot
     [SerializeField] private MainPanel_Menu mainPanel;
     [SerializeField] private CoinsPanel_Menu coinsPanel;
     [SerializeField] private LeaderboardPanel_Menu leaderboardPanel;
+    [SerializeField] private WardrobePanel_Menu wardrobePanel;
 
     [Header("Registration")]
     [SerializeField] private NicknamePanel_Menu nicknamePanel;
@@ -26,6 +27,7 @@ public class UIMainMenuRoot : UIRoot
         mainPanel.Initialize();
         coinsPanel.Initialize();
         leaderboardPanel.Initialize();
+        wardrobePanel.Initialize();
 
         nicknamePanel.Initialize();
         registrationPanel.Initialize();
@@ -40,6 +42,8 @@ public class UIMainMenuRoot : UIRoot
 
         mainPanel.OnClickToLeaderboard += HandleClickToLeaderboard_Main;
         mainPanel.OnClickToPlay += HandleClickToPlay_Main;
+
+        wardrobePanel.OnClickToBack += HandleClickToBack_Wardrobe;
     }
 
 
@@ -52,6 +56,8 @@ public class UIMainMenuRoot : UIRoot
         mainPanel.OnClickToLeaderboard -= HandleClickToLeaderboard_Main;
         mainPanel.OnClickToPlay -= HandleClickToPlay_Main;
 
+        wardrobePanel.OnClickToBack -= HandleClickToBack_Wardrobe;
+
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
 
@@ -62,6 +68,7 @@ public class UIMainMenuRoot : UIRoot
         CloseMainPanel();
         CloseNicknamePanel();
         CloseRegistrationPanel();
+        CloseWardrobePanel();
     }
 
     public void Dispose()
@@ -70,6 +77,7 @@ public class UIMainMenuRoot : UIRoot
         mainPanel.Dispose();
         coinsPanel.Dispose();
         leaderboardPanel.Dispose();
+        wardrobePanel.Dispose();
 
         nicknamePanel.Dispose();
         registrationPanel.Dispose();
@@ -188,6 +196,24 @@ public class UIMainMenuRoot : UIRoot
         CloseOtherPanel(introPanel);
     }
 
+
+
+
+
+    public void OpenWardrobePanel()
+    {
+        if(wardrobePanel.IsActive) return;
+
+        OpenOtherPanel(wardrobePanel);
+    }
+
+    public void CloseWardrobePanel()
+    {
+        if(!wardrobePanel.IsActive) return;
+
+        CloseOtherPanel(wardrobePanel);
+    }
+
     #endregion
 
 
@@ -234,6 +260,19 @@ public class UIMainMenuRoot : UIRoot
         _soundProvider.PlayOneShot("Click");
 
         OnClickToBack_Leaderboard?.Invoke();
+    }
+
+    #endregion
+
+    #region WardrobePanel
+
+    public event Action OnClickToBack_Wardrobe;
+
+    private void HandleClickToBack_Wardrobe()
+    {
+        _soundProvider.PlayOneShot("Click");
+
+        OnClickToBack_Wardrobe?.Invoke();
     }
 
     #endregion
