@@ -16,4 +16,4 @@ MonoBehaviour:
   id: 3
   description: 
   sprite: {fileID: 21300000, guid: 6a282dee99b1ba1488a9c8b3c232e8a5, type: 3}
-  price: 1
+  price: 500

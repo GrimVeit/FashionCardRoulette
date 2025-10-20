@@ -74,6 +74,8 @@ public class WardrobeClothesVisualModel
 
         _currentSelectClothes = null;
         OnDeactivateSubmit?.Invoke();
+
+        OnSubmitSelect?.Invoke();
     }
 
     #region Input
@@ -114,4 +116,6 @@ public class WardrobeClothesVisualModel
 
     public event Action OnActivateSubmit;
     public event Action OnDeactivateSubmit;
+
+    public event Action OnSubmitSelect;
 }

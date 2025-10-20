@@ -12,7 +12,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
     public StateMachine_Game
         (UIGameRoot sceneRoot,
         IStoreClothesEventsProvider storeClothesEventsProvider,
-        IShopClothesEventsProvider shopClothesEventsProvider)
+        IShopClothesEventsProvider shopClothesEventsProvider,
+        IWardrobeClothesEventsProvider wardrobeClothesEventsProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
@@ -27,7 +28,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         states[typeof(PaycheckState_Game)] = new PaycheckState_Game(this, sceneRoot, shopClothesEventsProvider);
 
         states[typeof(WardrobeTypeState_Game)] = new WardrobeTypeState_Game(this, sceneRoot, storeClothesEventsProvider);
-        states[typeof(WardrobeState_Game)] = new WardrobeState_Game(this, sceneRoot);
+        states[typeof(WardrobeState_Game)] = new WardrobeState_Game(this, sceneRoot, wardrobeClothesEventsProvider);
+        states[typeof(WardrobeFitClothesState_Game)] = new WardrobeFitClothesState_Game(this, sceneRoot);
     }
 
     public void Initialize()

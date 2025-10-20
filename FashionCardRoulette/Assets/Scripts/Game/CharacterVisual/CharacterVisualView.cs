@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class CharacterVisualView : View
 {
     [SerializeField] private CharacterVisuals visuals;
-    [SerializeField] private Transform transformCharacter;
-    [SerializeField] private Image imageCharacter;
+    [SerializeField] private List<Transform> transformsCharacter;
+    [SerializeField] private List<Image> imagesCharacter;
 
     private CharacterVisual _currentCharacterVisual;
 
@@ -22,9 +22,20 @@ public class CharacterVisualView : View
             return;
         }
 
-        transformCharacter.localPosition = _currentCharacterVisual.Position;
-        transformCharacter.localScale = _currentCharacterVisual.Scale;
-        imageCharacter.sprite = _currentCharacterVisual.Sprite;
+        for (int i = 0; i < transformsCharacter.Count; i++)
+        {
+            transformsCharacter[i].localPosition = _currentCharacterVisual.Position;
+            transformsCharacter[i].localScale = _currentCharacterVisual.Scale;
+        }
+
+        //transformCharacter.localPosition = _currentCharacterVisual.Position;
+        //transformCharacter.localScale = _currentCharacterVisual.Scale;
+
+        for (int i = 0; i < imagesCharacter.Count; i++)
+        {
+            imagesCharacter[i].sprite = _currentCharacterVisual.Sprite;
+        }
+        //imageCharacter.sprite = _currentCharacterVisual.Sprite;
     }
 }
 

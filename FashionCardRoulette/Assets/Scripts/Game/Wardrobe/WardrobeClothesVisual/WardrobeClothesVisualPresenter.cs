@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WardrobeClothesVisualPresenter
+public class WardrobeClothesVisualPresenter : IWardrobeClothesEventsProvider
 {
     private readonly WardrobeClothesVisualModel _model;
     private readonly WardrobeClothesVisualView _view;
@@ -62,4 +63,19 @@ public class WardrobeClothesVisualPresenter
         _model.OnActivateSubmit -= _view.ActivateSubmit;
         _model.OnDeactivateSubmit -= _view.DeactivateSubmit;
     }
+
+    #region Output
+
+    public event Action OnSubmitSelect
+    {
+        add => _model.OnSubmitSelect += value;
+        remove => _model.OnSubmitSelect -= value;
+    }
+
+    #endregion
+}
+
+public interface IWardrobeClothesEventsProvider
+{
+    public event Action OnSubmitSelect;
 }

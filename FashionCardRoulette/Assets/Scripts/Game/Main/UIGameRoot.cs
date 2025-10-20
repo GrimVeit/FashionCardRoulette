@@ -24,6 +24,7 @@ public class UIGameRoot : UIRoot
 
     [SerializeField] private WardrobeTypePanel_Game wardrobeTypePanel;
     [SerializeField] private WardrobePanel_Game wardrobePanel;
+    [SerializeField] private WardrobeFitClothesPanel_Game wardrobeFitClothesPanel;
 
     private ISoundProvider _soundProvider;
 
@@ -50,6 +51,7 @@ public class UIGameRoot : UIRoot
 
         wardrobeTypePanel.Initialize();
         wardrobePanel.Initialize();
+        wardrobeFitClothesPanel.Initialize();
     }
 
     public void Activate()
@@ -111,6 +113,7 @@ public class UIGameRoot : UIRoot
 
         CloseWardrobeTypePanel();
         CloseWardrobePanel();
+        CloseWardrobeFitClothesPanel();
     }
 
     public void Dispose()
@@ -131,6 +134,7 @@ public class UIGameRoot : UIRoot
 
         wardrobeTypePanel.Dispose();
         wardrobePanel.Dispose();
+        wardrobeFitClothesPanel.Dispose();
     }
 
     #region Input
@@ -352,6 +356,25 @@ public class UIGameRoot : UIRoot
         if(!wardrobePanel.IsActive) return;
 
         CloseOtherPanel(wardrobePanel);
+    }
+
+
+
+
+
+
+    public void OpenWardrobeFitClothesPanel()
+    {
+        if (wardrobeFitClothesPanel.IsActive) return;
+
+        OpenOtherPanel(wardrobeFitClothesPanel);
+    }
+
+    public void CloseWardrobeFitClothesPanel()
+    {
+        if(!wardrobeFitClothesPanel.IsActive) return;
+
+        CloseOtherPanel(wardrobeFitClothesPanel);
     }
 
     #endregion

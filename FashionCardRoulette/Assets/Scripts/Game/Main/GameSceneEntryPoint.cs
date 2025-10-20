@@ -34,6 +34,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private ChooseWardrobeClothesPresenter chooseWardrobeClothesPresenter;
     private WardrobeClothesVisualPresenter wardrobeClothesVisualPresenter;
+    private WardrobeFitClothesPresenter wardrobeFitClothesPresenter;
 
     private ClothesVisualPresenter clothesVisualPresenter;
 
@@ -72,10 +73,11 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseWardrobeClothesPresenter = new ChooseWardrobeClothesPresenter(new ChooseWardrobeClothesModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ChooseWardrobeClothesView>());
         wardrobeClothesVisualPresenter = new WardrobeClothesVisualPresenter(new WardrobeClothesVisualModel(storeClothesPresenter, storeClothesPresenter), viewContainer.GetView<WardrobeClothesVisualView>());
+        wardrobeFitClothesPresenter = new WardrobeFitClothesPresenter(new WardrobeFitClothesModel(storeClothesPresenter), viewContainer.GetView<WardrobeFitClothesView>());
 
         clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
 
-        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter, shopClothesPresenter);
+        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter, shopClothesPresenter, wardrobeClothesVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -103,6 +105,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseWardrobeClothesPresenter.Initialize();
         wardrobeClothesVisualPresenter.Initialize();
+        wardrobeFitClothesPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -158,6 +161,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseWardrobeClothesPresenter?.Dispose();
         wardrobeClothesVisualPresenter?.Dispose();
+        wardrobeFitClothesPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

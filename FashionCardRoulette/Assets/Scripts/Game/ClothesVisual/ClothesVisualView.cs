@@ -20,6 +20,8 @@ public class ClothesVisualView : View
             return;
         }
 
+        Debug.Log(clothes.ClothesType + "//" + clothes.Id);
+
         visual.SetData(clothesCharactersGroups.GetSprite(clothes.ClothesType, clothes.Id));
     }
 
@@ -46,6 +48,7 @@ public class ClothesVisualView : View
 public class ClothesVisual
 {
     public ClothesType Type => type;
+    public List<Image> Images => images;
 
     [SerializeField] private ClothesType type;
     [SerializeField] private List<Image> images;
