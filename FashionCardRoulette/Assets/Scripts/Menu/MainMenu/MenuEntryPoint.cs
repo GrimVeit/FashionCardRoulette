@@ -10,6 +10,7 @@ using UnityEngine;
 public class MenuEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private ClothesAllGroup clothesAllGroup;
     [SerializeField] private UIMainMenuRoot menuRootPrefab;
 
     private UIMainMenuRoot sceneRoot;
@@ -23,6 +24,9 @@ public class MenuEntryPoint : MonoBehaviour
     private FirebaseAuthenticationPresenter firebaseAuthenticationPresenter;
     private FirebaseDatabasePresenter firebaseDatabasePresenter;
     private LeaderboardPresenter leaderboardPresenter;
+
+    private StoreClothesPresenter storeClothesPresenter;
+    private WardrobeAllClothesPresenter wardrobeAllClothesPresenter;
 
     private StateMachine_Menu stateMachine;
 
@@ -61,6 +65,9 @@ public class MenuEntryPoint : MonoBehaviour
                 firebaseDatabasePresenter = new FirebaseDatabasePresenter(new FirebaseDatabaseModel(firebaseAuth, databaseReference, bankPresenter));
                 leaderboardPresenter = new LeaderboardPresenter(new LeaderboardModel(firebaseDatabasePresenter), viewContainer.GetView<LeaderboardView>());
 
+                storeClothesPresenter = new StoreClothesPresenter(new StoreClothesModel(clothesAllGroup));
+                wardrobeAllClothesPresenter = new WardrobeAllClothesPresenter(new WardrobeAllClothesModel(storeClothesPresenter), viewContainer.GetView<WardrobeAllClothesView>());
+
                 stateMachine = new StateMachine_Menu
                 (sceneRoot,
                 nicknamePresenter,
@@ -80,6 +87,9 @@ public class MenuEntryPoint : MonoBehaviour
                 leaderboardPresenter.Initialize();
                 firebaseAuthenticationPresenter.Initialize();
                 firebaseDatabasePresenter.Initialize();
+
+                wardrobeAllClothesPresenter.Initialize();
+                storeClothesPresenter.Initialize();
 
                 stateMachine.Initialize();
             }
@@ -104,12 +114,12 @@ public class MenuEntryPoint : MonoBehaviour
 
     private void ActivateTransitions()
     {
-        sceneRoot.OnClickToPlay += HandleClickToGame;
+        sceneRoot.OnClickToPlay_Main += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
-        sceneRoot.OnClickToPlay -= HandleClickToGame;
+        sceneRoot.OnClickToPlay_Main -= HandleClickToGame;
     }
 
     private void Deactivate()
@@ -131,6 +141,9 @@ public class MenuEntryPoint : MonoBehaviour
         leaderboardPresenter?.Dispose();
         firebaseAuthenticationPresenter?.Dispose();
         firebaseDatabasePresenter?.Dispose();
+
+        wardrobeAllClothesPresenter?.Dispose();
+        storeClothesPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

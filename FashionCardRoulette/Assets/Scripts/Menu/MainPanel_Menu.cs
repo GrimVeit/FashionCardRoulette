@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MainPanel_Menu : MovePanel
 {
     [SerializeField] private Button buttonLeaderboard;
+    [SerializeField] private Button buttonWardrobe;
     [SerializeField] private Button buttonPlay;
 
     [SerializeField] private List<UIEffectCombination> uIEffectCombinations = new List<UIEffectCombination>();
@@ -16,6 +17,7 @@ public class MainPanel_Menu : MovePanel
         base.Initialize();
 
         buttonLeaderboard.onClick.AddListener(() => OnClickToLeaderboard?.Invoke());
+        buttonWardrobe.onClick.AddListener(() => OnClickToWardrobe?.Invoke());
         buttonPlay.onClick.AddListener(() => OnClickToPlay?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Initialize());
@@ -26,6 +28,7 @@ public class MainPanel_Menu : MovePanel
         base.Dispose();
 
         buttonLeaderboard.onClick.RemoveListener(() => OnClickToLeaderboard?.Invoke());
+        buttonWardrobe.onClick.RemoveListener(() => OnClickToWardrobe?.Invoke());
         buttonPlay.onClick.RemoveListener(() => OnClickToPlay?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Dispose());
@@ -48,6 +51,7 @@ public class MainPanel_Menu : MovePanel
     #region Output
 
     public event Action OnClickToLeaderboard;
+    public event Action OnClickToWardrobe;
     public event Action OnClickToPlay;
 
     #endregion

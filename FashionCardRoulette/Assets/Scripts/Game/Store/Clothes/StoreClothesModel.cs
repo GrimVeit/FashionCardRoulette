@@ -85,6 +85,11 @@ public class StoreClothesModel
                 {
                     OnSelectClothes?.Invoke(_clothesAllGroup.Groups[i].Clothes[j]);
                 }
+
+                if (clothesGroupDatas[i].Datas[j].IsOpen)
+                {
+                    OnChooseOpenClothes?.Invoke(_clothesAllGroup.Groups[i].Clothes[j]);
+                }
             }
         }
     }

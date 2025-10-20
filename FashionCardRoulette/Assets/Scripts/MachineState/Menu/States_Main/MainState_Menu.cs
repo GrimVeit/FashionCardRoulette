@@ -17,7 +17,8 @@ public class MainState_Menu : IState
     {
         Debug.Log("<color=red>ACTIVATE STATE - MAIN STATE / MENU</color>");
 
-        _sceneRoot.OnClickToLeaderboard += ChangeStateToLeaderboard;
+        _sceneRoot.OnClickToLeaderboard_Main += ChangeStateToLeaderboard;
+        _sceneRoot.OnClickToWardrobe_Main += ChangeStateToWardrobe;
 
         _sceneRoot.OpenMainPanel();
         _sceneRoot.OpenCoinsPanel();
@@ -25,7 +26,8 @@ public class MainState_Menu : IState
 
     public void ExitState()
     {
-        _sceneRoot.OnClickToLeaderboard -= ChangeStateToLeaderboard;
+        _sceneRoot.OnClickToLeaderboard_Main -= ChangeStateToLeaderboard;
+        _sceneRoot.OnClickToWardrobe_Main -= ChangeStateToWardrobe;
 
         _sceneRoot.CloseMainPanel();
     }
@@ -33,5 +35,10 @@ public class MainState_Menu : IState
     private void ChangeStateToLeaderboard()
     {
         _machineProvider.SetState(_machineProvider.GetState<LeaderboardState_Menu>());
+    }
+
+    private void ChangeStateToWardrobe()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<WardrobeState_Menu>());
     }
 }

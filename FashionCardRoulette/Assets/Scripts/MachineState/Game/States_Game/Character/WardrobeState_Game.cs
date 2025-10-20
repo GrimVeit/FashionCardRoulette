@@ -17,6 +17,8 @@ public class WardrobeState_Game : IState
 
     public void EnterState()
     {
+        //Debug.Log("<color=red>ACTIVATE STATE - LEADERBOARD STATE / MENU</color>");
+
         _wardrobeClothesEventsProvide.OnSubmitSelect += ChangeStateToWardrobeFitState;
         _sceneRoot.OnClickToBack_Wardrobe += ChangeStateToWardrobeType;
 
