@@ -20,6 +20,7 @@ public class MainState_Game : IState
         _sceneRoot.OpenMainPanel();
         _sceneRoot.OpenCoinsPanel();
         _sceneRoot.OpenExitPanel();
+        _sceneRoot.OpenTasksPanel();
     }
 
     public void ExitState()
@@ -28,6 +29,7 @@ public class MainState_Game : IState
 
         _sceneRoot.CloseMainPanel();
         _sceneRoot.CloseExitPanel();
+        _sceneRoot.CloseTasksPanel();
     }
 
     private void ChangeStateToShopWardrobe()

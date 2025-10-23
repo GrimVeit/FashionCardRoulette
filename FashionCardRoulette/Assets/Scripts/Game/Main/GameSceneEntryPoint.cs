@@ -38,6 +38,10 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private ClothesVisualPresenter clothesVisualPresenter;
 
+
+
+    private TaskVisualPresenter taskVisualPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -77,6 +81,10 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
 
+
+
+        taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(), viewContainer.GetView<TaskVisualView>());
+
         stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter, shopClothesPresenter, wardrobeClothesVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
@@ -106,6 +114,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseWardrobeClothesPresenter.Initialize();
         wardrobeClothesVisualPresenter.Initialize();
         wardrobeFitClothesPresenter.Initialize();
+
+
+        taskVisualPresenter.Initialize();
+        taskVisualPresenter.ResetTasks();
 
         stateMachine.Initialize();
     }
