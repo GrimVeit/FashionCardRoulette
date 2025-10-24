@@ -40,7 +40,8 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ClothesVisualPresenter clothesVisualPresenter;
 
 
-
+    private ChooseNumberPresenter chooseNumberPresenter;
+    private TaskConditionStoragePresenter taskConditionStoragePresenter;
     private TaskVisualPresenter taskVisualPresenter;
 
     private StateMachine_Game stateMachine;
@@ -83,10 +84,20 @@ public class GameSceneEntryPoint : MonoBehaviour
         clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
 
 
+        chooseNumberPresenter = new ChooseNumberPresenter(new ChooseNumberModel(), viewContainer.GetView<ChooseNumberView>());
+        taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
+        taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
 
-        taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(), viewContainer.GetView<TaskVisualView>());
-
-        stateMachine = new StateMachine_Game(sceneRoot, storeClothesPresenter, shopClothesPresenter, wardrobeClothesVisualPresenter);
+        stateMachine = new StateMachine_Game
+            (sceneRoot, 
+            storeClothesPresenter, 
+            shopClothesPresenter, 
+            wardrobeClothesVisualPresenter,
+            numberValues,
+            chooseNumberPresenter,
+            chooseNumberPresenter,
+            taskVisualPresenter,
+            taskVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -117,8 +128,11 @@ public class GameSceneEntryPoint : MonoBehaviour
         wardrobeFitClothesPresenter.Initialize();
 
 
+
+        chooseNumberPresenter.Initialize();
+        taskConditionStoragePresenter.Initialize();
         taskVisualPresenter.Initialize();
-        taskVisualPresenter.ResetTasks();
+        taskVisualPresenter.SetRandomTasks();
 
         stateMachine.Initialize();
     }
@@ -175,6 +189,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseWardrobeClothesPresenter?.Dispose();
         wardrobeClothesVisualPresenter?.Dispose();
         wardrobeFitClothesPresenter?.Dispose();
+
+        chooseNumberPresenter?.Dispose();
+        taskConditionStoragePresenter?.Dispose();
+        taskVisualPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

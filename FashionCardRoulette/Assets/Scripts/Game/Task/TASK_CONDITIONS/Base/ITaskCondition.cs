@@ -5,6 +5,7 @@ using UnityEngine;
 
 public interface ITaskCondition
 {
+    public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
 

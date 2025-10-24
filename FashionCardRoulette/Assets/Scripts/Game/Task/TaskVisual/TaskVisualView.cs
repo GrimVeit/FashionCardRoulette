@@ -1,43 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TaskVisualView : View
 {
     [SerializeField] private TaskVisual taskVisualPrefab;
 
     [SerializeField] private TaskPositions taskPositions;
-    [SerializeField] private TaskDatas taskDatas;
     [SerializeField] private TaskSprites taskSprites;
     [SerializeField] private TaskNumberColors taskNumberColors;
 
-    private List<TaskVisual> taskVisuals = new();
+    private readonly List<TaskVisual> taskVisuals = new();
 
-    public void ResetTasks()
+    public void SetTasks(List<ITaskCondition> taskConditions)
     {
-        //if(taskVisuals.Count > 0)
-        //{
-        //    for (int i = 0; i < taskVisuals.Count; i++)
-        //    {
-        //        taskVisuals[i].Dispose();
+        if (taskVisuals.Count > 0)
+        {
+            for (int i = 0; i < taskVisuals.Count; i++)
+            {
+                taskVisuals[i].OnChooseCell -= ChooseCell;
+                taskVisuals[i].Dispose();
 
-        //        Destroy(taskVisuals[i].gameObject);
-        //    }
+                Destroy(taskVisuals[i].gameObject);
+            }
 
-        //    taskVisuals.Clear();
-        //}
+            taskVisuals.Clear();
+        }
 
-        //for (int i = 0; i < taskTypes.Count; i++)
-        //{
-        //    var parent = taskPositions.GetTransformParent(taskTypes[i]);
+        for (int i = 0; i < taskConditions.Count; i++)
+        {
+            var parent = taskPositions.GetTransformParent(i);
 
-        //    var visual = Instantiate(taskVisualPrefab, parent.transform);
-        //    visual.SetData(taskSprites.GetRandomTaskSprite(taskTypes[i]), taskDatas.GetRandomTaskData(taskTypes[i]).TextTask, taskTypes[i]);
+            var visual = Instantiate(taskVisualPrefab, parent.transform);
+            visual.SetData(taskSprites.GetRandomTaskSprite(taskConditions[i].TaskType), taskConditions[i]);
 
-        //    visual.Initialize();
-        //}
+            visual.OnChooseCell += ChooseCell;
+            visual.Initialize(i);
+
+            taskVisuals.Add(visual);
+        }
     }
 
     public void ActivateCells()
@@ -50,18 +55,29 @@ public class TaskVisualView : View
         taskVisuals.ForEach(data => data.DeactivateCells());
     }
 
-    public void SetNumberValue(TaskType type, int id, NumberValue numberValue)
+    public void SetNumberValue(int taskId, int cellId, NumberValue numberValue)
     {
-        var visual = taskVisuals.FirstOrDefault(data => data.Type == type);
+        var visual = taskVisuals.FirstOrDefault(data => data.Id == taskId);
 
         if(visual == null)
         {
-            Debug.LogError("Not found TaskVisual with type - " + type);
+            Debug.LogError("Not found TaskVisual with id - " + taskId);
             return;
         }
 
-        visual.SetNumberValue(id, numberValue, taskNumberColors.GetTextColorNumber(numberValue.Color));
+        visual.SetNumberValue(cellId, numberValue, taskNumberColors.GetTextColorNumber(numberValue.Color));
     }
+
+    #region Output
+
+    public event Action<int, int> OnChooseCell;
+
+    private void ChooseCell(int taskId, int cellId)
+    {
+        OnChooseCell?.Invoke(taskId, cellId);
+    }
+
+    #endregion
 }
 
 public enum TaskType
@@ -106,58 +122,20 @@ public class TaskPositions
 {
     [SerializeField] private List<TaskPosition> taskPositions = new();
     
-    public Transform GetTransformParent(TaskType type)
+    public Transform GetTransformParent(int id)
     {
-        return taskPositions.FirstOrDefault(data => data.Type == type).Parent;
+        return taskPositions.FirstOrDefault(data => data.ID == id).Parent;
     }
 }
 
 [System.Serializable]
 public class TaskPosition
 {
-    [SerializeField] private TaskType taskType;
+    [SerializeField] private int id;
     [SerializeField] private Transform transformParent;
 
-    public TaskType Type => taskType;
+    public int ID => id;
     public Transform Parent => transformParent;
-}
-
-#endregion
-
-#region Task Data
-
-[System.Serializable]
-public class TaskDatas
-{
-    [SerializeField] private List<TaskDatasGroup> groups = new();
-
-    public TaskData GetRandomTaskData(TaskType taskType)
-    {
-        return groups.FirstOrDefault(data => data.TaskType == taskType).GetRandomTaskData();
-    }
-}
-
-[System.Serializable]
-public class TaskDatasGroup
-{
-    [SerializeField] private TaskType taskType;
-
-    [SerializeField] private List<TaskData> tasks;
-
-    public TaskData GetRandomTaskData()
-    {
-        return tasks[Random.Range(0, tasks.Count)];
-    }
-
-    public TaskType TaskType => taskType;
-}
-
-[System.Serializable]
-public class TaskData
-{
-    [SerializeField] private string textTask;
-
-    public string TextTask => textTask;
 }
 
 #endregion

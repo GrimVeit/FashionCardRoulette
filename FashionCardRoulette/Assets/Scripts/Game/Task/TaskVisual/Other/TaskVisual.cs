@@ -8,16 +8,20 @@ using UnityEngine.UI;
 
 public class TaskVisual : MonoBehaviour
 {
-    public TaskType Type => _taskType;
+    public TaskType Type => _taskCondition.TaskType;
+    public int Id => _id;
 
     [SerializeField] private List<Image> imagesStown = new();
     [SerializeField] private TextMeshProUGUI textTask;
     [SerializeField] private List<TaskVisualCell> cells = new();
 
-    private TaskType _taskType;
+    private ITaskCondition _taskCondition = null;
+    private int _id;
 
-    public void Initialize()
+    public void Initialize(int id)
     {
+        _id = id;
+
         cells.ForEach(data => data.OnChoose += ChooseCell);
     }
 
@@ -26,13 +30,13 @@ public class TaskVisual : MonoBehaviour
 
     }
 
-    public void SetData(Sprite spriteStown, string task, TaskType taskType)
+    public void SetData(Sprite spriteStown, ITaskCondition taskCondition)
     {
-        _taskType = taskType;
+        _taskCondition = taskCondition;
 
         imagesStown.ForEach(data => data.sprite = spriteStown);
 
-        textTask.text = task;
+        textTask.text = _taskCondition.TaskName;
     }
 
     public void SetNumberValue(int cell, NumberValue numberValue, Color colorText)
@@ -47,16 +51,16 @@ public class TaskVisual : MonoBehaviour
 
     public void DeactivateCells()
     {
-        cells.ForEach(data => data.Activate());
+        cells.ForEach(data => data.Deactivate());
     }
 
     #region Output
 
-    public event Action<TaskType, int> OnChooseCell;
+    public event Action<int, int> OnChooseCell;
 
     private void ChooseCell(int index)
     {
-        OnChooseCell?.Invoke(_taskType, index);
+        OnChooseCell?.Invoke(_id, index);
     }
 
     #endregion

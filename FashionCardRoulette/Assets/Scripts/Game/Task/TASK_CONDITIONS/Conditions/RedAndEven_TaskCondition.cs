@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SameNumber_TaskCondition : ITaskCondition
+public class RedAndEven_TaskCondition : ITaskCondition
 {
     public string TaskName { get; }
     public TaskType TaskType { get; }
@@ -14,23 +14,23 @@ public class SameNumber_TaskCondition : ITaskCondition
 
     public event Action<List<NumberValue>> OnTaskConditionMet;
 
-    public SameNumber_TaskCondition(TaskType taskType, int id, int requiredCount)
+    public RedAndEven_TaskCondition(TaskType taskType, int id, int requiredCount)
     {
         TaskType = taskType;
         ID = id;
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} numbers of the same value";
+        TaskName = $"red and even number";
     }
 
     public bool IsMet(List<NumberValue> numberValues)
     {
-        var group = numberValues.GroupBy(n => n.Number).FirstOrDefault(g => g.Count() >= _requiredCount);
+        var matchedNumbers = numberValues.Where(n => n.Color == ColorNumber.Red && n.Number % 2 == 0).ToList();
 
-        if(group != null)
+        if(matchedNumbers.Count >= _requiredCount)
         {
-            OnTaskConditionMet?.Invoke(group.Take(_requiredCount).ToList());
+            OnTaskConditionMet?.Invoke(matchedNumbers.Take(_requiredCount).ToList());
             return true;
         }
 

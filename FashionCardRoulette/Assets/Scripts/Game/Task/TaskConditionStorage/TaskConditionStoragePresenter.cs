@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaskConditionStoragePresenter : MonoBehaviour
+public class TaskConditionStoragePresenter : ITaskConditionStorageProvider
 {
-    // Start is called before the first frame update
-    void Start()
+    private readonly TaskConditionStorageModel _model;
+
+    public TaskConditionStoragePresenter(TaskConditionStorageModel model)
     {
-        
+        _model = model;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize()
     {
-        
+
     }
+
+    public void Dispose()
+    {
+
+    }
+
+    public ITaskCondition GetTaskConditionByTaskType(TaskType taskType)
+    {
+        return _model.GetTaskConditionByTaskType(taskType);
+    }
+}
+
+public interface ITaskConditionStorageProvider
+{
+    public ITaskCondition GetTaskConditionByTaskType(TaskType taskType);
 }

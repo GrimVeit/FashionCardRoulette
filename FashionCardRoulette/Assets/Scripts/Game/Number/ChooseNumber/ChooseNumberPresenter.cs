@@ -42,6 +42,12 @@ public class ChooseNumberPresenter : IChooseNumberProvider, IChooseNumberEventsP
         remove => _model.OnSetNumber -= value;
     }
 
+    public event Action<NumberValue> OnSetNumber_Value
+    {
+        add => _model.OnSetNumber_Value += value;
+        remove => _model.OnSetNumber_Value -= value;
+    }
+
     #endregion
 
     #region Input
@@ -61,5 +67,6 @@ public interface IChooseNumberProvider
 
 public interface IChooseNumberEventsProvider
 {
+    public event Action<NumberValue> OnSetNumber_Value;
     public event Action OnSetNumber;
 }

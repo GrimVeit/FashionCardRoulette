@@ -13,12 +13,22 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         (UIGameRoot sceneRoot,
         IStoreClothesEventsProvider storeClothesEventsProvider,
         IShopClothesEventsProvider shopClothesEventsProvider,
-        IWardrobeClothesEventsProvider wardrobeClothesEventsProvider)
+        IWardrobeClothesEventsProvider wardrobeClothesEventsProvider, 
+        NumberValues numberValues,
+        IChooseNumberEventsProvider chooseNumberEventsProvider,
+        IChooseNumberProvider chooseNumberProvider,
+        ITaskVisualEventsProvider taskVisualEventsProvider,
+        ITaskVisualProvider taskVisualProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
-        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot);
+        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, numberValues, chooseNumberEventsProvider, chooseNumberProvider);
+        states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
+
+
+
+
 
         states[typeof(ShopWardrobeState_Game)] = new ShopWardrobeState_Game(this, sceneRoot);
 

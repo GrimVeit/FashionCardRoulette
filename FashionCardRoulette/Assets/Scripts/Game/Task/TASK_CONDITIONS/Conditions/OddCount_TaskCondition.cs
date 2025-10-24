@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SameNumber_TaskCondition : ITaskCondition
+public class OddCount_TaskCondition : ITaskCondition
 {
     public string TaskName { get; }
     public TaskType TaskType { get; }
@@ -14,23 +14,23 @@ public class SameNumber_TaskCondition : ITaskCondition
 
     public event Action<List<NumberValue>> OnTaskConditionMet;
 
-    public SameNumber_TaskCondition(TaskType taskType, int id, int requiredCount)
+    public OddCount_TaskCondition(TaskType taskType, int id, int requiredCount)
     {
         TaskType = taskType;
         ID = id;
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} numbers of the same value";
+        TaskName = $"{_requiredCount} odd numbers";
     }
 
     public bool IsMet(List<NumberValue> numberValues)
     {
-        var group = numberValues.GroupBy(n => n.Number).FirstOrDefault(g => g.Count() >= _requiredCount);
+        var evenNumbers = numberValues.Where(n => n.Number % 2 != 0).ToArray();
 
-        if(group != null)
+        if (evenNumbers.Length >= _requiredCount)
         {
-            OnTaskConditionMet?.Invoke(group.Take(_requiredCount).ToList());
+            OnTaskConditionMet?.Invoke(evenNumbers.Take(_requiredCount).ToList());
             return true;
         }
 

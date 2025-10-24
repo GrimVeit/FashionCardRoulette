@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SameColor_TaskCondition : ITaskCondition
 {
+    public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
 
@@ -19,11 +20,14 @@ public class SameColor_TaskCondition : ITaskCondition
         ID = id;
 
         _requiredCount = requiredCount;
+
+        TaskName = $"{_requiredCount} numbers of the same color";
     }
 
     public bool IsMet(List<NumberValue> numberValues)
     {
-        var group = numberValues.GroupBy(n => n.Color).FirstOrDefault(g => g.Count() >= _requiredCount);
+        var group = numberValues.GroupBy(n => n.Color)
+            .FirstOrDefault(g => g.Count() >= _requiredCount);
 
         if (group != null)
         {

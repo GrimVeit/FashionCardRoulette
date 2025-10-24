@@ -18,6 +18,8 @@ public class ChooseNumberView : View
     }
 }
 
+
+[System.Serializable]
 public class NumberColorSprites
 {
     [SerializeField] private List<NumberColorSprite> numberColorSprites = new();
@@ -28,6 +30,8 @@ public class NumberColorSprites
     }
 }
 
+
+[System.Serializable]
 public class NumberColorSprite
 {
     [SerializeField] private ColorNumber colorNumber;

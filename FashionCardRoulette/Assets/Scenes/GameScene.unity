@@ -3097,7 +3097,7 @@ GameObject:
   - component: {fileID: 201144997}
   - component: {fileID: 201144996}
   m_Layer: 5
-  m_Name: Color
+  m_Name: COLOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5696,7 +5696,7 @@ GameObject:
   - component: {fileID: 467791794}
   - component: {fileID: 467791793}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NUMBER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5741,7 +5741,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 31
+  m_text: ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 82eedf3d19641f749953393a7367d437, type: 2}
   m_sharedMaterial: {fileID: 6488032421701608735, guid: 82eedf3d19641f749953393a7367d437, type: 2}
@@ -11689,7 +11689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: {fileID: 2077423529}
-  numberValues: {fileID: 0}
+  numberValues: {fileID: 11400000, guid: da6acbbe5f3ed8541b5a4ae57a76a891, type: 2}
   clothesAllGroup: {fileID: 11400000, guid: e33cf852a76e3c54aaa6969645fe02df, type: 2}
   personZeroGroup: {fileID: 11400000, guid: 3b10953ab84a9d942b7a3ae744506219, type: 2}
   menuRootPrefab: {fileID: 7740716709243069829}
@@ -14988,6 +14988,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160561611}
   m_CullTransparentMesh: 1
+--- !u!1 &1171196795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1171196796}
+  - component: {fileID: 1171196797}
+  m_Layer: 5
+  m_Name: ChooseNumber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1171196796
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171196795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 426014025604183617}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1171196797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171196795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b62f9bb0074c1448c98d2604f91037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textNumber: {fileID: 467791793}
+  imageColor: {fileID: 201144996}
+  numberColorSprites:
+    numberColorSprites:
+    - colorNumber: 0
+      colorSprite: {fileID: 21300000, guid: 23e17b0563d1ac74aa3c6ba0035565db, type: 3}
+    - colorNumber: 1
+      colorSprite: {fileID: 21300000, guid: ca44fea047744f144902d7b69fd1f322, type: 3}
+    - colorNumber: 2
+      colorSprite: {fileID: 21300000, guid: ca44fea047744f144902d7b69fd1f322, type: 3}
 --- !u!1 &1174326287
 GameObject:
   m_ObjectHideFlags: 0
@@ -16215,7 +16273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1236680223
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16236,7 +16294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1236680224
@@ -16272,7 +16330,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236680222}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -23036,44 +23094,14 @@ MonoBehaviour:
   taskVisualPrefab: {fileID: 3408940129505791672, guid: 67abc02775c03d243ae811eff58a8222, type: 3}
   taskPositions:
     taskPositions:
-    - taskType: 0
+    - id: 0
       transformParent: {fileID: 1349891213}
-    - taskType: 1
+    - id: 1
       transformParent: {fileID: 562324171}
-    - taskType: 2
+    - id: 2
       transformParent: {fileID: 1778384292}
-    - taskType: 3
+    - id: 3
       transformParent: {fileID: 281521531}
-  taskDatas:
-    groups:
-    - taskType: 0
-      tasks:
-      - textTask: Easy_1
-      - textTask: Easy_2
-      - textTask: Easy_3
-      - textTask: Easy_4
-      - textTask: Easy_5
-    - taskType: 1
-      tasks:
-      - textTask: Middle_1
-      - textTask: Middle_2
-      - textTask: Middle_3
-      - textTask: Middle_4
-      - textTask: Middle_5
-    - taskType: 2
-      tasks:
-      - textTask: Hard_1
-      - textTask: Hard_2
-      - textTask: Hard_3
-      - textTask: Hard_4
-      - textTask: Hard_5
-    - taskType: 3
-      tasks:
-      - textTask: VeryHard_1
-      - textTask: VeryHard_2
-      - textTask: VeryHard_3
-      - textTask: VeryHard_4
-      - textTask: VeryHard_5
   taskSprites:
     taskSpritesGroup:
     - type: 0
@@ -23104,6 +23132,14 @@ MonoBehaviour:
       - {fileID: 21300000, guid: 296d989c7e471964c9968125274c4fc1, type: 3}
       - {fileID: 21300000, guid: 863e8c48c636e7a44b38fd0cf84a0249, type: 3}
       - {fileID: 21300000, guid: 5be60d3f1caa7af4191c9b2e911b23fa, type: 3}
+  taskNumberColors:
+    colors:
+    - colorNumber: 0
+      colorText: {r: 0.67295593, g: 0.1502511, b: 0.1502511, a: 1}
+    - colorNumber: 1
+      colorText: {r: 0, g: 0, b: 0, a: 1}
+    - colorNumber: 2
+      colorText: {r: 0.15867607, g: 0.6745098, b: 0.1490196, a: 1}
 --- !u!1 &1723012300
 GameObject:
   m_ObjectHideFlags: 0
@@ -26881,7 +26917,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2009295118
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26919,7 +26955,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009295117}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -29830,6 +29866,7 @@ RectTransform:
   - {fileID: 722515286}
   - {fileID: 572124095}
   - {fileID: 924816359}
+  - {fileID: 1171196796}
   m_Father: {fileID: 7268127844772316494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -30645,6 +30682,7 @@ MonoBehaviour:
   chooseGenderPanel: {fileID: 123047600}
   chooseCharacterPanel: {fileID: 1610640770}
   mainPanel: {fileID: 2054917486}
+  numberPanel: {fileID: 2009295121}
   tasksPanel: {fileID: 1236680225}
   coinsPanel: {fileID: 562442411}
   exitPanel: {fileID: 134994023}
