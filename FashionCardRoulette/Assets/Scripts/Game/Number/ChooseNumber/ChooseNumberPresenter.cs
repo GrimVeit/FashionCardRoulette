@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChooseNumberPresenter
+public class ChooseNumberPresenter : IChooseNumberProvider, IChooseNumberEventsProvider
 {
     private readonly ChooseNumberModel _model;
     private readonly ChooseNumberView _view;
@@ -25,16 +26,40 @@ public class ChooseNumberPresenter
 
     private void ActivateEvents()
     {
-
+        _model.OnSetNumber_Value += _view.SetNumber;
     }
 
     private void DeactivateEvents()
     {
-
+        _model.OnSetNumber_Value -= _view.SetNumber;
     }
+
+    #region Output
+
+    public event Action OnSetNumber
+    {
+        add => _model.OnSetNumber += value;
+        remove => _model.OnSetNumber -= value;
+    }
+
+    #endregion
+
+    #region Input
+
+    public void SetNumber(NumberValue numberValue)
+    {
+        _model.SetNumber(numberValue);
+    }
+
+    #endregion
 }
 
 public interface IChooseNumberProvider
 {
-    void SetNumber(int number);
+    void SetNumber(NumberValue numberValue);
+}
+
+public interface IChooseNumberEventsProvider
+{
+    public event Action OnSetNumber;
 }

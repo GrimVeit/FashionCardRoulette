@@ -65,6 +65,7 @@ public class UIGameRoot : UIRoot
 
         exitPanel.OnClickToExit += HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter += HandleClickToCharacter_Main;
+        mainPanel.OnClickToSpin += HandleClickToSpin_Main;
 
         shopWardrobePanel.OnClickToBack += HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop += HandleClickToShop_ShopWardrobe;
@@ -87,6 +88,7 @@ public class UIGameRoot : UIRoot
 
         exitPanel.OnClickToExit -= HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter -= HandleClickToCharacter_Main;
+        mainPanel.OnClickToSpin -= HandleClickToSpin_Main;
 
         shopWardrobePanel.OnClickToBack -= HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop -= HandleClickToShop_ShopWardrobe;
@@ -430,10 +432,16 @@ public class UIGameRoot : UIRoot
     //----------------------------------MAIN----------------------//
 
     public event Action OnClickToCharacter_Main;
+    public event Action OnClickToSpin_Main;
 
     private void HandleClickToCharacter_Main()
     {
         OnClickToCharacter_Main?.Invoke();
+    }
+
+    private void HandleClickToSpin_Main()
+    {
+        OnClickToSpin_Main?.Invoke();
     }
 
     //------------------------------EXIT--------------------------//

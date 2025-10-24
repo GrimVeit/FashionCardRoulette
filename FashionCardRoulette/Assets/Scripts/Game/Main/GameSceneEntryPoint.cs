@@ -9,6 +9,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private NumberValues numberValues;
     [SerializeField] private ClothesAllGroup clothesAllGroup;
     [SerializeField] private PersonZeroGroup personZeroGroup;
     [SerializeField] private UIGameRoot menuRootPrefab;

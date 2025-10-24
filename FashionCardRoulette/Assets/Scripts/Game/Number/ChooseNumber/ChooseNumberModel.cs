@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChooseNumberModel : MonoBehaviour
+public class ChooseNumberModel
 {
-    // Start is called before the first frame update
-    void Start()
+    public void SetNumber(NumberValue numberValue)
     {
-        
+        OnSetNumber_Value?.Invoke(numberValue);
+
+        OnSetNumber?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #region Output
+
+    public event Action<NumberValue> OnSetNumber_Value;
+    public event Action OnSetNumber;
+
+    #endregion
 }

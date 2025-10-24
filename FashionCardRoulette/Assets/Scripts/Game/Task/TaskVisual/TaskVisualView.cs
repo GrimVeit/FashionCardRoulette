@@ -11,29 +11,56 @@ public class TaskVisualView : View
     [SerializeField] private TaskPositions taskPositions;
     [SerializeField] private TaskDatas taskDatas;
     [SerializeField] private TaskSprites taskSprites;
+    [SerializeField] private TaskNumberColors taskNumberColors;
 
     private List<TaskVisual> taskVisuals = new();
-    private readonly List<TaskType> taskTypes = new() { TaskType.Easy, TaskType.Middle, TaskType.Hard, TaskType.VeryHard};
 
     public void ResetTasks()
     {
-        if(taskVisuals.Count > 0)
-        {
-            for (int i = 0; i < taskVisuals.Count; i++)
-            {
-                Destroy(taskVisuals[i].gameObject);
-            }
+        //if(taskVisuals.Count > 0)
+        //{
+        //    for (int i = 0; i < taskVisuals.Count; i++)
+        //    {
+        //        taskVisuals[i].Dispose();
 
-            taskVisuals.Clear();
+        //        Destroy(taskVisuals[i].gameObject);
+        //    }
+
+        //    taskVisuals.Clear();
+        //}
+
+        //for (int i = 0; i < taskTypes.Count; i++)
+        //{
+        //    var parent = taskPositions.GetTransformParent(taskTypes[i]);
+
+        //    var visual = Instantiate(taskVisualPrefab, parent.transform);
+        //    visual.SetData(taskSprites.GetRandomTaskSprite(taskTypes[i]), taskDatas.GetRandomTaskData(taskTypes[i]).TextTask, taskTypes[i]);
+
+        //    visual.Initialize();
+        //}
+    }
+
+    public void ActivateCells()
+    {
+        taskVisuals.ForEach(data => data.ActivateCells());
+    }
+
+    public void DeactivateCells()
+    {
+        taskVisuals.ForEach(data => data.DeactivateCells());
+    }
+
+    public void SetNumberValue(TaskType type, int id, NumberValue numberValue)
+    {
+        var visual = taskVisuals.FirstOrDefault(data => data.Type == type);
+
+        if(visual == null)
+        {
+            Debug.LogError("Not found TaskVisual with type - " + type);
+            return;
         }
 
-        for (int i = 0; i < taskTypes.Count; i++)
-        {
-            var parent = taskPositions.GetTransformParent(taskTypes[i]);
-
-            var visual = Instantiate(taskVisualPrefab, parent.transform);
-            visual.SetData(taskSprites.GetRandomTaskSprite(taskTypes[i]), taskDatas.GetRandomTaskData(taskTypes[i]).TextTask);
-        }
+        visual.SetNumberValue(id, numberValue, taskNumberColors.GetTextColorNumber(numberValue.Color));
     }
 }
 
@@ -42,7 +69,7 @@ public enum TaskType
     Easy, Middle, Hard, VeryHard
 }
 
-#region TaskSprite
+#region Task Sprite
 
 [System.Serializable]
 public class TaskSprites
@@ -72,7 +99,7 @@ public class TaskSpritesGroup
 
 #endregion
 
-#region TaskPosition
+#region Task Position
 
 [System.Serializable]
 public class TaskPositions
@@ -131,6 +158,32 @@ public class TaskData
     [SerializeField] private string textTask;
 
     public string TextTask => textTask;
+}
+
+#endregion
+
+#region Task Number Color
+
+[System.Serializable]
+public class TaskNumberColors
+{
+    [SerializeField] private List<TaskNumberColor> colors = new();
+
+    public Color GetTextColorNumber(ColorNumber colorNumber)
+    {
+        return colors.FirstOrDefault(data => data.ColorNumber == colorNumber).ColorText;
+    }
+
+}
+
+[System.Serializable]
+public class TaskNumberColor
+{
+    [SerializeField] private ColorNumber colorNumber;
+    [SerializeField] private Color colorText;
+
+    public ColorNumber ColorNumber => colorNumber;
+    public Color ColorText => colorText;
 }
 
 #endregion
