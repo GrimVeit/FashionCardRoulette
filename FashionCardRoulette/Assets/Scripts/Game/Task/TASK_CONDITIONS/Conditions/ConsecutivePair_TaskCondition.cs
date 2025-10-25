@@ -9,11 +9,12 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
+    public int NeedCountNumber { get; } = 5;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
+
 
     private readonly int _numberFirst;
     private readonly int _numberSecond;
-
-    public event Action<List<NumberValue>> OnTaskConditionMet;
 
     public ConsecutivePair_TaskCondition(TaskType taskType, int id, int numberFirst, int numberSecond)
     {
@@ -26,13 +27,17 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
         TaskName = $"Consecutive numbers: {_numberFirst}, {_numberSecond}";
     }
 
-    public bool IsMet(List<NumberValue> numberValues)
+    public bool IsMet(Dictionary<int, NumberValue> usedCells)
     {
-        for (int i = 0; i < numberValues.Count - 1; i++)
+        var ordered = usedCells.OrderBy(x => x.Key).ToArray();
+
+        for (int i = 0; i < ordered.Length - 1; i++)
         {
-            if (numberValues[i].Number == _numberFirst && numberValues[i + 1].Number == _numberSecond)
+            int current = ordered[i].Value.Number;
+            int next = ordered[i + 1].Value.Number;
+
+            if(next == current + 1)
             {
-                OnTaskConditionMet?.Invoke(new() { numberValues[i], numberValues[i + 1] });
                 return true;
             }
         }

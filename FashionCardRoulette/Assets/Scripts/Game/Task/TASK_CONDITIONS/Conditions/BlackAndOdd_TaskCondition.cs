@@ -9,10 +9,12 @@ public class BlackAndOdd_TaskCondition : ITaskCondition
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
+    public int NeedCountNumber { get; } = 5;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
+
 
     private readonly int _requiredCount;
 
-    public event Action<List<NumberValue>> OnTaskConditionMet;
 
     public BlackAndOdd_TaskCondition(TaskType taskType, int id, int requiredCount)
     {
@@ -21,16 +23,16 @@ public class BlackAndOdd_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"black and odd number";
+        TaskName = $"red and even number";
     }
 
-    public bool IsMet(List<NumberValue> numberValues)
+    public bool IsMet(Dictionary<int, NumberValue> usedCells)
     {
-        var matchedNumbers = numberValues.Where(n => n.Color == ColorNumber.Black && n.Number % 2 != 0).ToList();
+        var matchingCells = usedCells.Where(kv => kv.Value.Color == ColorNumber.Black && kv.Value.Number % 2 != 0);
 
-        if (matchedNumbers.Count >= _requiredCount)
+        if (matchingCells.Count() >= _requiredCount)
         {
-            OnTaskConditionMet?.Invoke(matchedNumbers.Take(_requiredCount).ToList());
+            OnTaskConditionMet_CellIndexes?.Invoke(matchingCells.Select(kv => kv.Key).Take(_requiredCount).ToList());
             return true;
         }
 

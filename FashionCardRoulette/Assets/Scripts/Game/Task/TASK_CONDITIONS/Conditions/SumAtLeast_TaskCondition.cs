@@ -9,10 +9,11 @@ public class SumAtLeast_TaskCondition : ITaskCondition
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
+    public int NeedCountNumber { get; } = 5;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
+
 
     private readonly int _targetSum;
-
-    public event Action<List<NumberValue>> OnTaskConditionMet;
 
     public SumAtLeast_TaskCondition(TaskType taskType, int id, int targetSum)
     {
@@ -24,13 +25,13 @@ public class SumAtLeast_TaskCondition : ITaskCondition
         TaskName = $"sum >= {_targetSum}";
     }
 
-    public bool IsMet(List<NumberValue> numberValues)
+    public bool IsMet(Dictionary<int, NumberValue> usedCells)
     {
-        int sum = numberValues.Sum(n => n.Number);
+        int sum = usedCells.Values.Sum(nv => nv.Number);
 
         if(sum >= _targetSum)
         {
-            OnTaskConditionMet?.Invoke(numberValues);
+            OnTaskConditionMet_CellIndexes?.Invoke(usedCells.Keys.ToList());
             return true;
         }
 

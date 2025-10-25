@@ -9,10 +9,11 @@ public class OddCount_TaskCondition : ITaskCondition
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
+    public int NeedCountNumber { get; } = 5;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
+
 
     private readonly int _requiredCount;
-
-    public event Action<List<NumberValue>> OnTaskConditionMet;
 
     public OddCount_TaskCondition(TaskType taskType, int id, int requiredCount)
     {
@@ -21,16 +22,16 @@ public class OddCount_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} odd numbers";
+        TaskName = $"{_requiredCount} even numbers";
     }
 
-    public bool IsMet(List<NumberValue> numberValues)
+    public bool IsMet(Dictionary<int, NumberValue> usedCells)
     {
-        var evenNumbers = numberValues.Where(n => n.Number % 2 != 0).ToArray();
+        var evenCells = usedCells.Where(kv => kv.Value.Number % 2 != 0);
 
-        if (evenNumbers.Length >= _requiredCount)
+        if (evenCells.Count() >= _requiredCount)
         {
-            OnTaskConditionMet?.Invoke(evenNumbers.Take(_requiredCount).ToList());
+            OnTaskConditionMet_CellIndexes?.Invoke(evenCells.Select(kv => kv.Key).Take(_requiredCount).ToList());
             return true;
         }
 

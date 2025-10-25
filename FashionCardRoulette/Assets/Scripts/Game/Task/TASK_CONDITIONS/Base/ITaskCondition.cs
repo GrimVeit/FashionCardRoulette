@@ -5,11 +5,12 @@ using UnityEngine;
 
 public interface ITaskCondition
 {
+    public int NeedCountNumber { get; }
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
 
-    bool IsMet(List<NumberValue> numberValues);
+    bool IsMet(Dictionary<int, NumberValue> usedCells);
 
-    public event Action<List<NumberValue>> OnTaskConditionMet;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
 }

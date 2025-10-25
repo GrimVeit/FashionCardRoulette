@@ -9,10 +9,11 @@ public class SameColor_TaskCondition : ITaskCondition
     public string TaskName { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
+    public int NeedCountNumber { get; } = 5;
+    public event Action<List<int>> OnTaskConditionMet_CellIndexes;
+
 
     private readonly int _requiredCount;
-
-    public event Action<List<NumberValue>> OnTaskConditionMet;
 
     public SameColor_TaskCondition(TaskType taskType, int id, int requiredCount)
     {
@@ -21,18 +22,21 @@ public class SameColor_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} numbers of the same color";
+        TaskName = $"{_requiredCount} numbers of the same value";
     }
 
-    public bool IsMet(List<NumberValue> numberValues)
+    public bool IsMet(Dictionary<int, NumberValue> usedCells)
     {
-        var group = numberValues.GroupBy(n => n.Color)
-            .FirstOrDefault(g => g.Count() >= _requiredCount);
+        var groups = usedCells.GroupBy(n => n.Value.Color);
 
-        if (group != null)
+        foreach (var group in groups)
         {
-            OnTaskConditionMet?.Invoke(group.Take(_requiredCount).ToList());
-            return true;
+            if (group.Count() >= _requiredCount)
+            {
+                List<int> indexes = group.Select(kv => kv.Key).Take(_requiredCount).ToList();
+                OnTaskConditionMet_CellIndexes?.Invoke(indexes);
+                return true;
+            }
         }
 
         return false;
