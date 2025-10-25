@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class EvenCount_TaskCondition : ITaskCondition
 {
-    public string TaskName { get; }
+    public string TaskSmallDescription { get; }
+    public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
     public int NeedCountNumber { get; } = 5;
@@ -22,7 +23,8 @@ public class EvenCount_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} even numbers";
+        TaskSmallDescription = $"{_requiredCount} even numbers";
+        TaskFullDescription = $"need to get {_requiredCount} even numbers";
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

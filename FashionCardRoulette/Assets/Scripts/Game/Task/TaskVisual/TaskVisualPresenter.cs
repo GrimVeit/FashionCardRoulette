@@ -31,6 +31,7 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
     private void ActivateEvents()
     {
         _view.OnChooseCell += _model.ChooseCell;
+        _view.OnChooseTask += _model.ChooseTask;
 
         _model.OnActivateCells += _view.ActivateCells;
         _model.OnDeactivateCells += _view.DeactivateCells;
@@ -41,6 +42,7 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
     private void DeactivateEvents()
     {
         _view.OnChooseCell -= _model.ChooseCell;
+        _view.OnChooseTask -= _model.ChooseTask;
 
         _model.OnActivateCells -= _view.ActivateCells;
         _model.OnDeactivateCells -= _view.DeactivateCells;
@@ -54,6 +56,18 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
     {
         add => _model.OnChooseCell += value;
         remove => _model.OnChooseCell -= value;
+    }
+
+    public event Action OnChooseTask
+    {
+        add => _model.OnChooseTask += value;
+        remove => _model.OnChooseTask -= value;
+    }
+
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value
+    {
+        add => _model.OnChooseTask_Value += value;
+        remove => _model.OnChooseTask_Value -= value;
     }
 
     #endregion
@@ -88,4 +102,7 @@ public interface ITaskVisualProvider
 public interface ITaskVisualEventsProvider
 {
     public event Action OnChooseCell;
+
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value;
+    public event Action OnChooseTask;
 }

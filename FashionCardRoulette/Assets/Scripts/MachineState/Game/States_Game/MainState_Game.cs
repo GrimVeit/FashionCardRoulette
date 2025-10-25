@@ -9,18 +9,21 @@ public class MainState_Game : IState
     private readonly NumberValues _numberValues;
     private readonly IChooseNumberEventsProvider _chooseNumberEventsProvider;
     private readonly IChooseNumberProvider _chooseNumberProvider;
+    private readonly ITaskVisualEventsProvider _taskVisualEventsProvider;
 
-    public MainState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, NumberValues numberValues, IChooseNumberEventsProvider chooseNumberEventsProvider, IChooseNumberProvider chooseNumberProvider)
+    public MainState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, NumberValues numberValues, IChooseNumberEventsProvider chooseNumberEventsProvider, IChooseNumberProvider chooseNumberProvider, ITaskVisualEventsProvider taskVisualEventsProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
         _numberValues = numberValues;
         _chooseNumberEventsProvider = chooseNumberEventsProvider;
         _chooseNumberProvider = chooseNumberProvider;
+        _taskVisualEventsProvider = taskVisualEventsProvider;
     }
 
     public void EnterState()
     {
+        _taskVisualEventsProvider.OnChooseTask += ChangeStateToTaskDescription;
         _sceneRoot.OnClickToCharacter_Main += ChangeStateToShopWardrobe;
         _sceneRoot.OnClickToSpin_Main += TEST;
         _chooseNumberEventsProvider.OnSetNumber += ChangeStateToSetNumber;
@@ -33,6 +36,7 @@ public class MainState_Game : IState
 
     public void ExitState()
     {
+        _taskVisualEventsProvider.OnChooseTask -= ChangeStateToTaskDescription;
         _sceneRoot.OnClickToCharacter_Main -= ChangeStateToShopWardrobe;
         _sceneRoot.OnClickToSpin_Main -= TEST;
         _chooseNumberEventsProvider.OnSetNumber -= ChangeStateToSetNumber;
@@ -56,5 +60,12 @@ public class MainState_Game : IState
         _sceneRoot.CloseTasksPanel();
 
         _machineProvider.SetState(_machineProvider.GetState<ShopWardrobeState_Game>());
+    }
+
+    private void ChangeStateToTaskDescription()
+    {
+        _sceneRoot.CloseTasksPanel();
+
+        _machineProvider.SetState(_machineProvider.GetState<TaskDescriptionState_Game>());
     }
 }

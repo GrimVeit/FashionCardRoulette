@@ -23,6 +23,7 @@ public class TaskVisualView : View
             for (int i = 0; i < taskVisuals.Count; i++)
             {
                 taskVisuals[i].OnChooseCell -= ChooseCell;
+                taskVisuals[i].OnChooseTask -= ChooseTask;
                 taskVisuals[i].Dispose();
 
                 Destroy(taskVisuals[i].gameObject);
@@ -39,6 +40,8 @@ public class TaskVisualView : View
             visual.SetData(taskSprites.GetRandomTaskSprite(taskConditions[i].TaskType), taskConditions[i]);
 
             visual.OnChooseCell += ChooseCell;
+            visual.OnChooseTask += ChooseTask;
+
             visual.Initialize(i);
 
             taskVisuals.Add(visual);
@@ -72,9 +75,16 @@ public class TaskVisualView : View
 
     public event Action<int, int> OnChooseCell;
 
+    public event Action<int> OnChooseTask;
+
     private void ChooseCell(int taskId, int cellId)
     {
         OnChooseCell?.Invoke(taskId, cellId);
+    }
+
+    private void ChooseTask(int taskId)
+    {
+        OnChooseTask?.Invoke(taskId);
     }
 
     #endregion
@@ -82,7 +92,7 @@ public class TaskVisualView : View
 
 public enum TaskType
 {
-    Easy, Middle, Hard, VeryHard
+    Easy, Medium, Hard, VeryHard
 }
 
 #region Task Sprite

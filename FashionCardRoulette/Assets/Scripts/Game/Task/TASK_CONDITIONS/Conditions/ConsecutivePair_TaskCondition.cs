@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class ConsecutivePair_TaskCondition : ITaskCondition
 {
-    public string TaskName { get; }
+    public string TaskSmallDescription { get; }
+    public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
     public int NeedCountNumber { get; } = 5;
@@ -24,7 +25,8 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
         _numberFirst = numberFirst;
         _numberSecond = numberSecond;
 
-        TaskName = $"Consecutive numbers: {_numberFirst}, {_numberSecond}";
+        TaskSmallDescription = $"consecutive numbers: {_numberFirst}, {_numberSecond}";
+        TaskFullDescription = $"need to get two consecutive numbers: {_numberFirst}, {_numberSecond}";
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)
@@ -33,12 +35,18 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
 
         for (int i = 0; i < ordered.Length - 1; i++)
         {
-            int current = ordered[i].Value.Number;
-            int next = ordered[i + 1].Value.Number;
+            int index1 = ordered[i].Key;
+            int index2 = ordered[i + 1].Key;
 
-            if(next == current + 1)
+            if(index2 == index1 + 1)
             {
-                return true;
+                int num1 = ordered[i].Value.Number;
+                int num2 = ordered[i + 1].Value.Number;
+
+                if(num1 == _numberFirst && num2 == _numberSecond)
+                {
+                    OnTaskConditionMet_CellIndexes?.Invoke(new() { index1,  index2 });
+                }
             }
         }
 

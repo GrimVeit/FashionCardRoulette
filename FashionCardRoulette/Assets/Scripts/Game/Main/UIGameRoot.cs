@@ -13,6 +13,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MainPanel_Game mainPanel;
     [SerializeField] private NumberPanel_Game numberPanel;
     [SerializeField] private TasksPanel_Game tasksPanel;
+    [SerializeField] private TaskDescriptionPanel_Game taskDescriptionPanel;
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
 
@@ -43,6 +44,7 @@ public class UIGameRoot : UIRoot
         mainPanel.Initialize();
         numberPanel.Initialize();
         tasksPanel.Initialize();
+        taskDescriptionPanel.Initialize();
         coinsPanel.Initialize();
         exitPanel.Initialize();
 
@@ -68,6 +70,7 @@ public class UIGameRoot : UIRoot
         exitPanel.OnClickToExit += HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter += HandleClickToCharacter_Main;
         mainPanel.OnClickToSpin += HandleClickToSpin_Main;
+        taskDescriptionPanel.OnClickToBack += HandleClickToBack_TaskDescription;
 
         shopWardrobePanel.OnClickToBack += HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop += HandleClickToShop_ShopWardrobe;
@@ -91,6 +94,7 @@ public class UIGameRoot : UIRoot
         exitPanel.OnClickToExit -= HandleClickToExit_Exit;
         mainPanel.OnClickToCharacter -= HandleClickToCharacter_Main;
         mainPanel.OnClickToSpin -= HandleClickToSpin_Main;
+        taskDescriptionPanel.OnClickToBack -= HandleClickToBack_TaskDescription;
 
         shopWardrobePanel.OnClickToBack -= HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop -= HandleClickToShop_ShopWardrobe;
@@ -110,6 +114,7 @@ public class UIGameRoot : UIRoot
         CloseMainPanel();
         CloseNumberPanel();
         CloseTasksPanel();
+        CloseTaskDescriptionPanel();
         CloseCoinsPanel();
         CloseExitPanel();
 
@@ -132,6 +137,7 @@ public class UIGameRoot : UIRoot
         mainPanel.Dispose();
         numberPanel.Dispose();
         tasksPanel.Dispose();
+        taskDescriptionPanel.Dispose();
         coinsPanel.Dispose();
         exitPanel.Dispose();
 
@@ -234,6 +240,25 @@ public class UIGameRoot : UIRoot
         if(!tasksPanel.IsActive) return;
 
         CloseOtherPanel(tasksPanel);
+    }
+
+
+
+
+
+
+    public void OpenTaskDescriptionPanel()
+    {
+        if (taskDescriptionPanel.IsActive) return;
+
+        OpenOtherPanel(taskDescriptionPanel);
+    }
+
+    public void CloseTaskDescriptionPanel()
+    {
+        if (!taskDescriptionPanel.IsActive) return;
+
+        CloseOtherPanel(taskDescriptionPanel);
     }
 
 
@@ -532,6 +557,18 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_Wardrobe()
     {
         OnClickToBack_Wardrobe?.Invoke();
+    }
+
+
+
+
+    //-------------------------TASK_DESCRIPTION----------------------------//
+
+    public event Action OnClickToBack_TaskDescription;
+
+    private void HandleClickToBack_TaskDescription()
+    {
+        OnClickToBack_TaskDescription?.Invoke();
     }
 
     #endregion

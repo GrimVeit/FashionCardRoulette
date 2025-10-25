@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class SumAtLeast_TaskCondition : ITaskCondition
 {
-    public string TaskName { get; }
+    public string TaskSmallDescription { get; }
+    public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
     public int NeedCountNumber { get; } = 5;
@@ -22,7 +23,8 @@ public class SumAtLeast_TaskCondition : ITaskCondition
 
         _targetSum = targetSum;
 
-        TaskName = $"sum >= {_targetSum}";
+        TaskSmallDescription = $"sum >= {_targetSum}";
+        TaskFullDescription = $"get a sum of numbers ≥ {_targetSum}";
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

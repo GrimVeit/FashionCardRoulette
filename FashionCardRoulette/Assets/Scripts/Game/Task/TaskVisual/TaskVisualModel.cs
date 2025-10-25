@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class TaskVisualModel
 {
-    private readonly List<TaskType> taskTypePattern = new() { TaskType.Easy, TaskType.Easy, TaskType.Middle, TaskType.Easy };
+    private List<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> tasksAll = new() 
+    { 
+        (TaskType.Easy, TaskStatus.Active, null), 
+        (TaskType.Hard, TaskStatus.Claimable, null), 
+        (TaskType.Medium, TaskStatus.Completed, null), 
+        (TaskType.VeryHard, TaskStatus.Failed, null) 
+    };
 
     private readonly ITaskConditionStorageProvider _taskConditionStorageProvider;
     private readonly IChooseNumberEventsProvider _chooseNumberEventsProvider;
@@ -41,6 +47,15 @@ public class TaskVisualModel
         OnChooseCell?.Invoke();
     }
 
+    public void ChooseTask(int taskId)
+    {
+        var task = tasksAll[taskId];
+
+        OnChooseTask_Value?.Invoke(task);
+
+        OnChooseTask?.Invoke();
+    }
+
     private void SetNumberValue(NumberValue numberValue)
     {
         _currentNumberValue = numberValue;
@@ -56,6 +71,12 @@ public class TaskVisualModel
     public event Action<int, int, NumberValue> OnChooseCell_Value;
     public event Action OnChooseCell;
 
+
+
+
+    public event Action OnChooseTask;
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value;
+
     #endregion
 
     #region Input
@@ -64,9 +85,11 @@ public class TaskVisualModel
     {
         List<ITaskCondition> tasks = new();
 
-        for (int i = 0; i < taskTypePattern.Count; i++)
+        for (int i = 0; i < tasksAll.Count; i++)
         {
-            var taskCondition = _taskConditionStorageProvider.GetTaskConditionByTaskType(taskTypePattern[i]);
+            var taskCondition = _taskConditionStorageProvider.GetTaskConditionByTaskType(tasksAll[i].TaskType);
+
+            tasksAll[i] = (tasksAll[i].TaskType, tasksAll[i].Status, taskCondition);
 
             tasks.Add(taskCondition);
         }

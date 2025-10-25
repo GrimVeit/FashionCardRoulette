@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class SameColor_TaskCondition : ITaskCondition
 {
-    public string TaskName { get; }
+    public string TaskSmallDescription { get; }
+    public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
     public int NeedCountNumber { get; } = 5;
@@ -22,7 +23,8 @@ public class SameColor_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"{_requiredCount} numbers of the same value";
+        TaskSmallDescription = $"{_requiredCount} numbers of the same color";
+        TaskFullDescription = $"get {_requiredCount} numbers of the same color";
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

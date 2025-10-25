@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class RedAndEven_TaskCondition : ITaskCondition
 {
-    public string TaskName { get; }
+    public string TaskSmallDescription { get; }
+    public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
     public int ID { get; }
     public int NeedCountNumber { get; } = 5;
@@ -23,7 +24,8 @@ public class RedAndEven_TaskCondition : ITaskCondition
 
         _requiredCount = requiredCount;
 
-        TaskName = $"red and even number";
+        TaskSmallDescription = $"red and even number";
+        TaskFullDescription = $"need to get a red even number";
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

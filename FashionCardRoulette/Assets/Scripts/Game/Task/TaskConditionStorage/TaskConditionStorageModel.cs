@@ -21,10 +21,10 @@ public class TaskConditionStorageModel
             new ConsecutivePair_TaskCondition(TaskType.Easy, 7, Random.Range(0, 36), Random.Range(0, 36))
         };
 
-        conditions[TaskType.Middle] = new List<ITaskCondition>()
+        conditions[TaskType.Medium] = new List<ITaskCondition>()
         {
-            new SameColor_TaskCondition(TaskType.Middle, 0, requiredCount: 3),
-            new SameNumber_TaskCondition(TaskType.Middle, 1, requiredCount: 3),
+            new SameColor_TaskCondition(TaskType.Medium, 0, requiredCount: 3),
+            new SameNumber_TaskCondition(TaskType.Medium, 1, requiredCount: 3),
         };
 
         conditions[TaskType.Hard] = new List<ITaskCondition>()
@@ -33,8 +33,7 @@ public class TaskConditionStorageModel
             new SameNumber_TaskCondition(TaskType.Hard, 1, requiredCount: 4),
         };
 
-        conditions[TaskType.VeryHard
-            ] = new List<ITaskCondition>()
+        conditions[TaskType.VeryHard] = new List<ITaskCondition>()
         {
             new SameColor_TaskCondition(TaskType.Hard, 0, requiredCount: 5),
             new SameNumber_TaskCondition(TaskType.Hard, 1, requiredCount: 5),
@@ -46,6 +45,11 @@ public class TaskConditionStorageModel
         if(!conditions.TryGetValue(taskType, out var list) || list.Count == 0) return null;
 
         int index = Random.Range(0, list.Count);
-        return list[index];
+
+        var condition = list[index];
+
+        conditions[taskType].Remove(condition);
+
+        return condition;
     }
 }

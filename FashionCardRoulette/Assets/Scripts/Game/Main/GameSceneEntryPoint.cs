@@ -43,6 +43,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChooseNumberPresenter chooseNumberPresenter;
     private TaskConditionStoragePresenter taskConditionStoragePresenter;
     private TaskVisualPresenter taskVisualPresenter;
+    private TaskDescriptionPresenter taskDescriptionPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -87,6 +88,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseNumberPresenter = new ChooseNumberPresenter(new ChooseNumberModel(), viewContainer.GetView<ChooseNumberView>());
         taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
         taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
+        taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter), viewContainer.GetView<TaskDescriptionView>());
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 
@@ -131,6 +133,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseNumberPresenter.Initialize();
         taskConditionStoragePresenter.Initialize();
+        taskDescriptionPresenter.Initialize();
         taskVisualPresenter.Initialize();
         taskVisualPresenter.SetRandomTasks();
 
@@ -192,6 +195,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseNumberPresenter?.Dispose();
         taskConditionStoragePresenter?.Dispose();
+        taskDescriptionPresenter?.Dispose();
         taskVisualPresenter?.Dispose();
 
         stateMachine?.Dispose();

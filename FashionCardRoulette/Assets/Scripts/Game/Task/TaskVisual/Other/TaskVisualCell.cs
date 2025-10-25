@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class TaskVisualCell : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public NumberValue CurrentNumberValue => _currentNumberValue;
     public bool IsHaveNumber => _currentNumberValue != null;
     public int Id => id;
 
@@ -17,9 +18,11 @@ public class TaskVisualCell : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     [SerializeField] private Transform transformCell;
     [SerializeField] private Image imageHighlight;
+    [SerializeField] private Image imageHighlight_Win;
 
     private NumberValue _currentNumberValue;
     private bool isActive;
+    private bool isActivaWin;
 
     private readonly float scaleMin = 1f;
     private readonly float scaleMax = 1.1f;
@@ -69,6 +72,11 @@ public class TaskVisualCell : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         transformCell.DOScale(scaleMin, deactivateDuration);
         imageHighlight.DOFade(0, deactivateDuration);
+    }
+
+    public void ActivateWin()
+    {
+        imageHighlight_Win.DOFade(1, deactivateDuration);
     }
 
     public void OnPointerDown(PointerEventData eventData)
