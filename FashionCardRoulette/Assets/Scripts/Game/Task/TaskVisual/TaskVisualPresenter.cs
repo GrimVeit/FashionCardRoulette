@@ -1,6 +1,6 @@
 using System;
 
-public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvider
+public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvider, ITaskVisualActivatorProvider, ITaskVisualInfoProvider
 {
     private readonly TaskVisualModel _model;
     private readonly TaskVisualView _view;
@@ -91,6 +91,17 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         remove => _model.OnChooseTask_Value -= value;
     }
 
+
+    public bool IsHaveTask(int taskId)
+    {
+        return _model.IsHaveTask(taskId);
+    }
+
+    public bool IsAllTaskFinished()
+    {
+        return _model.IsAllTaskFinished();
+    }
+
     #endregion
 
     #region Input
@@ -123,6 +134,14 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         _model.DeactivateInteractionTask();
     }
 
+
+
+    public void CompleteTask(int taskId)
+    {
+        _model.SetCompletedTask(taskId);
+        _model.ChooseTask(taskId);
+    }
+
     #endregion
 }
 
@@ -137,6 +156,17 @@ public interface ITaskVisualProvider
 
     public void ActivateInteractionTask();
     public void DeactivateInteractionTask();
+}
+
+public interface ITaskVisualInfoProvider
+{
+    public bool IsHaveTask(int taskId);
+    public bool IsAllTaskFinished();
+}
+
+public interface ITaskVisualActivatorProvider
+{
+    public void CompleteTask(int taskId);
 }
 
 public interface ITaskVisualEventsProvider

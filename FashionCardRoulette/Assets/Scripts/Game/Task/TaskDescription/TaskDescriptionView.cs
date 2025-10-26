@@ -55,7 +55,7 @@ public class TaskDescriptionView : View
         textTaskStatus.text = status;
 
         _claimCoins = task.TaskCondition.ClaimCoins;
-        textClaim.text = _claimCoins.ToString();
+        textClaim.text = "+" + _claimCoins.ToString();
 
         _currentTaskId = task.TaskId;
 

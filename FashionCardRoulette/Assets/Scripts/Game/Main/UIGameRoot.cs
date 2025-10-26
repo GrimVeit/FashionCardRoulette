@@ -14,6 +14,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private NumberPanel_Game numberPanel;
     [SerializeField] private TasksPanel_Game tasksPanel;
     [SerializeField] private TaskDescriptionPanel_Game taskDescriptionPanel;
+    [SerializeField] private MoreCoinsPanel_Game moreCoinsPanel;
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
 
@@ -45,6 +46,7 @@ public class UIGameRoot : UIRoot
         numberPanel.Initialize();
         tasksPanel.Initialize();
         taskDescriptionPanel.Initialize();
+        moreCoinsPanel.Initialize();
         coinsPanel.Initialize();
         exitPanel.Initialize();
 
@@ -115,6 +117,7 @@ public class UIGameRoot : UIRoot
         CloseNumberPanel();
         CloseTasksPanel();
         CloseTaskDescriptionPanel();
+        CloseMoreCoinsPanel();
         CloseCoinsPanel();
         CloseExitPanel();
 
@@ -138,6 +141,7 @@ public class UIGameRoot : UIRoot
         numberPanel.Dispose();
         tasksPanel.Dispose();
         taskDescriptionPanel.Dispose();
+        moreCoinsPanel.Dispose();
         coinsPanel.Dispose();
         exitPanel.Dispose();
 
@@ -259,6 +263,26 @@ public class UIGameRoot : UIRoot
         if (!taskDescriptionPanel.IsActive) return;
 
         CloseOtherPanel(taskDescriptionPanel);
+    }
+
+
+
+
+
+
+
+    public void OpenMoreCoinsPanel()
+    {
+        if(moreCoinsPanel.IsActive) return;
+
+        OpenOtherPanel(moreCoinsPanel);
+    }
+
+    public void CloseMoreCoinsPanel()
+    {
+        if(!moreCoinsPanel.IsActive) return;
+
+        CloseOtherPanel(moreCoinsPanel);
     }
 
 

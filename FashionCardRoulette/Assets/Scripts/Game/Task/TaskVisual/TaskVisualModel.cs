@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TaskVisualModel
@@ -95,6 +96,20 @@ public class TaskVisualModel
     private void SetNumberValue(NumberValue numberValue)
     {
         _currentNumberValue = numberValue;
+    }
+
+
+
+    public bool IsHaveTask(int taskId)
+    {
+        return taskId >= 0 && taskId < tasksAll.Count;
+    }
+
+    public bool IsAllTaskFinished()
+    {
+        return tasksAll.All(task =>
+            task.Status == TaskStatus.Completed || task.Status == TaskStatus.Failed
+        );
     }
 
     #region Output
