@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SumAtLeast_TaskCondition : ITaskCondition
 {
+    public int ClaimCoins { get; }
     public string TaskSmallDescription { get; }
     public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
@@ -16,7 +17,7 @@ public class SumAtLeast_TaskCondition : ITaskCondition
 
     private readonly int _targetSum;
 
-    public SumAtLeast_TaskCondition(TaskType taskType, int id, int targetSum)
+    public SumAtLeast_TaskCondition(TaskType taskType, int id, int targetSum, int claimCoins)
     {
         TaskType = taskType;
         ID = id;
@@ -25,6 +26,7 @@ public class SumAtLeast_TaskCondition : ITaskCondition
 
         TaskSmallDescription = $"sum >= {_targetSum}";
         TaskFullDescription = $"get a sum of numbers ≥ {_targetSum}";
+        ClaimCoins = claimCoins;
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

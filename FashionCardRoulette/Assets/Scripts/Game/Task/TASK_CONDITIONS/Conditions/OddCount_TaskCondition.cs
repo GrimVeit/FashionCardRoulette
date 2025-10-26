@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class OddCount_TaskCondition : ITaskCondition
 {
+    public int ClaimCoins { get; }
     public string TaskSmallDescription { get; }
     public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
@@ -16,7 +17,7 @@ public class OddCount_TaskCondition : ITaskCondition
 
     private readonly int _requiredCount;
 
-    public OddCount_TaskCondition(TaskType taskType, int id, int requiredCount)
+    public OddCount_TaskCondition(TaskType taskType, int id, int requiredCount, int claimCoins)
     {
         TaskType = taskType;
         ID = id;
@@ -25,6 +26,7 @@ public class OddCount_TaskCondition : ITaskCondition
 
         TaskSmallDescription = $"{_requiredCount} odd numbers";
         TaskFullDescription = $"need to get {_requiredCount} odd numbers";
+        ClaimCoins = claimCoins;
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

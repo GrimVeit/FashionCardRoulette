@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ConsecutivePair_TaskCondition : ITaskCondition
 {
+    public int ClaimCoins { get; }
     public string TaskSmallDescription { get; }
     public string TaskFullDescription { get; }
     public TaskType TaskType { get; }
@@ -17,7 +18,7 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
     private readonly int _numberFirst;
     private readonly int _numberSecond;
 
-    public ConsecutivePair_TaskCondition(TaskType taskType, int id, int numberFirst, int numberSecond)
+    public ConsecutivePair_TaskCondition(TaskType taskType, int id, int numberFirst, int numberSecond, int claimCoins)
     {
         TaskType = taskType;
         ID = id;
@@ -27,6 +28,7 @@ public class ConsecutivePair_TaskCondition : ITaskCondition
 
         TaskSmallDescription = $"consecutive numbers: {_numberFirst}, {_numberSecond}";
         TaskFullDescription = $"need to get two consecutive numbers: {_numberFirst}, {_numberSecond}";
+        ClaimCoins = claimCoins;
     }
 
     public bool IsMet(Dictionary<int, NumberValue> usedCells)

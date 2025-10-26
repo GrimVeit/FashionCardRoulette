@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvider
 {
@@ -32,22 +29,46 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
     {
         _view.OnChooseCell += _model.ChooseCell;
         _view.OnChooseTask += _model.ChooseTask;
+        _view.OnSuccessTask += _model.SetClaimableTask;
+        _view.OnFailTask += _model.SetFailedTask;
+
+
+        _model.OnActivateInteractionTask += _view.ActivateInteractionTask;
+        _model.OnDeactivateInteractionTask += _view.DeactivateInteractionTask;
 
         _model.OnActivateCells += _view.ActivateCells;
         _model.OnDeactivateCells += _view.DeactivateCells;
+
         _model.OnSetTaskConditions += _view.SetTasks;
         _model.OnChooseCell_Value += _view.SetNumberValue;
+
+        _model.OnSetInProgressTask += _view.SetTaskInProgress;
+        _model.OnSetClaimableTask += _view.SetTaskClaimable;
+        _model.OnSetCompletedTask += _view.SetTaskCompleted;
+        _model.OnSetFailedTask += _view.SetTaskFailed;
     }
 
     private void DeactivateEvents()
     {
         _view.OnChooseCell -= _model.ChooseCell;
         _view.OnChooseTask -= _model.ChooseTask;
+        _view.OnSuccessTask -= _model.SetClaimableTask;
+        _view.OnFailTask -= _model.SetFailedTask;
+
+
+        _model.OnActivateInteractionTask -= _view.ActivateInteractionTask;
+        _model.OnDeactivateInteractionTask -= _view.DeactivateInteractionTask;
 
         _model.OnActivateCells -= _view.ActivateCells;
         _model.OnDeactivateCells -= _view.DeactivateCells;
+
         _model.OnSetTaskConditions -= _view.SetTasks;
         _model.OnChooseCell_Value -= _view.SetNumberValue;
+
+        _model.OnSetInProgressTask -= _view.SetTaskInProgress;
+        _model.OnSetClaimableTask -= _view.SetTaskClaimable;
+        _model.OnSetCompletedTask -= _view.SetTaskCompleted;
+        _model.OnSetFailedTask -= _view.SetTaskFailed;
     }
 
     #region Output
@@ -64,7 +85,7 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         remove => _model.OnChooseTask -= value;
     }
 
-    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int TaskId)> OnChooseTask_Value
     {
         add => _model.OnChooseTask_Value += value;
         remove => _model.OnChooseTask_Value -= value;
@@ -79,6 +100,8 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         _model.SetRandomTasks();
     }
 
+
+
     public void ActivateCells()
     {
         _model.ActivateCells();
@@ -89,20 +112,37 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         _model.DeactivateCells();
     }
 
+
+    public void ActivateInteractionTask()
+    {
+        _model.ActivateInteractionTask();
+    }
+
+    public void DeactivateInteractionTask()
+    {
+        _model.DeactivateInteractionTask();
+    }
+
     #endregion
 }
 
 public interface ITaskVisualProvider
 {
     public void SetRandomTasks();
+
+
     public void ActivateCells();
     public void DeactivateCells();
+
+
+    public void ActivateInteractionTask();
+    public void DeactivateInteractionTask();
 }
 
 public interface ITaskVisualEventsProvider
 {
     public event Action OnChooseCell;
 
-    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value;
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int TaskId)> OnChooseTask_Value;
     public event Action OnChooseTask;
 }

@@ -26,6 +26,8 @@ public class ScaleEffect_Fade : ScaleEffect
     {
         tweenFade?.Kill();
 
+        isActive = false;
+
         scaleElement.localScale = Vector2.zero;
     }
 

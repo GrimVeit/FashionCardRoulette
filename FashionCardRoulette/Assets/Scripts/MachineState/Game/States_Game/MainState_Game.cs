@@ -10,8 +10,9 @@ public class MainState_Game : IState
     private readonly IChooseNumberEventsProvider _chooseNumberEventsProvider;
     private readonly IChooseNumberProvider _chooseNumberProvider;
     private readonly ITaskVisualEventsProvider _taskVisualEventsProvider;
+    private readonly ITaskVisualProvider _taskVisualProvider;
 
-    public MainState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, NumberValues numberValues, IChooseNumberEventsProvider chooseNumberEventsProvider, IChooseNumberProvider chooseNumberProvider, ITaskVisualEventsProvider taskVisualEventsProvider)
+    public MainState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, NumberValues numberValues, IChooseNumberEventsProvider chooseNumberEventsProvider, IChooseNumberProvider chooseNumberProvider, ITaskVisualEventsProvider taskVisualEventsProvider, ITaskVisualProvider taskVisualProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
@@ -19,6 +20,7 @@ public class MainState_Game : IState
         _chooseNumberEventsProvider = chooseNumberEventsProvider;
         _chooseNumberProvider = chooseNumberProvider;
         _taskVisualEventsProvider = taskVisualEventsProvider;
+        _taskVisualProvider = taskVisualProvider;
     }
 
     public void EnterState()
@@ -32,6 +34,8 @@ public class MainState_Game : IState
         _sceneRoot.OpenCoinsPanel();
         _sceneRoot.OpenExitPanel();
         _sceneRoot.OpenTasksPanel();
+
+        _taskVisualProvider.ActivateInteractionTask();
     }
 
     public void ExitState()
@@ -43,6 +47,8 @@ public class MainState_Game : IState
 
         _sceneRoot.CloseMainPanel();
         _sceneRoot.CloseExitPanel();
+
+        _taskVisualProvider.DeactivateInteractionTask();
     }
 
     private void TEST()

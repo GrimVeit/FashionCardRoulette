@@ -7,10 +7,10 @@ public class TaskVisualModel
 {
     private List<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> tasksAll = new() 
     { 
-        (TaskType.Easy, TaskStatus.Active, null), 
-        (TaskType.Hard, TaskStatus.Claimable, null), 
-        (TaskType.Medium, TaskStatus.Completed, null), 
-        (TaskType.VeryHard, TaskStatus.Failed, null) 
+        (TaskType.Easy, TaskStatus.InProgress, null), 
+        (TaskType.Easy, TaskStatus.Claimable, null), 
+        (TaskType.Easy, TaskStatus.Completed, null), 
+        (TaskType.Easy, TaskStatus.Failed, null) 
     };
 
     private readonly ITaskConditionStorageProvider _taskConditionStorageProvider;
@@ -49,11 +49,47 @@ public class TaskVisualModel
 
     public void ChooseTask(int taskId)
     {
-        var task = tasksAll[taskId];
+        var task = (tasksAll[taskId].TaskType, tasksAll[taskId].Status, tasksAll[taskId].TaskCondition, taskId);
 
         OnChooseTask_Value?.Invoke(task);
 
         OnChooseTask?.Invoke();
+    }
+
+    public void SetInProgressTask(int taskId)
+    {
+        tasksAll[taskId] = (tasksAll[taskId].TaskType, TaskStatus.InProgress, tasksAll[taskId].TaskCondition);
+
+        var task = tasksAll[taskId];
+
+        OnSetInProgressTask?.Invoke(taskId);
+    }
+
+    public void SetClaimableTask(int taskId)
+    {
+        tasksAll[taskId] = (tasksAll[taskId].TaskType, TaskStatus.Claimable, tasksAll[taskId].TaskCondition);
+
+        var task = tasksAll[taskId];
+
+        OnSetClaimableTask?.Invoke(taskId);
+    }
+
+    public void SetFailedTask(int taskId)
+    {
+        tasksAll[taskId] = (tasksAll[taskId].TaskType, TaskStatus.Failed, tasksAll[taskId].TaskCondition);
+
+        var task = tasksAll[taskId];
+
+        OnSetFailedTask?.Invoke(taskId);
+    }
+
+    public void SetCompletedTask(int taskId)
+    {
+        tasksAll[taskId] = (tasksAll[taskId].TaskType, TaskStatus.Completed, tasksAll[taskId].TaskCondition);
+
+        var task = tasksAll[taskId];
+
+        OnSetCompletedTask?.Invoke(taskId);
     }
 
     private void SetNumberValue(NumberValue numberValue)
@@ -68,6 +104,14 @@ public class TaskVisualModel
     public event Action OnActivateCells;
     public event Action OnDeactivateCells;
 
+    public event Action OnActivateInteractionTask;
+    public event Action OnDeactivateInteractionTask;
+
+    public event Action<int> OnSetInProgressTask;
+    public event Action<int> OnSetClaimableTask;
+    public event Action<int> OnSetCompletedTask;
+    public event Action<int> OnSetFailedTask;
+
     public event Action<int, int, NumberValue> OnChooseCell_Value;
     public event Action OnChooseCell;
 
@@ -75,7 +119,7 @@ public class TaskVisualModel
 
 
     public event Action OnChooseTask;
-    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnChooseTask_Value;
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int TaskId)> OnChooseTask_Value;
 
     #endregion
 
@@ -95,7 +139,14 @@ public class TaskVisualModel
         }
 
         OnSetTaskConditions?.Invoke(tasks);
+
+        for (int i = 0; i < tasksAll.Count; i++)
+        {
+            SetInProgressTask(i);
+        }
     }
+
+
 
     public void ActivateCells()
     {
@@ -105,6 +156,17 @@ public class TaskVisualModel
     public void DeactivateCells()
     {
         OnDeactivateCells?.Invoke();
+    }
+
+
+    public void ActivateInteractionTask()
+    {
+        OnActivateInteractionTask?.Invoke();
+    }
+
+    public void DeactivateInteractionTask()
+    {
+        OnDeactivateInteractionTask?.Invoke();
     }
 
     #endregion

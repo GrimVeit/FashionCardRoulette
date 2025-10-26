@@ -5,6 +5,7 @@ using UnityEngine;
 
 public interface ITaskCondition
 {
+    public int ClaimCoins { get; }
     public int NeedCountNumber { get; }
     public string TaskSmallDescription { get; }
     public string TaskFullDescription { get; }

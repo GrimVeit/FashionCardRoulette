@@ -23,7 +23,7 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
-        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, numberValues, chooseNumberEventsProvider, chooseNumberProvider, taskVisualEventsProvider);
+        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, numberValues, chooseNumberEventsProvider, chooseNumberProvider, taskVisualEventsProvider, taskVisualProvider);
         states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
         states[typeof(TaskDescriptionState_Game)] = new TaskDescriptionState_Game(this, sceneRoot);
 

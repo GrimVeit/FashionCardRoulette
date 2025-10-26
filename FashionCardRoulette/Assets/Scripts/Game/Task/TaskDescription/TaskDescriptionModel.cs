@@ -7,7 +7,7 @@ public class TaskDescriptionModel
 {
     private readonly ITaskVisualEventsProvider _taskVisualEventsProvider;
 
-    private (TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition) _currentTask;
+    private (TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int TaskId) _currentTask;
 
     public TaskDescriptionModel(ITaskVisualEventsProvider taskVisualEventsProvider)
     {
@@ -26,7 +26,7 @@ public class TaskDescriptionModel
         _taskVisualEventsProvider.OnChooseTask_Value -= SetTask;
     }
 
-    private void SetTask((TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition) task)
+    private void SetTask((TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int taskId) task)
     {
         _currentTask = task;
 
@@ -35,7 +35,7 @@ public class TaskDescriptionModel
 
     #region Output
 
-    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> OnSetTask;
+    public event Action<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition, int taskId)> OnSetTask;
 
     #endregion
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,13 +14,22 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public TaskType Type => _taskCondition.TaskType;
     public int Id => _id;
 
+    [SerializeField] private TextMeshProUGUI textStatus;
     [SerializeField] private List<Image> imagesStown = new();
     [SerializeField] private TextMeshProUGUI textTask;
     [SerializeField] private List<TaskVisualCell> cells = new();
 
-    private TaskStatus _status = TaskStatus.Active;
+    [Header("Background")]
+    [SerializeField] private Image imageBackground;
+    [SerializeField] private Sprite sprite_Good;
+    [SerializeField] private Sprite sprite_Bad;
+
+    private TaskStatus _status = TaskStatus.InProgress;
     private ITaskCondition _taskCondition = null;
     private int _id;
+    private bool isActiveInteraction = false;
+
+    private Sequence _scaleSequence;
 
     public void Initialize(int id)
     {
@@ -51,6 +61,8 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         CheckTask();
     }
 
+
+
     public void ActivateCells()
     {
         cells.ForEach(data => data.Activate());
@@ -61,6 +73,87 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         cells.ForEach(data => data.Deactivate());
     }
 
+
+    public void ActivateInteractionTask()
+    {
+        isActiveInteraction = true;
+
+        if (_status == TaskStatus.Claimable)
+        {
+            ActivateAnimationBubble();
+        }
+    }
+
+    public void DeactivateInteractionTask()
+    {
+        isActiveInteraction = false;
+
+        if (_status == TaskStatus.Claimable)
+        {
+            DeactivateAnimationBubble();
+        }
+    }
+
+
+    public void SetTaskInProgress()
+    {
+        _status = TaskStatus.InProgress;
+
+        imageBackground.sprite = sprite_Good;
+
+        textStatus.text = "In Progress";
+    }
+
+    public void SetTaskClaimable()
+    {
+        _status = TaskStatus.Claimable;
+
+        imageBackground.sprite = sprite_Good;
+
+        textStatus.text = "Claimable";
+
+        ActivateAnimationBubble();
+    }
+
+    public void SetTaskCompleted()
+    {
+        _status = TaskStatus.Completed;
+
+        imageBackground.sprite = sprite_Good;
+
+        textStatus.text = "Completed";
+    }
+
+    public void SetTaskFailed()
+    {
+        _status = TaskStatus.Failed;
+
+        imageBackground.sprite = sprite_Bad;
+
+        textStatus.text = "Failed";
+    }
+
+    private void ActivateAnimationBubble()
+    {
+        _scaleSequence?.Kill();
+
+        _scaleSequence = DOTween.Sequence();
+
+        _scaleSequence
+            .Append(transform.DOScale(1.1f, 0.4f))
+            .Append(transform.DOScale(1, 0.4f))
+            .SetLoops(-1);
+    }
+
+    private void DeactivateAnimationBubble()
+    {
+        _scaleSequence?.Kill();
+
+        _scaleSequence = DOTween.Sequence();
+
+        _scaleSequence.Append(transform.DOScale(1, 0.4f));
+    }
+
     private void ActivateWinCells(List<int> cellsIndexes)
     {
         for (int i = 0; i < cellsIndexes.Count; i++)
@@ -68,11 +161,10 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             cells.FirstOrDefault(data => data.Id == cellsIndexes[i]).ActivateWin();
         }
     }
-
-
-
     private void CheckTask()
     {
+        if (_status != TaskStatus.InProgress) return; 
+
         Dictionary<int, NumberValue> usedCells = new();
 
         for (int i = 0; i < cells.Count; i++)
@@ -91,7 +183,7 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             Debug.Log("WIN");
 
-            OnSuccess?.Invoke(_id);
+            OnSuccessTask?.Invoke(_id);
         }
         else
         {
@@ -99,7 +191,7 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 Debug.Log("LOSE");
 
-                OnFail?.Invoke(_id);
+                OnFailTask?.Invoke(_id);
             }
         }
     }
@@ -110,8 +202,8 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public event Action<int> OnChooseTask;
 
-    public event Action<int> OnSuccess;
-    public event Action<int> OnFail;
+    public event Action<int> OnSuccessTask;
+    public event Action<int> OnFailTask;
 
 
     private void ChooseCell(int index)
@@ -121,11 +213,13 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        if (!isActiveInteraction) return;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if(!isActiveInteraction) return;
+
         OnChooseTask?.Invoke(_id);
     }
 
@@ -134,8 +228,7 @@ public class TaskVisual : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
 public enum TaskStatus
 {
-    Active,
-    Inactive,
+    InProgress,
     Claimable,
     Completed,
     Failed

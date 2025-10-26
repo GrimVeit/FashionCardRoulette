@@ -24,6 +24,8 @@ public class TaskVisualView : View
             {
                 taskVisuals[i].OnChooseCell -= ChooseCell;
                 taskVisuals[i].OnChooseTask -= ChooseTask;
+                taskVisuals[i].OnSuccessTask -= SuccessTask;
+                taskVisuals[i].OnFailTask -= FailTask;
                 taskVisuals[i].Dispose();
 
                 Destroy(taskVisuals[i].gameObject);
@@ -41,6 +43,8 @@ public class TaskVisualView : View
 
             visual.OnChooseCell += ChooseCell;
             visual.OnChooseTask += ChooseTask;
+            visual.OnSuccessTask += SuccessTask;
+            visual.OnFailTask += FailTask;
 
             visual.Initialize(i);
 
@@ -56,6 +60,68 @@ public class TaskVisualView : View
     public void DeactivateCells()
     {
         taskVisuals.ForEach(data => data.DeactivateCells());
+    }
+
+    public void ActivateInteractionTask()
+    {
+        taskVisuals.ForEach(data => data.ActivateInteractionTask());
+    }
+
+    public void DeactivateInteractionTask()
+    {
+        taskVisuals.ForEach(data => data.DeactivateInteractionTask());
+    }
+
+    public void SetTaskInProgress(int id)
+    {
+        var taskVisual = taskVisuals.FirstOrDefault(data => data.Id == id);
+
+        if (taskVisual == null)
+        {
+            Debug.LogError("Not found TaskVisual with id" + id);
+            return;
+        }
+
+        taskVisual.SetTaskInProgress();
+    }
+
+    public void SetTaskClaimable(int id)
+    {
+        var taskVisual = taskVisuals.FirstOrDefault(data => data.Id == id);
+
+        if(taskVisual == null)
+        {
+            Debug.LogError("Not found TaskVisual with id" + id);
+            return;
+        }
+
+        taskVisual.SetTaskClaimable();
+    }
+
+    public void SetTaskCompleted(int id)
+    {
+        var taskVisual = taskVisuals.FirstOrDefault(data => data.Id == id);
+
+        if (taskVisual == null)
+        {
+            Debug.LogError("Not found TaskVisual with id" + id);
+            return;
+        }
+
+        taskVisual.SetTaskCompleted();
+    }
+
+    public void SetTaskFailed(int id)
+    {
+        var taskVisual = taskVisuals.FirstOrDefault(data => data.Id == id);
+
+        if (taskVisual == null)
+        {
+            Debug.LogError("Not found TaskVisual with id" + id);
+            return;
+        }
+
+        taskVisual.SetTaskFailed();
     }
 
     public void SetNumberValue(int taskId, int cellId, NumberValue numberValue)
@@ -77,6 +143,9 @@ public class TaskVisualView : View
 
     public event Action<int> OnChooseTask;
 
+    public event Action<int> OnSuccessTask;
+    public event Action<int> OnFailTask;
+
     private void ChooseCell(int taskId, int cellId)
     {
         OnChooseCell?.Invoke(taskId, cellId);
@@ -85,6 +154,18 @@ public class TaskVisualView : View
     private void ChooseTask(int taskId)
     {
         OnChooseTask?.Invoke(taskId);
+    }
+
+
+
+    private void SuccessTask(int taskId)
+    {
+        OnSuccessTask?.Invoke(taskId);
+    }
+
+    private void FailTask(int taskId)
+    {
+        OnFailTask?.Invoke(taskId);
     }
 
     #endregion
