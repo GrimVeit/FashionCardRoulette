@@ -28,7 +28,7 @@ public class RoulettePresenter : IRouletteValueProvider
 
     private void ActivateEvents()
     {
-        _view.OnGetRouletteNumber += _model.GetRouletteNumber;
+        _view.OnGetNumberValue += _model.GetNumberValue;
         _view.OnStop += _model.Stop;
 
         _model.OnStartSpin += _view.StartSpin;
@@ -37,7 +37,7 @@ public class RoulettePresenter : IRouletteValueProvider
 
     private void DeactivateEvents()
     {
-        _view.OnGetRouletteNumber -= _model.GetRouletteNumber;
+        _view.OnGetNumberValue -= _model.GetNumberValue;
         _view.OnStop -= _model.Stop;
 
         _model.OnStartSpin -= _view.StartSpin;
@@ -68,10 +68,10 @@ public class RoulettePresenter : IRouletteValueProvider
     }
 
 
-    public event Action<RouletteNumber> OnGetRouletteSlotValue
+    public event Action<NumberValue> OnGetNumberValue
     {
-        add { _model.OnGetRouletteSlotValue += value; }
-        remove { _model.OnGetRouletteSlotValue -= value; }
+        add { _model.OnGetNumberValue += value; }
+        remove { _model.OnGetNumberValue -= value; }
     }
 
     #endregion
@@ -79,5 +79,5 @@ public class RoulettePresenter : IRouletteValueProvider
 
 public interface IRouletteValueProvider
 {
-    public event Action<RouletteNumber> OnGetRouletteSlotValue;
+    public event Action<NumberValue> OnGetNumberValue;
 }

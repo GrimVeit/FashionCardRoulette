@@ -18,7 +18,7 @@ public class RouletteValueHistoryModel
         {
             var index = i;
             void Handler(RouletteNumber value) => HandleValue(index, value);
-            _rouletteValues[i].OnGetRouletteSlotValue += Handler;
+            //_rouletteValues[i].OnGetRouletteSlotValue += Handler;
             _handlers.Add(Handler);
         }
     }
@@ -27,7 +27,7 @@ public class RouletteValueHistoryModel
     {
         for (int i = 0; i < _rouletteValues.Count; i++)
         {
-            _rouletteValues[i].OnGetRouletteSlotValue -= _handlers[i];
+            //_rouletteValues[i].OnGetRouletteSlotValue -= _handlers[i];
         }
 
         _handlers.Clear();

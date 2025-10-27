@@ -47,6 +47,11 @@ public class GameSceneEntryPoint : MonoBehaviour
     private TaskVisualPresenter taskVisualPresenter;
     private TaskDescriptionPresenter taskDescriptionPresenter;
 
+
+
+    private RoulettePresenter roulettePresenter;
+    private RouletteBallPresenter rouletteBallPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -93,6 +98,9 @@ public class GameSceneEntryPoint : MonoBehaviour
         taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
         taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter, taskVisualPresenter, taskVisualPresenter, bankPresenter), viewContainer.GetView<TaskDescriptionView>());
 
+        roulettePresenter = new RoulettePresenter(new RouletteModel(soundPresenter), viewContainer.GetView<RouletteView>());
+        rouletteBallPresenter = new RouletteBallPresenter(new RouletteBallModel(soundPresenter), viewContainer.GetView<RouletteBallView>());
+
         stateMachine = new StateMachine_Game
             (sceneRoot, 
             storeClothesPresenter, 
@@ -104,7 +112,9 @@ public class GameSceneEntryPoint : MonoBehaviour
             taskVisualPresenter,
             taskVisualPresenter,
             taskDescriptionPresenter,
-            videoPresenter);
+            videoPresenter,
+            roulettePresenter,
+            rouletteBallPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -142,6 +152,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         taskDescriptionPresenter.Initialize();
         taskVisualPresenter.Initialize();
         taskVisualPresenter.SetRandomTasks();
+
+
+        roulettePresenter.Initialize();
+        rouletteBallPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -205,6 +219,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         taskConditionStoragePresenter?.Dispose();
         taskDescriptionPresenter?.Dispose();
         taskVisualPresenter?.Dispose();
+
+
+        roulettePresenter?.Dispose();
+        rouletteBallPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

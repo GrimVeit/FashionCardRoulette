@@ -70,6 +70,6 @@ public class TaskConditionStorageModel
         if (!claimsCoins.TryGetValue(taskType, out var rewards) || rewards.Count == 0)
             return 0;
 
-        return rewards[UnityEngine.Random.Range(0, rewards.Count)];
+        return rewards[Random.Range(0, rewards.Count)];
     }
 }

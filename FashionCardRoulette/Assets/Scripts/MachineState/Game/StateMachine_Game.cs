@@ -20,12 +20,15 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         ITaskVisualEventsProvider taskVisualEventsProvider,
         ITaskVisualProvider taskVisualProvider,
         IClaimEventsProvider claimEventsProvider,
-        IVideoProvider videoProvider)
+        IVideoProvider videoProvider,
+        RoulettePresenter roulettePresenter,
+        RouletteBallPresenter rouletteBallPresenter)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
-        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, numberValues, chooseNumberEventsProvider, chooseNumberProvider, taskVisualEventsProvider, taskVisualProvider);
+        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
+        states[typeof(RouletteState_Game)] = new RouletteState_Game(this, roulettePresenter, rouletteBallPresenter, chooseNumberProvider, sceneRoot);
         states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
         states[typeof(TaskDescriptionState_Game)] = new TaskDescriptionState_Game(this, sceneRoot, claimEventsProvider);
         states[typeof(FromTaskDescriptionToMoreCoinsState_Game)] = new FromTaskDescriptionToMoreCoinsState_Game(this, sceneRoot);
