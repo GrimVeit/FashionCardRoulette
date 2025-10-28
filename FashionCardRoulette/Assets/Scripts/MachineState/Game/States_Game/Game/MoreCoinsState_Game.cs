@@ -19,6 +19,8 @@ public class MoreCoinsState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - MORE COINS STATE / GAME</color>");
+
         if (timer != null) Coroutines.Stop(timer);
 
         timer = Timer(2.5f);

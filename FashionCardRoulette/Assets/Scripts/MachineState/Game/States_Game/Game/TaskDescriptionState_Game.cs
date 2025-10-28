@@ -17,6 +17,8 @@ public class TaskDescriptionState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - TASK DESCRIPTION STATE / GAME</color>");
+
         _claimEventsProvider.OnClaimTask += ChangeStateToFromTaskDescriptionToMoreCoins;
         _sceneRoot.OnClickToBack_TaskDescription += ChangeStateToMain;
 

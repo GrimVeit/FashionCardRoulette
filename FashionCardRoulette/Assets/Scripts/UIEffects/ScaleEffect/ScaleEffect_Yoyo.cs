@@ -25,9 +25,20 @@ public class ScaleEffect_Yoyo : ScaleEffect
         tweenYoyo?.Kill();
     }
 
+    public override void ResetEffect()
+    {
+        tweenYoyo?.Kill();
+
+        isActive = false;
+
+        scaleElement.localScale = Vector2.zero;
+    }
+
     public override void ActivateEffect(Action OnComplete = null)
     {
         tweenYoyo?.Kill();
+
+        isActive = true;
 
         tweenYoyo = scaleElement.DOScale(scaleMax, duration).SetLoops(-1, LoopType.Yoyo);
     }
@@ -35,6 +46,8 @@ public class ScaleEffect_Yoyo : ScaleEffect
     public override void DeactivateEffect(Action OnComplete = null)
     {
         tweenYoyo?.Kill();
+
+        isActive = false;
 
         tweenYoyo = scaleElement.DOScale(scaleMin, duration);
     }

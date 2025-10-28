@@ -8,17 +8,21 @@ public class SetNumberState_Game : IState
     private readonly UIGameRoot _sceneRoot;
     private readonly ITaskVisualEventsProvider _taskVisualEventsProvider;
     private readonly ITaskVisualProvider _taskVisualProvider;
+    private readonly IRouletteStateProvider _rouletteStateProvider;
 
-    public SetNumberState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, ITaskVisualEventsProvider taskVisualEventsProvider, ITaskVisualProvider taskVisualProvider)
+    public SetNumberState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, ITaskVisualEventsProvider taskVisualEventsProvider, ITaskVisualProvider taskVisualProvider, IRouletteStateProvider rouletteStateProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
         _taskVisualEventsProvider = taskVisualEventsProvider;
         _taskVisualProvider = taskVisualProvider;
+        _rouletteStateProvider = rouletteStateProvider;
     }
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - SET NUMBER STATE / GAME</color>");
+
         _taskVisualEventsProvider.OnChooseCell += ChangeStateToMain;
 
         _taskVisualProvider.ActivateCells();
@@ -34,6 +38,7 @@ public class SetNumberState_Game : IState
         _taskVisualProvider.DeactivateCells();
 
         _sceneRoot.CloseNumberPanel();
+        _rouletteStateProvider.SetIdle();
     }
 
     private void ChangeStateToMain()

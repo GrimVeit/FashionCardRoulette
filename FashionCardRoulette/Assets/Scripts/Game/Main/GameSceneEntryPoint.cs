@@ -51,6 +51,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private RoulettePresenter roulettePresenter;
     private RouletteBallPresenter rouletteBallPresenter;
+    private RouletteStatePresenter rouletteStatePresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -100,6 +101,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         roulettePresenter = new RoulettePresenter(new RouletteModel(soundPresenter), viewContainer.GetView<RouletteView>());
         rouletteBallPresenter = new RouletteBallPresenter(new RouletteBallModel(soundPresenter), viewContainer.GetView<RouletteBallView>());
+        rouletteStatePresenter = new RouletteStatePresenter(new RouletteStateModel(), viewContainer.GetView<RouletteStateView>());
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 
@@ -114,7 +116,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             taskDescriptionPresenter,
             videoPresenter,
             roulettePresenter,
-            rouletteBallPresenter);
+            rouletteBallPresenter,
+            rouletteStatePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -156,6 +159,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         roulettePresenter.Initialize();
         rouletteBallPresenter.Initialize();
+        rouletteStatePresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -223,6 +227,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         roulettePresenter?.Dispose();
         rouletteBallPresenter?.Dispose();
+        rouletteStatePresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

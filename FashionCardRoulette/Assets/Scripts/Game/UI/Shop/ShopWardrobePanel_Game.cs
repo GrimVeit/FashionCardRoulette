@@ -10,6 +10,8 @@ public class ShopWardrobePanel_Game : MovePanel
     [SerializeField] private Button buttonWardrobe;
     [SerializeField] private Button buttonShop;
 
+    [SerializeField] private UIEffectCombination effectCombination;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,6 +19,8 @@ public class ShopWardrobePanel_Game : MovePanel
         buttonBack.onClick.AddListener(() => OnClickToBack?.Invoke());
         buttonWardrobe.onClick.AddListener(() => OnClickToWardrobe?.Invoke());
         buttonShop.onClick.AddListener(() => OnClickToShop?.Invoke());
+
+        effectCombination.Initialize();
     }
 
     public override void Dispose()
@@ -26,6 +30,22 @@ public class ShopWardrobePanel_Game : MovePanel
         buttonBack.onClick.RemoveListener(() => OnClickToBack?.Invoke());
         buttonWardrobe.onClick.RemoveListener(() => OnClickToWardrobe?.Invoke());
         buttonShop.onClick.RemoveListener(() => OnClickToShop?.Invoke());
+
+        effectCombination.Dispose();
+    }
+
+    public override void ActivatePanel()
+    {
+        base.ActivatePanel();
+
+        effectCombination.ActivateEffect();
+    }
+
+    public override void DeactivatePanel()
+    {
+        base.DeactivatePanel();
+
+        effectCombination.DeactivateEffect();
     }
 
     #region Output

@@ -17,6 +17,8 @@ public class FromTaskDescriptionToMoreCoinsState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - FROM TASK DESCRIPTION TO MORE COINS STATE / GAME</color>");
+
         if (timer != null) Coroutines.Stop(timer);
 
         timer = Timer(0.5f);

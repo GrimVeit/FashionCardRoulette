@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIEffectCombination : MonoBehaviour
 {
+    [SerializeField] private float startTimeDelay;
     [SerializeField] private List<UIEffect> uiEffects = new List<UIEffect>();
     [SerializeField] private float timeDelay;
 
@@ -35,12 +36,19 @@ public class UIEffectCombination : MonoBehaviour
         if (scaleEffectCombimation_Coroutine != null)
             Coroutines.Stop(scaleEffectCombimation_Coroutine);
 
-        scaleEffectCombimation_Coroutine = DeactivateScaleEffect_Coroutine();
-        Coroutines.Start(scaleEffectCombimation_Coroutine);
+        //scaleEffectCombimation_Coroutine = DeactivateScaleEffect_Coroutine();
+        //Coroutines.Start(scaleEffectCombimation_Coroutine);
+
+        for (int i = uiEffects.Count - 1; i >= 0; i--)
+        {
+            uiEffects[i].DeactivateEffect();
+        }
     }
 
     private IEnumerator ActivateScaleEffect_Coroutine()
     {
+        yield return new WaitForSeconds(startTimeDelay);
+
         for (int i = 0; i < uiEffects.Count; i++)
         {
             uiEffects[i].ActivateEffect();
@@ -55,7 +63,7 @@ public class UIEffectCombination : MonoBehaviour
         {
             uiEffects[i].DeactivateEffect();
 
-            yield return new WaitForSeconds(timeDelay);
+            yield return null;
         }
     }
 }

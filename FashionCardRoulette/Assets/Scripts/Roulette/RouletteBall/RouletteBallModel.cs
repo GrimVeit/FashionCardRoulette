@@ -13,14 +13,14 @@ public class RouletteBallModel
     public RouletteBallModel(ISoundProvider soundProvider)
     {
         _soundProvider = soundProvider;
-        _soundSpin = _soundProvider.GetSound("BallSpin");
-        _soundFall = _soundProvider.GetSound("BallFall");
+        //_soundSpin = _soundProvider.GetSound("BallSpin");
+        //_soundFall = _soundProvider.GetSound("BallFall");
     }
     public void StartSpin()
     {
         OnStartSpin?.Invoke();
 
-        _soundSpin.Play();
+        //_soundSpin.Play();
     }
 
     public void BallStopped(Vector3 vector)

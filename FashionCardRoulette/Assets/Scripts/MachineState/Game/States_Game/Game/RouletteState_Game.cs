@@ -9,19 +9,21 @@ public class RouletteState_Game : IState
     private readonly RoulettePresenter _roulettePresenter;
     private readonly RouletteBallPresenter _rouletteBallPresenter;
     private readonly IChooseNumberProvider _chooseNumberProvider;
+    private readonly IRouletteStateProvider _rouletteStateProvider;
 
-    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot)
+    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot, IRouletteStateProvider rouletteStateProvider)
     {
         _machineProvider = machineProvider;
         _roulettePresenter = roulettePresenter;
         _rouletteBallPresenter = rouletteBallPresenter;
         _chooseNumberProvider = chooseNumberProvider;
         _sceneRoot = sceneRoot;
+        _rouletteStateProvider = rouletteStateProvider;
     }
 
     public void EnterState()
     {
-        Debug.Log("ACTIVATE STATE - ROULETTE");
+        Debug.Log("<color=red>ACTIVATE STATE - ROULETTE STATE / GAME</color>");
 
         _rouletteBallPresenter.OnBallStopped += _roulettePresenter.RollBallToSlot;
         _roulettePresenter.OnGetNumberValue += _chooseNumberProvider.SetNumber;
@@ -29,17 +31,16 @@ public class RouletteState_Game : IState
 
         _roulettePresenter.StartSpin();
         _rouletteBallPresenter.StartSpin();
+        _rouletteStateProvider.SetGame();
     }
 
     public void ExitState()
     {
-        Debug.Log("DEACTIVATE STATE - ROULETTE");
-
         _rouletteBallPresenter.OnBallStopped -= _roulettePresenter.RollBallToSlot;
         _roulettePresenter.OnGetNumberValue -= _chooseNumberProvider.SetNumber;
         _roulettePresenter.OnStopSpin -= ChangeStateToSetNumber;
 
-        _sceneRoot.CloseMainPanel();
+        _sceneRoot.CloseRoulettePanel();
     }
 
     private void ChangeStateToSetNumber()

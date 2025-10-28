@@ -28,8 +28,8 @@ public class RouletteBallView : View, IIdentify
 
     public void Initialize()
     {
-        startRadius = Vector3.Distance(transformStart.position, centerPoint.position);
-        endRadius = Vector3.Distance(transformEnd.position, centerPoint.position);
+        startRadius = Vector3.Distance(transformStart.localPosition, centerPoint.localPosition);
+        endRadius = Vector3.Distance(transformEnd.localPosition, centerPoint.localPosition);
     }
 
     public void Dispose()
@@ -61,7 +61,7 @@ public class RouletteBallView : View, IIdentify
             float x = centerPoint.position.x + Mathf.Cos(angle) * currentRadius;
             float y = centerPoint.position.y + Mathf.Sin(angle) * currentRadius;
 
-            ball.transform.position = new Vector3(x, y, ball.transform.position.z);
+            ball.transform.localPosition = new Vector3(x, y, ball.transform.localPosition.z);
 
             yield return null;
         }

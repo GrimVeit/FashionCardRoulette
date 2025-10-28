@@ -19,11 +19,15 @@ public class MainState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - MAIN STATE / GAME</color>");
+
         _taskVisualEventsProvider.OnChooseTask += ChangeStateToTaskDescription;
         _sceneRoot.OnClickToCharacter_Main += ChangeStateToShopWardrobe;
         _sceneRoot.OnClickToSpin_Main += ChangeStateToRoulette;
 
+        _sceneRoot.OpenRoulettePanel();
         _sceneRoot.OpenMainPanel();
+
         _sceneRoot.OpenCoinsPanel();
         _sceneRoot.OpenExitPanel();
         _sceneRoot.OpenTasksPanel();
@@ -38,6 +42,7 @@ public class MainState_Game : IState
         _sceneRoot.OnClickToSpin_Main -= ChangeStateToRoulette;
 
         _sceneRoot.CloseExitPanel();
+        _sceneRoot.CloseMainPanel();
 
         _taskVisualProvider.DeactivateInteractionTask();
     }
@@ -52,7 +57,7 @@ public class MainState_Game : IState
     private void ChangeStateToShopWardrobe()
     {
         _sceneRoot.CloseTasksPanel();
-        _sceneRoot.CloseMainPanel();
+        _sceneRoot.CloseRoulettePanel();
 
         _machineProvider.SetState(_machineProvider.GetState<ShopWardrobeState_Game>());
     }
@@ -60,7 +65,7 @@ public class MainState_Game : IState
     private void ChangeStateToTaskDescription()
     {
         _sceneRoot.CloseTasksPanel();
-        _sceneRoot.CloseMainPanel();
+        _sceneRoot.CloseRoulettePanel();
 
         _machineProvider.SetState(_machineProvider.GetState<TaskDescriptionState_Game>());
     }

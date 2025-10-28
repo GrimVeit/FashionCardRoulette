@@ -15,6 +15,8 @@ public class ChooseCharacterState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - CHOOSE CHARACTER STATE / GAME</color>");
+
         _sceneRoot.OnClickToContinue_ChooseCharacter += ChangeStateToMain;
         _sceneRoot.OnClickToBack_ChooseCharacter += ChangeStateToChooseGender;
 
