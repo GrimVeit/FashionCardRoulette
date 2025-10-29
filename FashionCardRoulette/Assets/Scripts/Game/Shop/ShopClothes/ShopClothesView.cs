@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ public class ShopClothesView : View
     [SerializeField] private Transform transformContent;
 
     private List<ShopClothesGrid> shopClothesGrids = new();
+
+    [SerializeField] private TextMeshProUGUI textPrice;
 
     public void Initialize()
     {
@@ -93,6 +96,11 @@ public class ShopClothesView : View
     public void Deactivate()
     {
         scaleEffect_Choose.DeactivateEffect();
+    }
+
+    public void ChangeAllPrice(int value)
+    {
+        textPrice.text = value.ToString();
     }
 
     #region Outpuut

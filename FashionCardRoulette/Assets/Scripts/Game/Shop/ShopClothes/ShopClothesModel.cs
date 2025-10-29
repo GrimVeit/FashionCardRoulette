@@ -20,8 +20,8 @@ public class ShopClothesModel
 
     private List<Clothes> _clothesBuy = new List<Clothes>();
 
-    private IStoreClothesActivatorProvider _clothesActivatorProvider;
-    private IMoneyProvider _moneyProvider;
+    private readonly IStoreClothesActivatorProvider _clothesActivatorProvider;
+    private readonly IMoneyProvider _moneyProvider;
 
     private int _allPrice = 0;
 
@@ -110,6 +110,8 @@ public class ShopClothesModel
 
             AllDelete();
         }
+
+        OnChangeAllPrice?.Invoke(_allPrice);
     }
 
     public void SubmitBuy()
@@ -131,4 +133,10 @@ public class ShopClothesModel
 
         AllDelete();
     }
+
+    #region Output
+
+    public event Action<int> OnChangeAllPrice;
+
+    #endregion
 }

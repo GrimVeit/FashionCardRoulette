@@ -39,6 +39,8 @@ public class ShopClothesPresenter : IShopClothesProvider, IShopClothesEventsProv
 
         _model.OnAddClothes += _view.SetClothes;
         _model.OnClearClothes += _view.Clear;
+
+        _model.OnChangeAllPrice += _view.ChangeAllPrice;
     }
 
     private void DeactivateEvents()
@@ -52,6 +54,8 @@ public class ShopClothesPresenter : IShopClothesProvider, IShopClothesEventsProv
 
         _model.OnAddClothes -= _view.SetClothes;
         _model.OnClearClothes -= _view.Clear;
+
+        _model.OnChangeAllPrice -= _view.ChangeAllPrice;
     }
 
     #region Output
