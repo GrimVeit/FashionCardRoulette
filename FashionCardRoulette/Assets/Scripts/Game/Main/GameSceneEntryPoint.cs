@@ -43,6 +43,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private VideoPresenter videoPresenter;
     private ChooseNumberPresenter chooseNumberPresenter;
+    private NumberTrashPresenter numberTrashPresenter;
     private TaskConditionStoragePresenter taskConditionStoragePresenter;
     private TaskVisualPresenter taskVisualPresenter;
     private TaskDescriptionPresenter taskDescriptionPresenter;
@@ -52,6 +53,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private RoulettePresenter roulettePresenter;
     private RouletteBallPresenter rouletteBallPresenter;
     private RouletteStatePresenter rouletteStatePresenter;
+    private RouletteSpinCountPresenter rouletteSpinCountPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -95,6 +97,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
         chooseNumberPresenter = new ChooseNumberPresenter(new ChooseNumberModel(), viewContainer.GetView<ChooseNumberView>());
+        numberTrashPresenter = new NumberTrashPresenter(new NumberTrashModel(), viewContainer.GetView<NumberTrashView>());
         taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
         taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
         taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter, taskVisualPresenter, taskVisualPresenter, bankPresenter), viewContainer.GetView<TaskDescriptionView>());
@@ -102,6 +105,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         roulettePresenter = new RoulettePresenter(new RouletteModel(soundPresenter), viewContainer.GetView<RouletteView>());
         rouletteBallPresenter = new RouletteBallPresenter(new RouletteBallModel(soundPresenter), viewContainer.GetView<RouletteBallView>());
         rouletteStatePresenter = new RouletteStatePresenter(new RouletteStateModel(), viewContainer.GetView<RouletteStateView>());
+        rouletteSpinCountPresenter = new RouletteSpinCountPresenter(new RouletteSpinCountModel(taskVisualPresenter), viewContainer.GetView<RouletteSpinCountView>());
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 
@@ -117,7 +121,9 @@ public class GameSceneEntryPoint : MonoBehaviour
             videoPresenter,
             roulettePresenter,
             rouletteBallPresenter,
-            rouletteStatePresenter);
+            rouletteStatePresenter,
+            numberTrashPresenter,
+            rouletteSpinCountPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -151,6 +157,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         videoPresenter.Initialize();
         chooseNumberPresenter.Initialize();
+        numberTrashPresenter.Initialize();
         taskConditionStoragePresenter.Initialize();
         taskDescriptionPresenter.Initialize();
         taskVisualPresenter.Initialize();
@@ -160,6 +167,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         roulettePresenter.Initialize();
         rouletteBallPresenter.Initialize();
         rouletteStatePresenter.Initialize();
+        rouletteSpinCountPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -220,6 +228,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         videoPresenter?.Dispose();
         chooseNumberPresenter?.Dispose();
+        numberTrashPresenter?.Dispose();
         taskConditionStoragePresenter?.Dispose();
         taskDescriptionPresenter?.Dispose();
         taskVisualPresenter?.Dispose();
@@ -228,6 +237,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         roulettePresenter?.Dispose();
         rouletteBallPresenter?.Dispose();
         rouletteStatePresenter?.Dispose();
+        rouletteSpinCountPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

@@ -112,6 +112,18 @@ public class TaskVisualModel
         );
     }
 
+    public int AllCountCells()
+    {
+        int count = 0;
+
+        for (int i = 0; i < tasksAll.Count; i++)
+        {
+            count += tasksAll[i].TaskCondition.NeedCountNumber;
+        }
+
+        return count;
+    }
+
     #region Output
 
     public event Action<List<ITaskCondition>> OnSetTaskConditions;

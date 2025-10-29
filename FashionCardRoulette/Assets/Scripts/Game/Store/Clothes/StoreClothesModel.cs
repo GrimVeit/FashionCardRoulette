@@ -52,7 +52,7 @@ public class StoreClothesModel
                 {
                     if(j == 0)
                     {
-                        var data = new ClothesData(true, true);
+                        var data = new ClothesData(false, false);
 
                         clothesDatas.Add(data);
 
@@ -96,6 +96,14 @@ public class StoreClothesModel
 
     public void Dispose()
     {
+        for (int i = 0; i < clothesGroupDatas.Count; i++)
+        {
+            for (int j = 0; j < clothesGroupDatas[i].Datas.Length; j++)
+            {
+                clothesGroupDatas[i].Datas[j].IsSelect = false;
+            }
+        }
+
         string json = JsonUtility.ToJson(new AllClothesDatas(clothesGroupDatas.ToArray()));
         File.WriteAllText(FilePath, json);
     }

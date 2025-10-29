@@ -9,14 +9,16 @@ public class SetNumberState_Game : IState
     private readonly ITaskVisualEventsProvider _taskVisualEventsProvider;
     private readonly ITaskVisualProvider _taskVisualProvider;
     private readonly IRouletteStateProvider _rouletteStateProvider;
+    private readonly INumberTrashEventsProvider _numberTrashEventsProvider;
 
-    public SetNumberState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, ITaskVisualEventsProvider taskVisualEventsProvider, ITaskVisualProvider taskVisualProvider, IRouletteStateProvider rouletteStateProvider)
+    public SetNumberState_Game(IGlobalStateMachineProvider machineProvider, UIGameRoot sceneRoot, ITaskVisualEventsProvider taskVisualEventsProvider, ITaskVisualProvider taskVisualProvider, IRouletteStateProvider rouletteStateProvider, INumberTrashEventsProvider numberTrashEventsProvider)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
         _taskVisualEventsProvider = taskVisualEventsProvider;
         _taskVisualProvider = taskVisualProvider;
         _rouletteStateProvider = rouletteStateProvider;
+        _numberTrashEventsProvider = numberTrashEventsProvider;
     }
 
     public void EnterState()
@@ -24,6 +26,7 @@ public class SetNumberState_Game : IState
         Debug.Log("<color=red>ACTIVATE STATE - SET NUMBER STATE / GAME</color>");
 
         _taskVisualEventsProvider.OnChooseCell += ChangeStateToMain;
+        _numberTrashEventsProvider.OnMoveToTrash += ChangeStateToMain;
 
         _taskVisualProvider.ActivateCells();
 
@@ -34,6 +37,7 @@ public class SetNumberState_Game : IState
     public void ExitState()
     {
         _taskVisualEventsProvider.OnChooseCell -= ChangeStateToMain;
+        _numberTrashEventsProvider.OnMoveToTrash -= ChangeStateToMain;
 
         _taskVisualProvider.DeactivateCells();
 

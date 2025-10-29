@@ -23,24 +23,25 @@ public class ClothesVisualView : View
         Debug.Log(clothes.ClothesType + "//" + clothes.Id);
 
         visual.SetData(clothesCharactersGroups.GetSprite(clothes.ClothesType, clothes.Id));
+        visual.Activate();
     }
 
     public void SetClothesType(List<ClothesType> clothesTypes)
     {
         clothesVisuals.ForEach(data => data.Deactivate());
 
-        for (int i = 0; i < clothesTypes.Count; i++)
-        {
-            var visual = clothesVisuals.FirstOrDefault(data => data.Type == clothesTypes[i]);
+        //for (int i = 0; i < clothesTypes.Count; i++)
+        //{
+        //    var visual = clothesVisuals.FirstOrDefault(data => data.Type == clothesTypes[i]);
 
-            if(visual == null)
-            {
-                Debug.LogError("Not found clothes visual with type - " + clothesTypes[i]);
-                continue;
-            }
+        //    if(visual == null)
+        //    {
+        //        Debug.LogError("Not found clothes visual with type - " + clothesTypes[i]);
+        //        continue;
+        //    }
 
-            visual.Activate();
-        }
+        //    //visual.Activate();
+        //}
     }
 }
 

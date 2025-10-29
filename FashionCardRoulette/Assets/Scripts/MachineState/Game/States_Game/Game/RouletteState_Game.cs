@@ -10,8 +10,9 @@ public class RouletteState_Game : IState
     private readonly RouletteBallPresenter _rouletteBallPresenter;
     private readonly IChooseNumberProvider _chooseNumberProvider;
     private readonly IRouletteStateProvider _rouletteStateProvider;
+    private readonly IRouletteSpinCountProvider _rouletteSpinCountProvider;
 
-    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot, IRouletteStateProvider rouletteStateProvider)
+    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot, IRouletteStateProvider rouletteStateProvider, IRouletteSpinCountProvider rouletteSpinCountProvider)
     {
         _machineProvider = machineProvider;
         _roulettePresenter = roulettePresenter;
@@ -19,6 +20,7 @@ public class RouletteState_Game : IState
         _chooseNumberProvider = chooseNumberProvider;
         _sceneRoot = sceneRoot;
         _rouletteStateProvider = rouletteStateProvider;
+        _rouletteSpinCountProvider = rouletteSpinCountProvider;
     }
 
     public void EnterState()
@@ -41,6 +43,7 @@ public class RouletteState_Game : IState
         _roulettePresenter.OnStopSpin -= ChangeStateToSetNumber;
 
         _sceneRoot.CloseRoulettePanel();
+        _rouletteSpinCountProvider.RemoveSpin();
     }
 
     private void ChangeStateToSetNumber()

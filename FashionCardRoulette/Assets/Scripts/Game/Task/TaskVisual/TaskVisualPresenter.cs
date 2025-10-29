@@ -102,6 +102,11 @@ public class TaskVisualPresenter : ITaskVisualProvider, ITaskVisualEventsProvide
         return _model.IsAllTaskFinished();
     }
 
+    public int AllCountCells()
+    {
+        return _model.AllCountCells();
+    }
+
     #endregion
 
     #region Input
@@ -162,6 +167,7 @@ public interface ITaskVisualInfoProvider
 {
     public bool IsHaveTask(int taskId);
     public bool IsAllTaskFinished();
+    public int AllCountCells();
 }
 
 public interface ITaskVisualActivatorProvider
