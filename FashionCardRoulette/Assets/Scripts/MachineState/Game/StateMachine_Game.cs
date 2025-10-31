@@ -25,7 +25,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         RouletteBallPresenter rouletteBallPresenter,
         IRouletteStateProvider rouletteStateProvider,
         INumberTrashEventsProvider numberTrashEventsProvider,
-        IRouletteSpinCountProvider rouletteSpinCountProvider)
+        IRouletteSpinCountProvider rouletteSpinCountProvider,
+        ITaskVisualMoveProvider taskVisualMoveProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);

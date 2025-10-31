@@ -18,6 +18,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MoreCoinsPanel_Game moreCoinsPanel;
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
+    [SerializeField] private ResultPanel_Game resultPanel;
 
     [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;
@@ -51,6 +52,7 @@ public class UIGameRoot : UIRoot
         moreCoinsPanel.Initialize();
         coinsPanel.Initialize();
         exitPanel.Initialize();
+        resultPanel.Initialize();
 
         shopWardrobePanel.Initialize();
 
@@ -76,6 +78,8 @@ public class UIGameRoot : UIRoot
         mainPanel.OnClickToSpin += HandleClickToSpin_Main;
         taskDescriptionPanel.OnClickToBack += HandleClickToBack_TaskDescription;
 
+        resultPanel.OnClickToContinue += HandleClickToContinue_Result;
+
         shopWardrobePanel.OnClickToBack += HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop += HandleClickToShop_ShopWardrobe;
         shopWardrobePanel.OnClickToWardrobe += HandleClickToWardrobe_ShopWardrobe;
@@ -99,6 +103,8 @@ public class UIGameRoot : UIRoot
         mainPanel.OnClickToCharacter -= HandleClickToCharacter_Main;
         mainPanel.OnClickToSpin -= HandleClickToSpin_Main;
         taskDescriptionPanel.OnClickToBack -= HandleClickToBack_TaskDescription;
+
+        resultPanel.OnClickToContinue -= HandleClickToContinue_Result;
 
         shopWardrobePanel.OnClickToBack -= HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop -= HandleClickToShop_ShopWardrobe;
@@ -148,6 +154,7 @@ public class UIGameRoot : UIRoot
         moreCoinsPanel.Dispose();
         coinsPanel.Dispose();
         exitPanel.Dispose();
+        resultPanel.Dispose();
 
         shopWardrobePanel.Dispose();
 
@@ -501,6 +508,26 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(wardrobeFitClothesPanel);
     }
 
+
+
+
+
+
+
+    public void OpenResultPanel()
+    {
+        if(resultPanel.IsActive) return;
+
+        OpenOtherPanel(resultPanel);
+    }
+
+    public void CloseResultPanel()
+    {
+        if(!resultPanel.IsActive) return;
+
+        CloseOtherPanel(resultPanel);
+    }
+
     #endregion
 
 
@@ -619,6 +646,17 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_TaskDescription()
     {
         OnClickToBack_TaskDescription?.Invoke();
+    }
+
+
+
+    //-------------------------RESULT----------------------------//
+
+    public event Action OnClickToContinue_Result;
+
+    private void HandleClickToContinue_Result()
+    {
+        OnClickToContinue_Result?.Invoke();
     }
 
     #endregion

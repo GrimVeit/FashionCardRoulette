@@ -47,6 +47,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private TaskConditionStoragePresenter taskConditionStoragePresenter;
     private TaskVisualPresenter taskVisualPresenter;
     private TaskDescriptionPresenter taskDescriptionPresenter;
+    private TaskVisualMovePresenter taskVisualMovePresenter;
 
 
 
@@ -101,6 +102,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
         taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
         taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter, taskVisualPresenter, taskVisualPresenter, bankPresenter), viewContainer.GetView<TaskDescriptionView>());
+        taskVisualMovePresenter = new TaskVisualMovePresenter(new TaskVisualMoveModel(), viewContainer.GetView<TaskVisualMoveView>());
 
         roulettePresenter = new RoulettePresenter(new RouletteModel(soundPresenter), viewContainer.GetView<RouletteView>());
         rouletteBallPresenter = new RouletteBallPresenter(new RouletteBallModel(soundPresenter), viewContainer.GetView<RouletteBallView>());
@@ -123,7 +125,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             rouletteBallPresenter,
             rouletteStatePresenter,
             numberTrashPresenter,
-            rouletteSpinCountPresenter);
+            rouletteSpinCountPresenter,
+            taskVisualMovePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -160,6 +163,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         numberTrashPresenter.Initialize();
         taskConditionStoragePresenter.Initialize();
         taskDescriptionPresenter.Initialize();
+        taskVisualMovePresenter.Initialize();
         taskVisualPresenter.Initialize();
         taskVisualPresenter.SetRandomTasks();
 
@@ -231,6 +235,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         numberTrashPresenter?.Dispose();
         taskConditionStoragePresenter?.Dispose();
         taskDescriptionPresenter?.Dispose();
+        taskVisualMovePresenter?.Dispose();
         taskVisualPresenter?.Dispose();
 
 
