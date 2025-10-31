@@ -37,6 +37,6 @@ public class CheckFinishState_Game : IState
 
     private void ChangeStateToResult()
     {
-
+        _machineProvider.SetState(_machineProvider.GetState<ResultState_Game>());
     }
 }

@@ -19,6 +19,7 @@ public class ResultState_Game : IState
     {
         _sceneRoot.OpenTasksPanel();
         _sceneRoot.OpenResultPanel();
+        _sceneRoot.CloseCoinsPanel();
 
         _visualMoveProvider.MoveFinish();
     }

@@ -27,7 +27,7 @@ public class RouletteBallModel
     {
         OnBallStopped?.Invoke(vector);
 
-        _soundSpin.Stop();
-        _soundFall.Play();
+        //_soundSpin.Stop();
+        //_soundFall.Play();
     }
 }

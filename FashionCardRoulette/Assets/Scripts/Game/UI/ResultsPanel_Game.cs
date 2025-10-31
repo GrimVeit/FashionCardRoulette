@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultPanel_Game : MovePanel
+public class ResultsPanel_Game : MovePanel
 {
     [SerializeField] private Button buttonContinue;
     [SerializeField] private UIEffectCombination effectCombination;

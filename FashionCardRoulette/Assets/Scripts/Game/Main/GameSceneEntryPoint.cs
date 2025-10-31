@@ -18,6 +18,8 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ViewContainer viewContainer;
 
     private BankPresenter bankPresenter;
+    private BankTransactionHistoryPresenter bankTransactionHistoryPresenter;
+
     private ParticleEffectPresenter particleEffectPresenter;
     private SoundPresenter soundPresenter;
 
@@ -76,6 +78,7 @@ public class GameSceneEntryPoint : MonoBehaviour
             viewContainer.GetView<ParticleEffectView>());
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
+        bankTransactionHistoryPresenter = new BankTransactionHistoryPresenter(new BankTransactionHistoryModel(bankPresenter), viewContainer.GetView<BankTransactionHistoryView>());
 
         storeCharacterPresenter = new StoreCharacterPresenter(new StoreCharacterModel(personZeroGroup));
         chooseGenderPresenter = new ChooseGenderPresenter(new ChooseGenderModel(storeCharacterPresenter), viewContainer.GetView<ChooseGenderView>());
@@ -126,7 +129,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             rouletteStatePresenter,
             numberTrashPresenter,
             rouletteSpinCountPresenter,
-            taskVisualMovePresenter);
+            taskVisualMovePresenter,
+            taskVisualPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -137,6 +141,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
+        bankTransactionHistoryPresenter.Initialize();
 
         storeCharacterPresenter.Initialize();
         chooseGenderPresenter.Initialize();
@@ -210,6 +215,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         sceneRoot.Dispose();
         particleEffectPresenter?.Dispose();
         bankPresenter?.Dispose();
+        bankTransactionHistoryPresenter?.Dispose();
 
         storeCharacterPresenter?.Dispose();
         chooseGenderPresenter?.Dispose();

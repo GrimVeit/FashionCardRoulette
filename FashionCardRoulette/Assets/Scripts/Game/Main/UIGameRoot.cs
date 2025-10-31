@@ -18,7 +18,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MoreCoinsPanel_Game moreCoinsPanel;
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
-    [SerializeField] private ResultPanel_Game resultPanel;
+    [SerializeField] private ResultsPanel_Game resultPanel;
 
     [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;

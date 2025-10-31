@@ -10,7 +10,7 @@ public class UIGameSceneRoot_Game : UIRoot
     [SerializeField] private MainPanel_Game mainPanel;
     [SerializeField] private FooterPanel_Game footerPanel;
     [SerializeField] private RoulettePanel_Game roulettePanel;
-    [SerializeField] private ResultPanel_Game resultPanel;
+    [SerializeField] private ResultsPanel_Game resultPanel;
 
     private ISoundProvider _soundProvider;
 

@@ -41,11 +41,11 @@ public class MoreCoinsState_Game : IState
     {
         yield return new WaitForSeconds(time);
 
-        ChangeStateToMain();
+        ChangeStateToCheckFinish();
     }
 
-    public void ChangeStateToMain()
+    public void ChangeStateToCheckFinish()
     {
-        _machineProvider.SetState(_machineProvider.GetState<MainState_Game>());
+        _machineProvider.SetState(_machineProvider.GetState<CheckFinishState_Game>());
     }
 }

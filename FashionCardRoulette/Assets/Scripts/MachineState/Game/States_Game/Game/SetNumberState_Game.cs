@@ -25,8 +25,8 @@ public class SetNumberState_Game : IState
     {
         Debug.Log("<color=red>ACTIVATE STATE - SET NUMBER STATE / GAME</color>");
 
-        _taskVisualEventsProvider.OnChooseCell += ChangeStateToMain;
-        _numberTrashEventsProvider.OnMoveToTrash += ChangeStateToMain;
+        _taskVisualEventsProvider.OnChooseCell += ChangeStateToCheckFinish;
+        _numberTrashEventsProvider.OnMoveToTrash += ChangeStateToCheckFinish;
 
         _taskVisualProvider.ActivateCells();
 
@@ -36,8 +36,8 @@ public class SetNumberState_Game : IState
 
     public void ExitState()
     {
-        _taskVisualEventsProvider.OnChooseCell -= ChangeStateToMain;
-        _numberTrashEventsProvider.OnMoveToTrash -= ChangeStateToMain;
+        _taskVisualEventsProvider.OnChooseCell -= ChangeStateToCheckFinish;
+        _numberTrashEventsProvider.OnMoveToTrash -= ChangeStateToCheckFinish;
 
         _taskVisualProvider.DeactivateCells();
 
@@ -45,8 +45,8 @@ public class SetNumberState_Game : IState
         _rouletteStateProvider.SetIdle();
     }
 
-    private void ChangeStateToMain()
+    private void ChangeStateToCheckFinish()
     {
-        _machineProvider.SetState(_machineProvider.GetState<MainState_Game>());
+        _machineProvider.SetState(_machineProvider.GetState<CheckFinishState_Game>());
     }
 }

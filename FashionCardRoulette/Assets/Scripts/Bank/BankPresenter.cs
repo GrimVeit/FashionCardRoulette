@@ -1,6 +1,6 @@
 using System;
 
-public class BankPresenter : IMoneyProvider
+public class BankPresenter : IMoneyProvider, IMoneyEventsProvider
 {
     private readonly BankModel _model;
     private readonly BankView _view;
@@ -49,6 +49,12 @@ public class BankPresenter : IMoneyProvider
         add { _model.OnChangeMoney += value; }
         remove { _model.OnChangeMoney -= value; }
     }
+
+    public event Action<int> OnSendMoney
+    {
+        add => _model.OnSendMoney += value;
+        remove => _model.OnSendMoney -= value;
+    }
 }
 
 public interface IMoneyProvider
@@ -58,6 +64,11 @@ public interface IMoneyProvider
     event Action<float> OnChangeMoney;
     void SendMoney(int money);
     bool CanAfford(float money);
+}
+
+public interface IMoneyEventsProvider
+{
+    public event Action<int> OnSendMoney;
 }
 
 

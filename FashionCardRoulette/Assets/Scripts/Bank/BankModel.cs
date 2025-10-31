@@ -10,6 +10,8 @@ public class BankModel
     public event Action OnRemoveMoney;
     public event Action<float> OnChangeMoney;
 
+    public event Action<int> OnSendMoney;
+
     private const string BANK_MONEY = "BANK_MONEY";
 
     public void Initialize()
@@ -25,6 +27,8 @@ public class BankModel
     public void SendMoney(int money)
     {
         Debug.Log(money);
+
+        OnSendMoney?.Invoke(money);
 
         if(money >= 0)
         {
