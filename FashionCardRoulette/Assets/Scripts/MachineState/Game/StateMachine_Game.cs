@@ -27,12 +27,15 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         INumberTrashEventsProvider numberTrashEventsProvider,
         IRouletteSpinCountProvider rouletteSpinCountProvider,
         ITaskVisualMoveProvider taskVisualMoveProvider,
-        ITaskVisualInfoProvider taskVisualInfoProvider)
+        ITaskVisualInfoProvider taskVisualInfoProvider,
+        INumberSelectionActivatorProvider numberSelectionActivatorProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
         states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
+        states[typeof(NumberSelectionState_Game)] = new NumberSelectionState_Game(this, rouletteStateProvider, sceneRoot, numberSelectionActivatorProvider);
+
         states[typeof(CheckFinishState_Game)] = new CheckFinishState_Game(this, taskVisualInfoProvider);
         states[typeof(ResultState_Game)] = new ResultState_Game(this, sceneRoot, taskVisualMoveProvider);
         states[typeof(RouletteState_Game)] = new RouletteState_Game(this, roulettePresenter, rouletteBallPresenter, chooseNumberProvider, sceneRoot, rouletteStateProvider, rouletteSpinCountProvider);

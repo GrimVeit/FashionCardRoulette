@@ -23,7 +23,7 @@ public class MainState_Game : IState
 
         _taskVisualEventsProvider.OnChooseTask += ChangeStateToTaskDescription;
         _sceneRoot.OnClickToCharacter_Main += ChangeStateToShopWardrobe;
-        _sceneRoot.OnClickToSpin_Main += ChangeStateToRoulette;
+        _sceneRoot.OnClickToSpin_Main += ChangeStateToNumbersSelection;
 
         _sceneRoot.OpenRoulettePanel();
         _sceneRoot.OpenMainPanel();
@@ -39,7 +39,7 @@ public class MainState_Game : IState
     {
         _taskVisualEventsProvider.OnChooseTask -= ChangeStateToTaskDescription;
         _sceneRoot.OnClickToCharacter_Main -= ChangeStateToShopWardrobe;
-        _sceneRoot.OnClickToSpin_Main -= ChangeStateToRoulette;
+        _sceneRoot.OnClickToSpin_Main -= ChangeStateToNumbersSelection;
 
         _sceneRoot.CloseExitPanel();
         _sceneRoot.CloseMainPanel();
@@ -47,11 +47,11 @@ public class MainState_Game : IState
         _taskVisualProvider.DeactivateInteractionTask();
     }
 
-    private void ChangeStateToRoulette()
+    private void ChangeStateToNumbersSelection()
     {
         _sceneRoot.CloseTasksPanel();
 
-        _machineProvider.SetState(_machineProvider.GetState<RouletteState_Game>());
+        _machineProvider.SetState(_machineProvider.GetState<NumberSelectionState_Game>());
     }
 
     private void ChangeStateToShopWardrobe()

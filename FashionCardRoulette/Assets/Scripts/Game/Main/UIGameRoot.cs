@@ -11,6 +11,7 @@ public class UIGameRoot : UIRoot
 
     [Header("Main")]
     [SerializeField] private MainPanel_Game mainPanel;
+    [SerializeField] private NumbersSelectionPanel_Game numberSelectionPanel;
     [SerializeField] private RoulettePanel_Game roulettePanel;
     [SerializeField] private NumberPanel_Game numberPanel;
     [SerializeField] private TasksPanel_Game tasksPanel;
@@ -45,6 +46,7 @@ public class UIGameRoot : UIRoot
         chooseCharacterPanel.Initialize();
 
         mainPanel.Initialize();
+        numberSelectionPanel.Initialize();
         roulettePanel.Initialize();
         numberPanel.Initialize();
         tasksPanel.Initialize();
@@ -122,6 +124,7 @@ public class UIGameRoot : UIRoot
         CloseChooseGenderPanel();
         CloseChooseCharacterPanel();
         CloseMainPanel();
+        CloseNumbersSelectionPanel();
         CloseRoulettePanel();
         CloseNumberPanel();
         CloseTasksPanel();
@@ -147,6 +150,7 @@ public class UIGameRoot : UIRoot
         chooseCharacterPanel.Dispose();
 
         mainPanel.Dispose();
+        numberSelectionPanel.Dispose();
         roulettePanel.Dispose();
         numberPanel.Dispose();
         tasksPanel.Dispose();
@@ -219,6 +223,28 @@ public class UIGameRoot : UIRoot
 
         CloseOtherPanel(mainPanel);
     }
+
+
+
+
+
+
+
+
+    public void OpenNumbersSelectionPanel()
+    {
+        if(numberSelectionPanel.IsActive) return;
+
+        OpenOtherPanel(numberSelectionPanel);
+    }
+
+    public void CloseNumbersSelectionPanel()
+    {
+        if(!numberSelectionPanel.IsActive) return;
+
+        CloseOtherPanel(numberSelectionPanel);
+    }
+
 
 
 
