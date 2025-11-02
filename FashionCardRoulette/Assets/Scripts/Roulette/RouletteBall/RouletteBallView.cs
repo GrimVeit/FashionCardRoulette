@@ -1,6 +1,8 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +23,7 @@ public class RouletteBallView : View, IIdentify
     [SerializeField] private float maxDuration;
     [SerializeField] private float startSpeed;
     [SerializeField] private float endSpeed = 0;
+    [SerializeField] private List<RouletteSlotValue> rouletteSlotValues = new List<RouletteSlotValue>();
 
     private float currentRadius;
     private float currentSpeed;
@@ -46,6 +49,15 @@ public class RouletteBallView : View, IIdentify
         DOTween.To(() => currentSpeed, x => currentSpeed = x, endSpeed, value);
     }
 
+    public void StartSpin(int number)
+    {
+        float value = UnityEngine.Random.Range(minDuration, maxDuration);
+
+        Coroutines.Start(MoveBall(number));
+        DOTween.To(() => currentRadius, x => currentRadius = x, endRadius, value);
+        DOTween.To(() => currentSpeed, x => currentSpeed = x, endSpeed, value);
+    }
+
     private IEnumerator MoveBall()
     {
         currentSpeed = startSpeed;
@@ -67,5 +79,56 @@ public class RouletteBallView : View, IIdentify
         }
 
         OnBallStopped?.Invoke(ball.transform.position);
+    }
+
+    private IEnumerator MoveBall(int number)
+    {
+        var needSlotValue = rouletteSlotValues.FirstOrDefault(data => data.NumberValue.Number == number);
+
+        currentSpeed = startSpeed;
+        currentRadius = startRadius;
+        angle = 0f;
+
+        ball.transform.SetParent(transformParent);
+
+        while (currentRadius > endRadius)
+        {
+            angle += currentSpeed * Time.deltaTime;
+
+            float x = centerPoint.position.x + Mathf.Cos(angle) * currentRadius;
+            float y = centerPoint.position.y + Mathf.Sin(angle) * currentRadius;
+
+            ball.transform.localPosition = new Vector3(x, y, ball.transform.localPosition.z);
+
+            yield return null;
+        }
+
+        bool isChoose = false;
+
+        while (!isChoose)
+        {
+            angle += currentSpeed * Time.deltaTime;
+
+            float x = centerPoint.position.x + Mathf.Cos(angle) * currentRadius;
+            float y = centerPoint.position.y + Mathf.Sin(angle) * currentRadius;
+
+            ball.transform.localPosition = new Vector3(x, y, ball.transform.localPosition.z);
+
+            RouletteSlotValue closestSlotValue = GetClosestSlot(ball.transform.position);
+
+            if(needSlotValue == closestSlotValue)
+            {
+                isChoose = true;
+                OnBallStopped?.Invoke(ball.transform.position);
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    private RouletteSlotValue GetClosestSlot(Vector3 vector)
+    {
+        return rouletteSlotValues.OrderBy(rv => Vector3.Distance(vector, rv.SlotTransform.position)).First();
     }
 }

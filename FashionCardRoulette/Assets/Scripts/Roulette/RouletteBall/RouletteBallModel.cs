@@ -4,11 +4,12 @@ using UnityEngine;
 public class RouletteBallModel
 {
     public event Action<Vector3> OnBallStopped;
-    public event Action OnStartSpin;
+    public event Action OnStartSpin_Random;
+    public event Action<int> OnStartSpin_Number;
 
     private ISoundProvider _soundProvider;
-    private ISound _soundSpin;
-    private ISound _soundFall;
+    //private ISound _soundSpin;
+    //private ISound _soundFall;
 
     public RouletteBallModel(ISoundProvider soundProvider)
     {
@@ -18,7 +19,14 @@ public class RouletteBallModel
     }
     public void StartSpin()
     {
-        OnStartSpin?.Invoke();
+        OnStartSpin_Random?.Invoke();
+
+        //_soundSpin.Play();
+    }
+
+    public void StartSpin(int number)
+    {
+        OnStartSpin_Number?.Invoke(number);
 
         //_soundSpin.Play();
     }

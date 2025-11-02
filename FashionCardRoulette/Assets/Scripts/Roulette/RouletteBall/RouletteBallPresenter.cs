@@ -31,14 +31,16 @@ public class RouletteBallPresenter
     {
         _view.OnBallStopped += _model.BallStopped;
 
-        _model.OnStartSpin += _view.StartSpin;
+        _model.OnStartSpin_Random += _view.StartSpin;
+        _model.OnStartSpin_Number += _view.StartSpin;
     }
 
     private void DeactivateEvents()
     {
         _view.OnBallStopped -= _model.BallStopped;
 
-        _model.OnStartSpin -= _view.StartSpin;
+        _model.OnStartSpin_Random -= _view.StartSpin;
+        _model.OnStartSpin_Number -= _view.StartSpin;
     }
 
     #region Input
@@ -46,6 +48,11 @@ public class RouletteBallPresenter
     public void StartSpin()
     {
         _model.StartSpin();
+    }
+
+    public void StartSpin(int number)
+    {
+        _model.StartSpin(number);
     }
 
     #endregion
