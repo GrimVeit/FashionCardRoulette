@@ -33,7 +33,7 @@ public class SectorArrowView : View
             path[i] = points[i].localPosition;
 
         tweenMove = transformArrow
-            .DOLocalPath(path, path.Length / speedMove, PathType.CatmullRom)
+            .DOLocalPath(path, path.Length / speedMove, PathType.Linear)
             .SetOptions(true)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.Linear)
@@ -63,9 +63,8 @@ public class SectorArrowView : View
                     OnSectorZoneChanged?.Invoke(currentZoneIndex);
                     Debug.Log($"ZONE: {currentZoneIndex}");
                 }
+                return;
             }
-
-            return;
         }
 
         currentZoneIndex = -1;

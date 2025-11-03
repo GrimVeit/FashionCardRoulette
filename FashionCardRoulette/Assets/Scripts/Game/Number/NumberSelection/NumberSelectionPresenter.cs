@@ -45,9 +45,9 @@ public class NumberSelectionPresenter : INumberSelectionEventsProvider, INumberS
 
     #region Output
 
-    public event Action<List<int>> OnChooseFiveNumbers { 
-        add => _model.OnSelectFiveNumbers += value; 
-        remove => _model.OnSelectFiveNumbers -= value; }
+    public event Action<List<int>> OnChooseSevenNumbers { 
+        add => _model.OnSelectSevenNumbers += value; 
+        remove => _model.OnSelectSevenNumbers -= value; }
 
     #endregion
 
@@ -66,5 +66,5 @@ public interface INumberSelectionActivatorProvider
 
 public interface INumberSelectionEventsProvider
 {
-    public event Action<List<int>> OnChooseFiveNumbers;
+    public event Action<List<int>> OnChooseSevenNumbers;
 }

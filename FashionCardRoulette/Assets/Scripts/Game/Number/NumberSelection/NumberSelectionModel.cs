@@ -25,13 +25,13 @@ public class NumberSelectionModel
         List<int> result = new();
         int count = _allNumbers.Count;
 
-        for (int i = -2; i <= 2; i++)
+        for (int i = -3; i <= 3; i++)
         {
             int wrappedIndex = (index + i + count) % count;
             result.Add(_allNumbers[wrappedIndex]);
         }
 
-        OnSelectFiveNumbers?.Invoke(result);
+        OnSelectSevenNumbers?.Invoke(result);
     }
 
     public void ActivateChoose()
@@ -46,7 +46,7 @@ public class NumberSelectionModel
 
     #region Output
 
-    public event Action<List<int>> OnSelectFiveNumbers;
+    public event Action<List<int>> OnSelectSevenNumbers;
 
 
     public event Action OnActivate;

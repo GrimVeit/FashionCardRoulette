@@ -19,14 +19,25 @@ public class NumberSelectionState_Game : IState
 
     public void EnterState()
     {
+        _sceneRoot.OnClickToContinue_ChooseNumbers += ChangeStateToSectorNumbers;
+
         _rouletteStateProvider.SetGame();
 
         _sceneRoot.OpenNumbersSelectionPanel();
+        _sceneRoot.OpenChooseNumbersPanel();
         _numberSelectionActivatorProvider.Activate();
     }
 
     public void ExitState()
     {
         _numberSelectionActivatorProvider.Deactivate();
+
+        _sceneRoot.CloseChooseNumbersPanel();
+        _sceneRoot.CloseRoulettePanel();
+    }
+
+    private void ChangeStateToSectorNumbers()
+    {
+        _globalStateMachineProvider.SetState(_globalStateMachineProvider.GetState<SectorsNumbersState_Game>());
     }
 }

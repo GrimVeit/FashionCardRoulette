@@ -31,11 +31,11 @@ public class NumberSelectionVisualPresenter
 
     private void ActivateEvents()
     {
-        _model.OnChooseFiveNumbers += _view.SetFiveNumbers;
+        _model.OnChooseSevenNumbers += _view.SetSevenNumbers;
     }
 
     private void DeactivateEvents()
     {
-        _model.OnChooseFiveNumbers -= _view.SetFiveNumbers;
+        _model.OnChooseSevenNumbers -= _view.SetSevenNumbers;
     }
 }

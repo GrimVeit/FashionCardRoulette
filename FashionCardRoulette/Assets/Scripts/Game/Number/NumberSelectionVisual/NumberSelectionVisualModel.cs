@@ -12,7 +12,7 @@ public class NumberSelectionVisualModel
     public NumberSelectionVisualModel(INumberSelectionEventsProvider numberSelectionEventsProvider)
     {
         _numberSelectionEventsProvider = numberSelectionEventsProvider;
-        _numberSelectionEventsProvider.OnChooseFiveNumbers += ChooseFiveNumbers;
+        _numberSelectionEventsProvider.OnChooseSevenNumbers += ChooseSevenNumbers;
     }
 
     public void Initialize()
@@ -22,19 +22,19 @@ public class NumberSelectionVisualModel
 
     public void Dispose()
     {
-        _numberSelectionEventsProvider.OnChooseFiveNumbers -= ChooseFiveNumbers;
+        _numberSelectionEventsProvider.OnChooseSevenNumbers -= ChooseSevenNumbers;
     }
 
     #region Output
 
-    public event Action<List<int>> OnChooseFiveNumbers;
+    public event Action<List<int>> OnChooseSevenNumbers;
 
-    private void ChooseFiveNumbers(List<int> numbers)
+    private void ChooseSevenNumbers(List<int> numbers)
     {
         if(_mainNumber == numbers[2]) return;
 
         _mainNumber = numbers[2];
-        OnChooseFiveNumbers?.Invoke(numbers);
+        OnChooseSevenNumbers?.Invoke(numbers);
     }
 
     #endregion

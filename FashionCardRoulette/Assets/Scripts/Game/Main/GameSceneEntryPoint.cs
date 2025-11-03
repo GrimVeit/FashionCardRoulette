@@ -59,6 +59,8 @@ public class GameSceneEntryPoint : MonoBehaviour
     private NumberSelectionPresenter numberSelectionPresenter;
     private NumberSelectionVisualPresenter numberSelectionVisualPresenter;
 
+    private SectorArrowPresenter sectorArrowPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -117,6 +119,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         numberSelectionPresenter = new NumberSelectionPresenter(new NumberSelectionModel(), viewContainer.GetView<NumberSelectionView>());
         numberSelectionVisualPresenter = new NumberSelectionVisualPresenter(new NumberSelectionVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberSelectionVisualView>());
 
+        sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(), viewContainer.GetView<SectorArrowView>());
+
         stateMachine = new StateMachine_Game
             (sceneRoot, 
             storeClothesPresenter, 
@@ -136,7 +140,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             rouletteSpinCountPresenter,
             taskVisualMovePresenter,
             taskVisualPresenter,
-            numberSelectionPresenter);
+            numberSelectionPresenter,
+            sectorArrowPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -185,9 +190,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         rouletteSpinCountPresenter.Initialize();
 
 
-
-        numberSelectionPresenter.Initialize();
         numberSelectionVisualPresenter.Initialize();
+        numberSelectionPresenter.Initialize();
+
+        sectorArrowPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -265,6 +271,8 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         numberSelectionPresenter?.Dispose();
         numberSelectionVisualPresenter?.Dispose();
+
+        sectorArrowPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }
