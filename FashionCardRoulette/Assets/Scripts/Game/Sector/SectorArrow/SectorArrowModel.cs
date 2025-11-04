@@ -5,20 +5,34 @@ using UnityEngine;
 
 public class SectorArrowModel
 {
-    public void ActivateArrowMove()
+    private readonly IStoreNumberProvider _storeNumberProvider;
+
+    public SectorArrowModel(IStoreNumberProvider storeNumberProvider)
     {
-        OnActivateArrowMove?.Invoke();
+        _storeNumberProvider = storeNumberProvider;
     }
 
-    public void DeactivateArrowMove()
+    public void ActivateZone()
     {
-        OnDeactivateArrowMove?.Invoke();
+        OnActivateZone?.Invoke();
+    }
+
+    public void DeactivateZone()
+    {
+        OnDeactivateZone?.Invoke();
+    }
+
+
+
+    public void SetSectorZone(int zone)
+    {
+        _storeNumberProvider.SetSector(zone);
     }
 
     #region Output
 
-    public event Action OnActivateArrowMove;
-    public event Action OnDeactivateArrowMove;
+    public event Action OnActivateZone;
+    public event Action OnDeactivateZone;
 
     #endregion
 }

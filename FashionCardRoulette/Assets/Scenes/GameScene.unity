@@ -3726,6 +3726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6778c1582eebd1542bae0a523d2c9fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sectorZone: {fileID: 1862262787}
   points:
   - {fileID: 1245673551}
   - {fileID: 1332858685}
@@ -3745,7 +3746,7 @@ MonoBehaviour:
   - leftIndex: 4
     rightIndex: 5
   transformArrow: {fileID: 1713235363}
-  speedMove: 0.2
+  speedMove: 2
 --- !u!1 &158810090
 GameObject:
   m_ObjectHideFlags: 0
@@ -45498,6 +45499,7 @@ GameObject:
   - component: {fileID: 1862262783}
   - component: {fileID: 1862262785}
   - component: {fileID: 1862262784}
+  - component: {fileID: 1862262787}
   - component: {fileID: 1862262786}
   m_Layer: 5
   m_Name: FRAME
@@ -45585,6 +45587,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 1862262783}
+--- !u!114 &1862262787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862262782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a23e0af11f39c47b6551ac1fb1dc42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868479078
 GameObject:
   m_ObjectHideFlags: 0

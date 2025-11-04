@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class SectorArrowView : View
 {
+    [SerializeField] private SectorZone sectorZone;
     [SerializeField] private List<Transform> points = new();
-    [SerializeField] private List<SectorZone> zones = new();
+    [SerializeField] private List<Sector> zones = new();
 
     [SerializeField] private Transform transformArrow;
     [SerializeField] private float speedMove = 2f;
@@ -17,20 +18,40 @@ public class SectorArrowView : View
 
     public void Initialize()
     {
-
+        sectorZone.OnClickToZone += ClickToZone;
     }
 
     public void Dispose()
     {
-
+        sectorZone.OnClickToZone -= ClickToZone;
     }
 
-    public void StartMoveArrow()
+    public void ActivateZone()
     {
+        sectorZone.Activate();
+
+        StartMoveArrow();
+    }
+
+    public void DeactivateZone()
+    {
+        sectorZone.Deactivate();
+
+        StopMoveArrow();
+    }
+
+    private void StartMoveArrow()
+    {
+        tweenMove?.Kill();
+
         Vector3[] path = new Vector3[points.Count];
 
         for (int i = 0; i < points.Count; i++)
             path[i] = points[i].localPosition;
+
+        transformArrow.localPosition = path[0];
+        currentZoneIndex = 0;
+        OnSectorZoneChanged?.Invoke(currentZoneIndex);
 
         tweenMove = transformArrow
             .DOLocalPath(path, path.Length / speedMove, PathType.Linear)
@@ -40,10 +61,9 @@ public class SectorArrowView : View
             .OnUpdate(CheckCurrentZone);
     }
 
-    public void StopMoveArrow()
+    private void StopMoveArrow()
     {
-        tweenMove.Kill();
-        OnSectorZoneSubmit?.Invoke(currentZoneIndex);
+        tweenMove?.Kill();
     }
 
     private void CheckCurrentZone()
@@ -73,13 +93,19 @@ public class SectorArrowView : View
     #region Output
 
     public event Action<int> OnSectorZoneChanged;
-    public event Action<int> OnSectorZoneSubmit;
+
+    public event Action OnClickToZone;
+
+    private void ClickToZone()
+    {
+        OnClickToZone?.Invoke();
+    }
 
     #endregion
 }
 
 [System.Serializable]
-public class SectorZone
+public class Sector
 {
     [SerializeField] private int leftIndex;
     [SerializeField] private int rightIndex;

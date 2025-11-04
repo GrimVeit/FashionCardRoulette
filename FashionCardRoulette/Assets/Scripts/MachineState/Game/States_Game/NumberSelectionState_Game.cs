@@ -19,6 +19,8 @@ public class NumberSelectionState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - NUMBER SELECTION STATE / GAME</color>");
+
         _sceneRoot.OnClickToContinue_ChooseNumbers += ChangeStateToSectorNumbers;
 
         _rouletteStateProvider.SetGame();
@@ -30,6 +32,8 @@ public class NumberSelectionState_Game : IState
 
     public void ExitState()
     {
+        _sceneRoot.OnClickToContinue_ChooseNumbers -= ChangeStateToSectorNumbers;
+
         _numberSelectionActivatorProvider.Deactivate();
 
         _sceneRoot.CloseChooseNumbersPanel();

@@ -65,8 +65,9 @@ public class RouletteBallView : View, IIdentify
         angle = 0f;
 
         ball.transform.SetParent(transformParent);
+        ball.transform.localScale = Vector3.one;
 
-        while(currentRadius > endRadius)
+        while (currentRadius > endRadius)
         {
             angle += currentSpeed * Time.deltaTime;
 
@@ -90,6 +91,7 @@ public class RouletteBallView : View, IIdentify
         angle = 0f;
 
         ball.transform.SetParent(transformParent);
+        ball.transform.localScale = Vector3.one;
 
         while (currentRadius > endRadius)
         {

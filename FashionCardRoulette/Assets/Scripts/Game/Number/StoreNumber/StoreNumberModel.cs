@@ -32,21 +32,15 @@ public class StoreNumberModel
 
     public int GetRandomNumber()
     {
-        switch (_option)
+        return _option switch
         {
-            case 0:
-                return _numbers[3];
-            case 1:
-                return _numbers[Random.Range(2, 5)];
-            case 2:
-                return _numbers[Random.Range(1, 6)];
-            case 3:
-                return _numbers[Random.Range(0, 7)];
-            case 4:
-                return _numbers[Random.Range(0, 37)];
-            default:
-                return _numbers[Random.Range(0, 37)];
-        }
+            0 => _numbers[3],
+            1 => _numbers[Random.Range(2, 5)],
+            2 => _numbers[Random.Range(1, 6)],
+            3 => _numbers[Random.Range(0, 7)],
+            4 => Random.Range(0, 37),
+            _ => Random.Range(0, 37),
+        };
     }
 
     private void SetNumbers(List<int> numbers)

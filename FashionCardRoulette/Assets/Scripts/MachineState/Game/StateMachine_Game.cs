@@ -29,18 +29,21 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         ITaskVisualMoveProvider taskVisualMoveProvider,
         ITaskVisualInfoProvider taskVisualInfoProvider,
         INumberSelectionActivatorProvider numberSelectionActivatorProvider,
-        ISectorArrowProvider sectorArrowProvider)
+        ISectorArrowProvider sectorArrowProvider,
+        ISectorArrowEventsProvider sectorArrowEventsProvider,
+        IStoreNumberInfoProvider storeNumberInfoProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
 
         states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider);
         states[typeof(NumberSelectionState_Game)] = new NumberSelectionState_Game(this, rouletteStateProvider, sceneRoot, numberSelectionActivatorProvider);
-        states[typeof(SectorsNumbersState_Game)] = new SectorsNumbersState_Game(this, sceneRoot, sectorArrowProvider);
+        states[typeof(SectorsNumbersState_Game)] = new SectorsNumbersState_Game(this, sceneRoot, sectorArrowProvider, sectorArrowEventsProvider);
+        states[typeof(SectorsNumbersFinishState_Game)] = new SectorsNumbersFinishState_Game(this, sceneRoot);
 
         states[typeof(CheckFinishState_Game)] = new CheckFinishState_Game(this, taskVisualInfoProvider);
         states[typeof(ResultState_Game)] = new ResultState_Game(this, sceneRoot, taskVisualMoveProvider);
-        states[typeof(RouletteState_Game)] = new RouletteState_Game(this, roulettePresenter, rouletteBallPresenter, chooseNumberProvider, sceneRoot, rouletteStateProvider, rouletteSpinCountProvider);
+        states[typeof(RouletteState_Game)] = new RouletteState_Game(this, roulettePresenter, rouletteBallPresenter, chooseNumberProvider, sceneRoot, rouletteStateProvider, rouletteSpinCountProvider, storeNumberInfoProvider);
         states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider, rouletteStateProvider, numberTrashEventsProvider);
         states[typeof(TaskDescriptionState_Game)] = new TaskDescriptionState_Game(this, sceneRoot, claimEventsProvider);
         states[typeof(FromTaskDescriptionToMoreCoinsState_Game)] = new FromTaskDescriptionToMoreCoinsState_Game(this, sceneRoot);

@@ -11,8 +11,9 @@ public class RouletteState_Game : IState
     private readonly IChooseNumberProvider _chooseNumberProvider;
     private readonly IRouletteStateProvider _rouletteStateProvider;
     private readonly IRouletteSpinCountProvider _rouletteSpinCountProvider;
+    private readonly IStoreNumberInfoProvider _storeNumberInfoProvider;
 
-    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot, IRouletteStateProvider rouletteStateProvider, IRouletteSpinCountProvider rouletteSpinCountProvider)
+    public RouletteState_Game(IGlobalStateMachineProvider machineProvider, RoulettePresenter roulettePresenter, RouletteBallPresenter rouletteBallPresenter, IChooseNumberProvider chooseNumberProvider, UIGameRoot sceneRoot, IRouletteStateProvider rouletteStateProvider, IRouletteSpinCountProvider rouletteSpinCountProvider, IStoreNumberInfoProvider storeNumberInfoProvider)
     {
         _machineProvider = machineProvider;
         _roulettePresenter = roulettePresenter;
@@ -21,6 +22,7 @@ public class RouletteState_Game : IState
         _sceneRoot = sceneRoot;
         _rouletteStateProvider = rouletteStateProvider;
         _rouletteSpinCountProvider = rouletteSpinCountProvider;
+        _storeNumberInfoProvider = storeNumberInfoProvider;
     }
 
     public void EnterState()
@@ -32,8 +34,10 @@ public class RouletteState_Game : IState
         _roulettePresenter.OnStopSpin += ChangeStateToSetNumber;
 
         _roulettePresenter.StartSpin();
-        _rouletteBallPresenter.StartSpin();
+        _rouletteBallPresenter.StartSpin(_storeNumberInfoProvider.GetRandomNumber());
         _rouletteStateProvider.SetGame();
+
+        _sceneRoot.OpenRoulettePanel();
     }
 
     public void ExitState()
@@ -42,8 +46,8 @@ public class RouletteState_Game : IState
         _roulettePresenter.OnGetNumberValue -= _chooseNumberProvider.SetNumber;
         _roulettePresenter.OnStopSpin -= ChangeStateToSetNumber;
 
-        _sceneRoot.CloseRoulettePanel();
         _rouletteSpinCountProvider.RemoveSpin();
+        _sceneRoot.CloseRoulettePanel();
     }
 
     private void ChangeStateToSetNumber()

@@ -59,6 +59,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private NumberSelectionPresenter numberSelectionPresenter;
     private NumberSelectionVisualPresenter numberSelectionVisualPresenter;
 
+    private StoreNumberPresenter storeNumberPresenter;
     private SectorArrowPresenter sectorArrowPresenter;
 
     private StateMachine_Game stateMachine;
@@ -115,11 +116,11 @@ public class GameSceneEntryPoint : MonoBehaviour
         rouletteStatePresenter = new RouletteStatePresenter(new RouletteStateModel(), viewContainer.GetView<RouletteStateView>());
         rouletteSpinCountPresenter = new RouletteSpinCountPresenter(new RouletteSpinCountModel(taskVisualPresenter), viewContainer.GetView<RouletteSpinCountView>());
 
-
         numberSelectionPresenter = new NumberSelectionPresenter(new NumberSelectionModel(), viewContainer.GetView<NumberSelectionView>());
         numberSelectionVisualPresenter = new NumberSelectionVisualPresenter(new NumberSelectionVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberSelectionVisualView>());
 
-        sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(), viewContainer.GetView<SectorArrowView>());
+        storeNumberPresenter = new StoreNumberPresenter(new StoreNumberModel(numberSelectionPresenter));
+        sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(storeNumberPresenter), viewContainer.GetView<SectorArrowView>());
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 
@@ -141,7 +142,9 @@ public class GameSceneEntryPoint : MonoBehaviour
             taskVisualMovePresenter,
             taskVisualPresenter,
             numberSelectionPresenter,
-            sectorArrowPresenter);
+            sectorArrowPresenter,
+            sectorArrowPresenter,
+            storeNumberPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -193,6 +196,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         numberSelectionVisualPresenter.Initialize();
         numberSelectionPresenter.Initialize();
 
+        storeNumberPresenter.Initialize();
         sectorArrowPresenter.Initialize();
 
         stateMachine.Initialize();
@@ -272,6 +276,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         numberSelectionPresenter?.Dispose();
         numberSelectionVisualPresenter?.Dispose();
 
+        storeNumberPresenter?.Dispose();
         sectorArrowPresenter?.Dispose();
 
         stateMachine?.Dispose();
