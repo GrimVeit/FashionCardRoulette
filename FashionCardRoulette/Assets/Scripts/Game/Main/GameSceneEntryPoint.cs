@@ -58,6 +58,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private NumberSelectionPresenter numberSelectionPresenter;
     private NumberSelectionVisualPresenter numberSelectionVisualPresenter;
+    private NumberBallVisualPresenter numberBallVisualPresenter;
 
     private StoreNumberPresenter storeNumberPresenter;
     private SectorArrowPresenter sectorArrowPresenter;
@@ -118,6 +119,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         numberSelectionPresenter = new NumberSelectionPresenter(new NumberSelectionModel(), viewContainer.GetView<NumberSelectionView>());
         numberSelectionVisualPresenter = new NumberSelectionVisualPresenter(new NumberSelectionVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberSelectionVisualView>());
+        numberBallVisualPresenter = new NumberBallVisualPresenter(new NumberBallVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberBallVisualView>());
 
         storeNumberPresenter = new StoreNumberPresenter(new StoreNumberModel(numberSelectionPresenter));
         sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(storeNumberPresenter), viewContainer.GetView<SectorArrowView>());
@@ -194,6 +196,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
 
         numberSelectionVisualPresenter.Initialize();
+        numberBallVisualPresenter.Initialize();
         numberSelectionPresenter.Initialize();
 
         storeNumberPresenter.Initialize();
@@ -275,6 +278,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         numberSelectionPresenter?.Dispose();
         numberSelectionVisualPresenter?.Dispose();
+        numberBallVisualPresenter?.Dispose();
 
         storeNumberPresenter?.Dispose();
         sectorArrowPresenter?.Dispose();

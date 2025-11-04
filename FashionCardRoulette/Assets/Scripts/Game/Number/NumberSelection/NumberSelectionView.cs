@@ -12,8 +12,7 @@ public class NumberSelectionView : View
     {
         sections.ForEach(data => data.OnSelectSection += ChooseSection);
 
-        var randomNumber = sections[Random.Range(0, sections.Count)].Number;
-        OnChooseSection?.Invoke(randomNumber);
+        ChooseRandom();
     }
 
     public void Dispose()
@@ -29,6 +28,12 @@ public class NumberSelectionView : View
     public void Deactivate()
     {
         sections.ForEach(data => data.Deactivate());
+    }
+
+    public void ChooseRandom()
+    {
+        var randomNumber = sections[Random.Range(0, sections.Count)].Number;
+        OnChooseSection?.Invoke(randomNumber);
     }
 
     #region Output

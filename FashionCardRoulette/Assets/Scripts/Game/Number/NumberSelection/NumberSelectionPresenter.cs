@@ -55,6 +55,7 @@ public class NumberSelectionPresenter : INumberSelectionEventsProvider, INumberS
 
     public void Activate() => _model.ActivateChoose();
     public void Deactivate() => _model.DeactivateChoose();
+    public void ChooseRandom() => _view.ChooseRandom();
 
     #endregion
 }
@@ -62,6 +63,7 @@ public interface INumberSelectionActivatorProvider
 {
     public void Activate();
     public void Deactivate();
+    public void ChooseRandom();
 }
 
 public interface INumberSelectionEventsProvider

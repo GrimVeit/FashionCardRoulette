@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class RouletteStateModel
 {
-    public void SetGame()
+    public void SetGame_Smooth()
     {
-        OnSetGame?.Invoke();
+        OnSetGame_Smooth?.Invoke();
+    }
+
+    public void SetIdle_Smooth()
+    {
+        OnSetIdle_Smooth?.Invoke();
     }
 
     public void SetIddle()
@@ -15,6 +20,7 @@ public class RouletteStateModel
         OnSetIdle?.Invoke();
     }
 
-    public event Action OnSetGame;
+    public event Action OnSetGame_Smooth;
+    public event Action OnSetIdle_Smooth;
     public event Action OnSetIdle;
 }

@@ -24,7 +24,18 @@ public class RouletteStateView : View
         transformRouletteScale.localScale = vectorScaleIdle;
     }
 
-    public void SetGame()
+    public void SetIdle_Smooth()
+    {
+        _sequenceRoulette?.Kill();
+
+        _sequenceRoulette = DOTween.Sequence();
+
+        _sequenceRoulette
+            .Append(transformRouletteMove.DOLocalMove(transformIdle.localPosition, 0.3f))
+            .Join(transformRouletteScale.DOScale(vectorScaleIdle, 0.3f));
+    }
+
+    public void SetGame_Smooth()
     {
         _sequenceRoulette?.Kill();
 

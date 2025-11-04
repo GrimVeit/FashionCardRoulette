@@ -35,7 +35,7 @@ public class RouletteState_Game : IState
 
         _roulettePresenter.StartSpin();
         _rouletteBallPresenter.StartSpin(_storeNumberInfoProvider.GetRandomNumber());
-        _rouletteStateProvider.SetGame();
+        _rouletteStateProvider.SetGame_Smooth();
 
         _sceneRoot.OpenRoulettePanel();
     }

@@ -26,18 +26,21 @@ public class RouletteStatePresenter : IRouletteStateProvider
     private void ActivateEvents()
     {
         _model.OnSetIdle += _view.SetIdle;
-        _model.OnSetGame += _view.SetGame;
+        _model.OnSetIdle_Smooth += _view.SetIdle_Smooth;
+        _model.OnSetGame_Smooth += _view.SetGame_Smooth;
     }
 
     private void DeactivateEvents()
     {
         _model.OnSetIdle -= _view.SetIdle;
-        _model.OnSetGame -= _view.SetGame;
+        _model.OnSetIdle_Smooth -= _view.SetIdle_Smooth;
+        _model.OnSetGame_Smooth -= _view.SetGame_Smooth;
     }
 
     #region Input
 
-    public void SetGame() => _model.SetGame();
+    public void SetGame_Smooth() => _model.SetGame_Smooth();
+    public void SetIdle_Smooth() => _model.SetIdle_Smooth();
     public void SetIdle() => _model.SetIddle();
 
     #endregion
@@ -45,6 +48,7 @@ public class RouletteStatePresenter : IRouletteStateProvider
 
 public interface IRouletteStateProvider
 {
-    public void SetGame();
+    public void SetGame_Smooth();
+    public void SetIdle_Smooth();
     public void SetIdle();
 }

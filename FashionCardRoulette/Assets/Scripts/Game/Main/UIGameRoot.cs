@@ -14,6 +14,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private NumbersSelectionPanel_Game numberSelectionPanel;
     [SerializeField] private RoulettePanel_Game roulettePanel;
     [SerializeField] private SectorsPanel_Game sectorsPanel;
+    [SerializeField] private SectorsDescriptionPanel_Game sectorsDescriptionPanel;
     [SerializeField] private ChooseNumbersPanel_Game chooseNumbersPanel;
     [SerializeField] private NumberPanel_Game numberPanel;
     [SerializeField] private TasksPanel_Game tasksPanel;
@@ -51,6 +52,7 @@ public class UIGameRoot : UIRoot
         numberSelectionPanel.Initialize();
         roulettePanel.Initialize();
         sectorsPanel.Initialize();
+        sectorsDescriptionPanel.Initialize();
         chooseNumbersPanel.Initialize();
         numberPanel.Initialize();
         tasksPanel.Initialize();
@@ -83,7 +85,9 @@ public class UIGameRoot : UIRoot
         mainPanel.OnClickToCharacter += HandleClickToCharacter_Main;
         mainPanel.OnClickToSpin += HandleClickToSpin_Main;
         taskDescriptionPanel.OnClickToBack += HandleClickToBack_TaskDescription;
+
         chooseNumbersPanel.OnClickToContinue += HandleClickToContinue_ChooseNumbers;
+        chooseNumbersPanel.OnClickToBack += HandleClickToBack_ChooseNumbers;
 
         resultPanel.OnClickToContinue += HandleClickToContinue_Result;
 
@@ -110,7 +114,9 @@ public class UIGameRoot : UIRoot
         mainPanel.OnClickToCharacter -= HandleClickToCharacter_Main;
         mainPanel.OnClickToSpin -= HandleClickToSpin_Main;
         taskDescriptionPanel.OnClickToBack -= HandleClickToBack_TaskDescription;
+
         chooseNumbersPanel.OnClickToContinue -= HandleClickToContinue_ChooseNumbers;
+        chooseNumbersPanel.OnClickToBack -= HandleClickToBack_ChooseNumbers;
 
         resultPanel.OnClickToContinue -= HandleClickToContinue_Result;
 
@@ -133,6 +139,7 @@ public class UIGameRoot : UIRoot
         CloseNumbersSelectionPanel();
         CloseRoulettePanel();
         CloseSectorsPanel();
+        CloseSectorsDescriptionPanel();
         CloseChooseNumbersPanel();
         CloseNumberPanel();
         CloseTasksPanel();
@@ -161,6 +168,7 @@ public class UIGameRoot : UIRoot
         numberSelectionPanel.Dispose();
         roulettePanel.Dispose();
         sectorsPanel.Dispose();
+        sectorsDescriptionPanel.Dispose();
         chooseNumbersPanel.Dispose();
         numberPanel.Dispose();
         tasksPanel.Dispose();
@@ -295,6 +303,26 @@ public class UIGameRoot : UIRoot
         if(!sectorsPanel.IsActive) return;
 
         CloseOtherPanel(sectorsPanel);
+    }
+
+
+
+
+
+
+
+    public void OpenSectorsDescriptionPanel()
+    {
+        if (sectorsDescriptionPanel.IsActive) return;
+
+        OpenOtherPanel(sectorsDescriptionPanel);
+    }
+
+    public void CloseSectorsDescriptionPanel()
+    {
+        if (!sectorsDescriptionPanel.IsActive) return;
+
+        CloseOtherPanel(sectorsDescriptionPanel);
     }
 
 
@@ -740,10 +768,16 @@ public class UIGameRoot : UIRoot
     //-------------------------CHOOSE_NUMBERS----------------------------//
 
     public event Action OnClickToContinue_ChooseNumbers;
+    public event Action OnClickToBack_ChooseNumbers;
 
     private void HandleClickToContinue_ChooseNumbers()
     {
         OnClickToContinue_ChooseNumbers?.Invoke();
+    }
+
+    private void HandleClickToBack_ChooseNumbers()
+    {
+        OnClickToBack_ChooseNumbers?.Invoke();
     }
 
     #endregion

@@ -1,21 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ChooseNumbersPanel_Game : MovePanel
+public class SectorsDescriptionPanel_Game : MovePanel
 {
-    [SerializeField] private Button buttonContinue;
-    [SerializeField] private Button buttonBack;
     [SerializeField] private UIEffectCombination effectCombination;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        buttonContinue.onClick.AddListener(() => OnClickToContinue?.Invoke());
-        buttonBack.onClick.AddListener(() => OnClickToBack?.Invoke());
 
         effectCombination.Initialize();
     }
@@ -23,9 +16,6 @@ public class ChooseNumbersPanel_Game : MovePanel
     public override void Dispose()
     {
         base.Dispose();
-
-        buttonContinue.onClick.RemoveListener(() => OnClickToContinue?.Invoke());
-        buttonBack.onClick.RemoveListener(() => OnClickToBack?.Invoke());
 
         effectCombination.Dispose();
     }
@@ -43,11 +33,4 @@ public class ChooseNumbersPanel_Game : MovePanel
 
         effectCombination.DeactivateEffect();
     }
-
-    #region Output
-
-    public event Action OnClickToContinue;
-    public event Action OnClickToBack;
-
-    #endregion
 }

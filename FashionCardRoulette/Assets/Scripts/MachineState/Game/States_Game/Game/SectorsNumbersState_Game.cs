@@ -26,11 +26,14 @@ public class SectorsNumbersState_Game : IState
         _sectorArrowProvider.ActivateZone();
 
         _sceneRoot.OpenSectorsPanel();
+        _sceneRoot.OpenSectorsDescriptionPanel();
     }
 
     public void ExitState()
     {
         _sectorArrowEventsProvider.OnDeactivateZone -= ChangeStateToSectorsFinish;
+
+        _sceneRoot.CloseSectorsDescriptionPanel();
     }
 
     private void ChangeStateToSectorsFinish()
