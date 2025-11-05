@@ -21,6 +21,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private BankTransactionHistoryPresenter bankTransactionHistoryPresenter;
 
     private ParticleEffectPresenter particleEffectPresenter;
+    private ParticleEffectMaterialPresenter particleEffectMaterialPresenter;
     private SoundPresenter soundPresenter;
 
     private StoreCharacterPresenter storeCharacterPresenter;
@@ -82,6 +83,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             (new ParticleEffectModel(),
             viewContainer.GetView<ParticleEffectView>());
 
+        particleEffectMaterialPresenter = new ParticleEffectMaterialPresenter(new ParticleEffectMaterialModel(), viewContainer.GetView<ParticleEffectMaterialView>());
+
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
         bankTransactionHistoryPresenter = new BankTransactionHistoryPresenter(new BankTransactionHistoryModel(bankPresenter), viewContainer.GetView<BankTransactionHistoryView>());
 
@@ -126,6 +129,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 
+            particleEffectPresenter,
             storeClothesPresenter, 
             shopClothesPresenter, 
             wardrobeClothesVisualPresenter,
@@ -155,6 +159,8 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         soundPresenter.Initialize();
         particleEffectPresenter.Initialize();
+        particleEffectMaterialPresenter.Initialize();
+        particleEffectMaterialPresenter.Activate();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
         bankTransactionHistoryPresenter.Initialize();
@@ -218,15 +224,23 @@ public class GameSceneEntryPoint : MonoBehaviour
     private void ActivateTransitions()
     {
         sceneRoot.OnClickToExit_Exit += HandleClickToMenu;
+        sceneRoot.OnClickToExit_Finish += HandleClickToMenu;
+
+        sceneRoot.OnClickToRestart_Finish += HandleClickToGame;
     }
 
     private void DeactivateTransitions()
     {
         sceneRoot.OnClickToExit_Exit -= HandleClickToMenu;
+        sceneRoot.OnClickToExit_Finish -= HandleClickToMenu;
+
+        sceneRoot.OnClickToRestart_Finish -= HandleClickToGame;
     }
 
     private void Deactivate()
     {
+        particleEffectMaterialPresenter.Deactivate();
+
         sceneRoot.Deactivate();
         soundPresenter?.Dispose();
     }
@@ -238,6 +252,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         soundPresenter?.Dispose();
         sceneRoot.Dispose();
         particleEffectPresenter?.Dispose();
+        particleEffectMaterialPresenter?.Dispose();
         bankPresenter?.Dispose();
         bankTransactionHistoryPresenter?.Dispose();
 
@@ -295,12 +310,20 @@ public class GameSceneEntryPoint : MonoBehaviour
 
 
     public event Action OnClickToMenu;
+    public event Action OnClickToGame;
 
     private void HandleClickToMenu()
     {
         Deactivate();
 
         OnClickToMenu?.Invoke();
+    }
+
+    private void HandleClickToGame()
+    {
+        Deactivate();
+
+        OnClickToGame?.Invoke();
     }
 
     #endregion

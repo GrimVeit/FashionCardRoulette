@@ -14105,7 +14105,7 @@ GameObject:
   - component: {fileID: 400006}
   - component: {fileID: 114000011358851358}
   m_Layer: 0
-  m_Name: Snow
+  m_Name: FullCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

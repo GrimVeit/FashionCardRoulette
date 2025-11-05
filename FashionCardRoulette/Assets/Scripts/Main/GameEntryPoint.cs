@@ -36,7 +36,7 @@ public class GameEntryPoint
 
     private void Run()  
     {
-        coroutines.StartCoroutine(LoadAndStartGame());
+        coroutines.StartCoroutine(LoadAndStartMainMenu());
     }
 
     private IEnumerator LoadAndStartMainMenu()
@@ -53,6 +53,7 @@ public class GameEntryPoint
         sceneEntryPoint.Run(rootView);
 
         sceneEntryPoint.OnClickToGame += () => coroutines.StartCoroutine(LoadAndStartGame());
+
 
         yield return rootView.HideLoadingScreen(0);
     }
@@ -71,6 +72,7 @@ public class GameEntryPoint
         sceneEntryPoint.Run(rootView);
 
         sceneEntryPoint.OnClickToMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
+        sceneEntryPoint.OnClickToGame += () => coroutines.StartCoroutine(LoadAndStartGame());
 
         yield return rootView.HideLoadingScreen(1);
     }

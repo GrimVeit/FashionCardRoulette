@@ -23,6 +23,8 @@ public class UIGameRoot : UIRoot
     [SerializeField] private CoinsPanel_Game coinsPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
     [SerializeField] private ResultsPanel_Game resultPanel;
+    [SerializeField] private CharacterResultPanel_Game characterResultPanel;
+    [SerializeField] private FinishPanel_Game finishPanel;
 
     [Header("Character")]
     [SerializeField] private ShopWardrobePanel_Game shopWardrobePanel;
@@ -61,6 +63,8 @@ public class UIGameRoot : UIRoot
         coinsPanel.Initialize();
         exitPanel.Initialize();
         resultPanel.Initialize();
+        characterResultPanel.Initialize();
+        finishPanel.Initialize();
 
         shopWardrobePanel.Initialize();
 
@@ -90,6 +94,8 @@ public class UIGameRoot : UIRoot
         chooseNumbersPanel.OnClickToBack += HandleClickToBack_ChooseNumbers;
 
         resultPanel.OnClickToContinue += HandleClickToContinue_Result;
+        finishPanel.OnClickToExit += HandleClickToExit_Finish;
+        finishPanel.OnClickToRestart += HandleClickToRestart_Finish;
 
         shopWardrobePanel.OnClickToBack += HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop += HandleClickToShop_ShopWardrobe;
@@ -119,6 +125,8 @@ public class UIGameRoot : UIRoot
         chooseNumbersPanel.OnClickToBack -= HandleClickToBack_ChooseNumbers;
 
         resultPanel.OnClickToContinue -= HandleClickToContinue_Result;
+        finishPanel.OnClickToExit -= HandleClickToExit_Finish;
+        finishPanel.OnClickToRestart -= HandleClickToRestart_Finish;
 
         shopWardrobePanel.OnClickToBack -= HandleClickToBack_ShopWardrobe;
         shopWardrobePanel.OnClickToShop -= HandleClickToShop_ShopWardrobe;
@@ -147,6 +155,9 @@ public class UIGameRoot : UIRoot
         CloseMoreCoinsPanel();
         CloseCoinsPanel();
         CloseExitPanel();
+        CloseResultPanel();
+        CloseCharacterResultPanel();
+        CloseFinishPanel();
 
         CloseShopWardrobePanel();
         CloseShopTypePanel();
@@ -177,6 +188,8 @@ public class UIGameRoot : UIRoot
         coinsPanel.Dispose();
         exitPanel.Dispose();
         resultPanel.Dispose();
+        characterResultPanel.Dispose();
+        finishPanel.Dispose();
 
         shopWardrobePanel.Dispose();
 
@@ -633,6 +646,46 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(resultPanel);
     }
 
+
+
+
+
+
+
+    public void OpenCharacterResultPanel()
+    {
+        if(characterResultPanel.IsActive) return;
+
+        OpenOtherPanel(characterResultPanel);
+    }
+
+    public void CloseCharacterResultPanel()
+    {
+        if(!characterResultPanel.IsActive) return;
+
+        CloseOtherPanel(characterResultPanel);
+    }
+
+
+
+
+
+
+
+    public void OpenFinishPanel()
+    {
+        if(finishPanel.IsActive) return;
+
+        OpenOtherPanel(finishPanel);
+    }
+
+    public void CloseFinishPanel()
+    {
+        if(!finishPanel.IsActive) return;
+
+        CloseOtherPanel(finishPanel);
+    }
+
     #endregion
 
 
@@ -778,6 +831,21 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_ChooseNumbers()
     {
         OnClickToBack_ChooseNumbers?.Invoke();
+    }
+
+    //-------------------------FINISH----------------------------//
+
+    public event Action OnClickToRestart_Finish;
+    public event Action OnClickToExit_Finish;
+
+    private void HandleClickToRestart_Finish()
+    {
+        OnClickToRestart_Finish?.Invoke();
+    }
+
+    private void HandleClickToExit_Finish()
+    {
+        OnClickToExit_Finish?.Invoke();
     }
 
     #endregion

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class UIRootView : MonoBehaviour
 {
-    [SerializeField] private Canvas canvas;
+    [SerializeField] private Canvas canvasMain;
     [SerializeField] private List<MovePanel> loadScreens = new List<MovePanel>();
     [SerializeField] private Transform uiSceneContainer;
+
     public IEnumerator ShowLoadingScreen(int index)
     {
         loadScreens[index].ActivatePanel();
@@ -23,8 +24,8 @@ public class UIRootView : MonoBehaviour
     {
         ClearSceneUI();
 
-        canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = camera;
+        canvasMain.renderMode = RenderMode.ScreenSpaceCamera;
+        canvasMain.worldCamera = camera;
 
         sceneUI.transform.SetParent(uiSceneContainer, false);
         sceneUI.transform.localScale = Vector3.one;

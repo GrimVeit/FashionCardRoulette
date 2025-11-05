@@ -11,6 +11,7 @@ public class StateMachine_Game : IGlobalStateMachineProvider
 
     public StateMachine_Game
         (UIGameRoot sceneRoot,
+        IParticleEffectProvider particleEffectProvider,
         IStoreClothesEventsProvider storeClothesEventsProvider,
         IShopClothesEventsProvider shopClothesEventsProvider,
         IWardrobeClothesEventsProvider wardrobeClothesEventsProvider, 
@@ -43,6 +44,9 @@ public class StateMachine_Game : IGlobalStateMachineProvider
 
         states[typeof(CheckFinishState_Game)] = new CheckFinishState_Game(this, taskVisualInfoProvider);
         states[typeof(ResultState_Game)] = new ResultState_Game(this, sceneRoot, taskVisualMoveProvider);
+        states[typeof(ResultCharacterState_Game)] = new ResultCharacterState_Game(this, sceneRoot, particleEffectProvider);
+        states[typeof(FinishState_Game)] = new FinishState_Game(this, sceneRoot);
+
         states[typeof(RouletteState_Game)] = new RouletteState_Game(this, roulettePresenter, rouletteBallPresenter, chooseNumberProvider, sceneRoot, rouletteStateProvider, rouletteSpinCountProvider, storeNumberInfoProvider);
         states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider, rouletteStateProvider, numberTrashEventsProvider);
         states[typeof(TaskDescriptionState_Game)] = new TaskDescriptionState_Game(this, sceneRoot, claimEventsProvider);

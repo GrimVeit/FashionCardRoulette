@@ -18,6 +18,7 @@ public class MenuEntryPoint : MonoBehaviour
 
     private BankPresenter bankPresenter;
     private ParticleEffectPresenter particleEffectPresenter;
+    private ParticleEffectMaterialPresenter particleEffectMaterialPresenter;
     private SoundPresenter soundPresenter;
 
     private NicknamePresenter nicknamePresenter;
@@ -57,6 +58,8 @@ public class MenuEntryPoint : MonoBehaviour
                     (new ParticleEffectModel(),
                     viewContainer.GetView<ParticleEffectView>());
 
+                particleEffectMaterialPresenter = new ParticleEffectMaterialPresenter(new ParticleEffectMaterialModel(), viewContainer.GetView<ParticleEffectMaterialView>());
+
                 bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
                 nicknamePresenter = new NicknamePresenter(new NicknameModel(PlayerPrefsKeys.NICKNAME, soundPresenter), viewContainer.GetView<NicknameView>());
@@ -81,6 +84,8 @@ public class MenuEntryPoint : MonoBehaviour
 
                 soundPresenter.Initialize();
                 particleEffectPresenter.Initialize();
+                particleEffectMaterialPresenter.Initialize();
+                particleEffectMaterialPresenter.Activate();
                 sceneRoot.Initialize();
                 bankPresenter.Initialize();
                 nicknamePresenter.Initialize();
@@ -124,6 +129,8 @@ public class MenuEntryPoint : MonoBehaviour
 
     private void Deactivate()
     {
+        particleEffectMaterialPresenter.Deactivate();
+
         sceneRoot.Deactivate();
         soundPresenter?.Dispose();
     }
@@ -135,6 +142,7 @@ public class MenuEntryPoint : MonoBehaviour
         soundPresenter?.Dispose();
         sceneRoot?.Dispose();
         particleEffectPresenter?.Dispose();
+        particleEffectMaterialPresenter?.Dispose();
         bankPresenter?.Dispose();
 
         nicknamePresenter?.Dispose();

@@ -5,7 +5,8 @@ using UnityEngine;
 public class ParticleEffectModel
 {
     public event Action OnActivateEffect;
-    
+    public event Action OnDeactivateEffect;
+
     public Dictionary<string, ParticleEffect> particleEffects = new Dictionary<string, ParticleEffect>();
 
     public void Initialize(ParticleEffect[] effects)

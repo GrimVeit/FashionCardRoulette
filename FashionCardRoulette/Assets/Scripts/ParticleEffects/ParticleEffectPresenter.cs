@@ -28,6 +28,11 @@ public class ParticleEffectPresenter : IParticleEffectProvider
         effectModel.Play(ID);
     }
 
+    public void Stop(string ID)
+    {
+        effectModel.Play(ID);
+    }
+
     public IParticleEffect GetParticleEffect(string ID)
     {
         return effectModel.GetParticleEffect(ID);

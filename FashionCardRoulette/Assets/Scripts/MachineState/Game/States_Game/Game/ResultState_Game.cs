@@ -17,6 +17,10 @@ public class ResultState_Game : IState
 
     public void EnterState()
     {
+        Debug.Log("<color=red>ACTIVATE STATE - RESULT STATE / GAME</color>");
+
+        _sceneRoot.OnClickToContinue_Result += ChangeStateToCharacterResult;
+
         _sceneRoot.OpenTasksPanel();
         _sceneRoot.OpenResultPanel();
         _sceneRoot.CloseCoinsPanel();
@@ -26,7 +30,14 @@ public class ResultState_Game : IState
 
     public void ExitState()
     {
+        _sceneRoot.OnClickToContinue_Result -= ChangeStateToCharacterResult;
+
         _sceneRoot.CloseTasksPanel();
         _sceneRoot.CloseResultPanel();
+    }
+
+    private void ChangeStateToCharacterResult()
+    {
+        _machineProvider.SetState(_machineProvider.GetState<ResultCharacterState_Game>());
     }
 }
