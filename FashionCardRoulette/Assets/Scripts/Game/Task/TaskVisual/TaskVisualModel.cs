@@ -19,10 +19,13 @@ public class TaskVisualModel
 
     private NumberValue _currentNumberValue;
 
-    public TaskVisualModel(ITaskConditionStorageProvider taskConditionStorageProvider, IChooseNumberEventsProvider chooseNumberEventsProvider)
+    private readonly ISoundProvider _soundProvider;
+
+    public TaskVisualModel(ITaskConditionStorageProvider taskConditionStorageProvider, IChooseNumberEventsProvider chooseNumberEventsProvider, ISoundProvider soundProvider)
     {
         _taskConditionStorageProvider = taskConditionStorageProvider;
         _chooseNumberEventsProvider = chooseNumberEventsProvider;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -55,6 +58,8 @@ public class TaskVisualModel
         OnChooseTask_Value?.Invoke(task);
 
         OnChooseTask?.Invoke();
+
+        _soundProvider.PlayOneShot("ClickTask");
     }
 
     public void SetInProgressTask(int taskId)

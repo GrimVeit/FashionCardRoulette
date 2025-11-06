@@ -9,10 +9,12 @@ public class ChooseCharacterModel
     private readonly IStoreCharacterEventsProvider _storeCharacterEventsProvider;
 
     private (Gender gender, int id) _currentCharacter;
+    private readonly ISoundProvider _soundProvider;
 
-    public ChooseCharacterModel(IStoreCharacterEventsProvider storeCharacterEventsProvider)
+    public ChooseCharacterModel(IStoreCharacterEventsProvider storeCharacterEventsProvider, ISoundProvider soundProvider)
     {
         _storeCharacterEventsProvider = storeCharacterEventsProvider;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -27,10 +29,14 @@ public class ChooseCharacterModel
 
     public void SetCharacter(Gender gender, int id)
     {
+        if (_currentCharacter == (gender, id)) return;
+
         OnDeactivate?.Invoke(_currentCharacter.gender, _currentCharacter.id);
 
         _currentCharacter = (gender, id);
         OnActivate?.Invoke(gender, id);
+
+        _soundProvider.PlayOneShot("Toggle");
     }
 
     public void SubmitChoice()
@@ -38,6 +44,8 @@ public class ChooseCharacterModel
         Debug.Log(_currentCharacter.ToString());
 
         OnChooseCharacter?.Invoke(_currentCharacter.gender, _currentCharacter.id);
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     #region Output

@@ -89,14 +89,14 @@ public class GameSceneEntryPoint : MonoBehaviour
         bankTransactionHistoryPresenter = new BankTransactionHistoryPresenter(new BankTransactionHistoryModel(bankPresenter), viewContainer.GetView<BankTransactionHistoryView>());
 
         storeCharacterPresenter = new StoreCharacterPresenter(new StoreCharacterModel(personZeroGroup));
-        chooseGenderPresenter = new ChooseGenderPresenter(new ChooseGenderModel(storeCharacterPresenter), viewContainer.GetView<ChooseGenderView>());
-        chooseCharacterPresenter = new ChooseCharacterPresenter(new ChooseCharacterModel(storeCharacterPresenter), viewContainer.GetView<ChooseCharacterView>());
+        chooseGenderPresenter = new ChooseGenderPresenter(new ChooseGenderModel(storeCharacterPresenter, soundPresenter), viewContainer.GetView<ChooseGenderView>());
+        chooseCharacterPresenter = new ChooseCharacterPresenter(new ChooseCharacterModel(storeCharacterPresenter, soundPresenter), viewContainer.GetView<ChooseCharacterView>());
 
         storeClothesPresenter = new StoreClothesPresenter(new StoreClothesModel(clothesAllGroup));
         chooseGenderClothesPresenter = new ChooseGenderClothesPresenter(new ChooseGenderClothesModel(chooseGenderPresenter));
         characterVisualPresenter = new CharacterVisualPresenter(new CharacterVisualModel(chooseCharacterPresenter), viewContainer.GetView<CharacterVisualView>());
 
-        chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ChooseShopClothesView>());
+        chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter, storeClothesPresenter, soundPresenter), viewContainer.GetView<ChooseShopClothesView>());
         shopClothesPresenter = new ShopClothesPresenter(new ShopClothesModel(bankPresenter, storeClothesPresenter), viewContainer.GetView<ShopClothesView>());
         shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter, shopClothesPresenter, shopClothesPresenter), viewContainer.GetView<ShopClothesVisualView>());
 
@@ -111,7 +111,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseNumberPresenter = new ChooseNumberPresenter(new ChooseNumberModel(), viewContainer.GetView<ChooseNumberView>());
         numberTrashPresenter = new NumberTrashPresenter(new NumberTrashModel(), viewContainer.GetView<NumberTrashView>());
         taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
-        taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter), viewContainer.GetView<TaskVisualView>());
+        taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter, soundPresenter), viewContainer.GetView<TaskVisualView>());
         taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter, taskVisualPresenter, taskVisualPresenter, bankPresenter), viewContainer.GetView<TaskDescriptionView>());
         taskVisualMovePresenter = new TaskVisualMovePresenter(new TaskVisualMoveModel(), viewContainer.GetView<TaskVisualMoveView>());
 

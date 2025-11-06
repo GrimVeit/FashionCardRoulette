@@ -5,21 +5,27 @@ using UnityEngine;
 
 public class ChooseGenderModel
 {
-    private IStoreCharacterProvider _storeCharacterProvider;
+    private readonly IStoreCharacterProvider _storeCharacterProvider;
+    private readonly ISoundProvider _soundProvider;
 
-    public ChooseGenderModel(IStoreCharacterProvider storeCharacterProvider)
+    public ChooseGenderModel(IStoreCharacterProvider storeCharacterProvider, ISoundProvider soundProvider)
     {
         _storeCharacterProvider = storeCharacterProvider;
+        _soundProvider = soundProvider;
     }
 
     private int _currentGender = 0;
 
     public void SetGender(int id)
     {
+        if(_currentGender == id) return;
+
         OnDeactivate?.Invoke(_currentGender);
 
         _currentGender = id;
         OnActivate?.Invoke(_currentGender);
+
+        _soundProvider.PlayOneShot("Toggle");
     }
 
     public void SubmitChoice()
@@ -36,6 +42,7 @@ public class ChooseGenderModel
                 break;
         }
 
+        _soundProvider.PlayOneShot("Click");
         Debug.Log(_currentGender);
     }
 

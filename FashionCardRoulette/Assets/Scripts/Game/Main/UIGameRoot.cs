@@ -706,11 +706,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToContinue_ChooseCharacter()
     {
         OnClickToContinue_ChooseCharacter?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToBack_ChooseCharacter()
     {
         OnClickToBack_ChooseCharacter?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //----------------------------------MAIN----------------------//
@@ -721,11 +725,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToCharacter_Main()
     {
         OnClickToCharacter_Main?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToSpin_Main()
     {
         OnClickToSpin_Main?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //------------------------------EXIT--------------------------//
@@ -735,6 +743,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToExit_Exit()
     {
         OnClickToExit_Exit?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //----------------------------SHOP_WARDROBE--------------------------//
@@ -746,16 +756,22 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_ShopWardrobe()
     {
         OnClickToBack_ShopWardrobe?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToWardrobe_ShopWardrobe()
     {
         OnClickToWardrobe_ShopWardrobe?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToShop_ShopWardrobe()
     {
         OnClickToShop_ShopWardrobe?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //-------------------------SHOP_TYPE----------------------------//
@@ -765,6 +781,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_ShopType()
     {
         OnClickToBack_ShopType?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //-------------------------SHOP----------------------------//
@@ -774,6 +792,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_Shop()
     {
         OnClickToBack_Shop?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //-------------------------WARDROBE_TYPE----------------------------//
@@ -783,6 +803,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_WardrobeType()
     {
         OnClickToBack_WardrobeType?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //-------------------------WARDROBE----------------------------//
@@ -792,6 +814,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_Wardrobe()
     {
         OnClickToBack_Wardrobe?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
 
@@ -804,6 +828,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToBack_TaskDescription()
     {
         OnClickToBack_TaskDescription?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
 
@@ -815,6 +841,8 @@ public class UIGameRoot : UIRoot
     private void HandleClickToContinue_Result()
     {
         OnClickToContinue_Result?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
 
@@ -826,11 +854,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToContinue_ChooseNumbers()
     {
         OnClickToContinue_ChooseNumbers?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToBack_ChooseNumbers()
     {
         OnClickToBack_ChooseNumbers?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     //-------------------------FINISH----------------------------//
@@ -841,11 +873,15 @@ public class UIGameRoot : UIRoot
     private void HandleClickToRestart_Finish()
     {
         OnClickToRestart_Finish?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     private void HandleClickToExit_Finish()
     {
         OnClickToExit_Finish?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     #endregion
