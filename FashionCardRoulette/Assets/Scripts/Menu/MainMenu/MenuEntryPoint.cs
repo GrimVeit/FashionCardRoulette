@@ -102,7 +102,6 @@ public class MenuEntryPoint : MonoBehaviour
             {
                 Debug.LogError(string.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
             }
         });
     }

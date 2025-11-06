@@ -4,42 +4,36 @@ using UnityEngine;
 
 public class LoadScreenPanel : MovePanel
 {
-    [SerializeField] private List<AnimationElement> animationElementIcons;
     [SerializeField] private UIEffectCombination effectCombination;
-    [SerializeField] private float timeWait;
+    [SerializeField] private LazyMotionGroup motionGroup;
 
-    private IEnumerator timer;
+    private void Awake() => Initialize();
 
-    private void Awake()
+    private void OnDestroy() => Dispose();
+
+
+    public override void Initialize()
     {
+        base.Initialize();
+
         effectCombination.Initialize();
-
-        animationElementIcons.ForEach(data => OnDeactivatePanel += data.Deactivate);
-
-        Initialize();
+        motionGroup.Initialize();
     }
 
-    private void OnDestroy()
+    public override void Dispose()
     {
-        if (timer != null) Coroutines.Stop(timer);
+        base.Dispose();
 
         effectCombination.Dispose();
-
-        animationElementIcons.ForEach(data => OnDeactivatePanel -= data.Deactivate);
-
-        Dispose();
+        motionGroup.Dispose();
     }
 
     public override void ActivatePanel()
     {
         base.ActivatePanel();
 
-        if (timer != null) Coroutines.Stop(timer);
-
         effectCombination.ActivateEffect();
-
-        timer = Timer();
-        Coroutines.Start(timer);
+        motionGroup.Activate();
     }
 
     public override void DeactivatePanel()
@@ -47,12 +41,6 @@ public class LoadScreenPanel : MovePanel
         base.DeactivatePanel();
 
         effectCombination.DeactivateEffect();
-    }
-
-    private IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(timeWait);
-
-        animationElementIcons.ForEach(data => data.Activate(1));
+        motionGroup.Deactivate();
     }
 }

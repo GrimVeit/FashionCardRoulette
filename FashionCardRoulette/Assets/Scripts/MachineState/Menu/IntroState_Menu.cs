@@ -22,7 +22,7 @@ public class IntroState_Menu : IState
 
         if (timer != null ) Coroutines.Stop(timer);
 
-        timer = Timer(2);
+        timer = Timer(1);
         Coroutines.Start(timer);
     }
 
