@@ -10,7 +10,9 @@ public class WardrobeClothesVisualModel
 
     private Clothes _currentSelectClothes;
 
-    public WardrobeClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider, IStoreClothesSelectorProvider storeClothesSelectorProvider)
+    private readonly ISoundProvider _soundProvider;
+
+    public WardrobeClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider, IStoreClothesSelectorProvider storeClothesSelectorProvider, ISoundProvider soundProvider)
     {
         _storeClothesEventsProvider = storeClothesEventsProvider;
         _storeClothesSelectorProvider = storeClothesSelectorProvider;
@@ -20,6 +22,7 @@ public class WardrobeClothesVisualModel
 
         _storeClothesEventsProvider.OnChangeChooseClothes += ClearClothes;
         _storeClothesEventsProvider.OnEndChangeChooseClothes += ClearEndClothes;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -38,11 +41,13 @@ public class WardrobeClothesVisualModel
 
     public void SetChooseClothes(Clothes clothes)
     {
-        if(_currentSelectClothes == null)
+        if (_currentSelectClothes == null)
         {
             _currentSelectClothes = clothes;
             OnActivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
             OnActivateSubmit?.Invoke();
+
+            _soundProvider.PlayOneShot("Toggle");
             return;
         }
         else
@@ -61,7 +66,14 @@ public class WardrobeClothesVisualModel
             OnActivate?.Invoke(_currentSelectClothes.ClothesType, _currentSelectClothes.Id);
 
             OnActivateSubmit?.Invoke();
+
+            _soundProvider.PlayOneShot("Toggle");
         }
+    }
+
+    public void LeftRight()
+    {
+        _soundProvider.PlayOneShot("Click");
     }
 
     public void SubmitChoice()
@@ -76,6 +88,8 @@ public class WardrobeClothesVisualModel
         OnDeactivateSubmit?.Invoke();
 
         OnSubmitSelect?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     #region Input

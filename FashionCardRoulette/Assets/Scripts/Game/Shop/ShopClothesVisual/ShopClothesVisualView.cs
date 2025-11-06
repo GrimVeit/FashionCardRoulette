@@ -48,6 +48,8 @@ public class ShopClothesVisualView : View
         {
             _currentPage--;
             UpdatePage();
+
+            OnClickLeftRight?.Invoke();
         }
     }
 
@@ -57,6 +59,8 @@ public class ShopClothesVisualView : View
         {
             _currentPage++;
             UpdatePage();
+
+            OnClickLeftRight?.Invoke();
         }
     }
 
@@ -195,6 +199,7 @@ public class ShopClothesVisualView : View
     #region Output
 
     public event Action<Clothes> OnChooseToBuy;
+    public event Action OnClickLeftRight;
 
     private void ChooseToBuy(Clothes clothes)
     {

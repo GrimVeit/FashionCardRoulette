@@ -34,6 +34,7 @@ public class WardrobeClothesVisualPresenter : IWardrobeClothesEventsProvider
     {
         _view.OnChooseToSelect += _model.SetChooseClothes;
         _view.OnSubmitChoice += _model.SubmitChoice;
+        _view.OnClickLeftRight += _model.LeftRight;
 
         _model.OnSetSelectClothes += _view.SetSelectClothes;
         _model.OnSetDeselectClothes += _view.SetDeselectClothes;
@@ -51,6 +52,7 @@ public class WardrobeClothesVisualPresenter : IWardrobeClothesEventsProvider
     {
         _view.OnChooseToSelect -= _model.SetChooseClothes;
         _view.OnSubmitChoice -= _model.SubmitChoice;
+        _view.OnClickLeftRight -= _model.LeftRight;
 
         _model.OnSetSelectClothes -= _view.SetSelectClothes;
         _model.OnSetDeselectClothes -= _view.SetDeselectClothes;

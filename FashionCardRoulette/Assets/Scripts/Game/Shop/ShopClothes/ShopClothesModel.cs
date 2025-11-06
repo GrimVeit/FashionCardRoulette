@@ -22,13 +22,15 @@ public class ShopClothesModel
 
     private readonly IStoreClothesActivatorProvider _clothesActivatorProvider;
     private readonly IMoneyProvider _moneyProvider;
+    private readonly ISoundProvider _soundProvider;
 
     private int _allPrice = 0;
 
-    public ShopClothesModel(IMoneyProvider moneyProvider, IStoreClothesActivatorProvider storeClothesActivatorProvider)
+    public ShopClothesModel(IMoneyProvider moneyProvider, IStoreClothesActivatorProvider storeClothesActivatorProvider, ISoundProvider soundProvider)
     {
         _moneyProvider = moneyProvider;
         _clothesActivatorProvider = storeClothesActivatorProvider;
+        _soundProvider = soundProvider;
     }
 
     public void ChooseClothes(Clothes clothes)
@@ -63,6 +65,8 @@ public class ShopClothesModel
 
     public void CancelBuy()
     {
+        _soundProvider.PlayOneShot("Click");
+
         for (int i = 0; i < _clothesBuy.Count; i++)
         {
             OnUnchooseClothes?.Invoke(_clothesBuy[i]);
@@ -98,6 +102,8 @@ public class ShopClothesModel
             OnAddClothes?.Invoke(_clothesBuy);
 
             OnCanBuy?.Invoke();
+
+            _soundProvider.PlayOneShot("Click");
         }
         else
         {
@@ -130,6 +136,8 @@ public class ShopClothesModel
 
             OnBuy?.Invoke();
         }
+
+        _soundProvider.PlayOneShot("Click");
 
         AllDelete();
     }

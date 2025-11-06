@@ -53,6 +53,8 @@ public class WardrobeClothesVisualView : View
         {
             _currentPage--;
             UpdatePage();
+
+            OnClickLeftRight?.Invoke();
         }
     }
 
@@ -62,6 +64,8 @@ public class WardrobeClothesVisualView : View
         {
             _currentPage++;
             UpdatePage();
+
+            OnClickLeftRight?.Invoke();
         }
     }
 
@@ -211,8 +215,8 @@ public class WardrobeClothesVisualView : View
     #region Output
 
     public event Action OnSubmitChoice;
-
     public event Action<Clothes> OnChooseToSelect;
+    public event Action OnClickLeftRight;
 
     private void ChooseToSelect(Clothes clothes)
     {

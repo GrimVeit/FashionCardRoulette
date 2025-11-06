@@ -10,11 +10,14 @@ public class ChooseWardrobeClothesModel
 
     private GenderClothesTypes _genderClothesTypes;
 
-    public ChooseWardrobeClothesModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider, IStoreClothesChooseProvider storeClothesChooseProvider)
+    private readonly ISoundProvider _soundProvider;
+
+    public ChooseWardrobeClothesModel(IChooseGenderClothesEventsProvider chooseGenderClothesEventsProvider, IStoreClothesChooseProvider storeClothesChooseProvider, ISoundProvider soundProvider)
     {
         _chooseGenderClothesEventsProvider = chooseGenderClothesEventsProvider;
         _storeClothesChooseProvider = storeClothesChooseProvider;
         _chooseGenderClothesEventsProvider.OnChooseGenderClothesType += SetGenderClothesTypes;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -40,6 +43,8 @@ public class ChooseWardrobeClothesModel
 
     public void ChooseType(ClothesType type)
     {
+        _soundProvider.PlayOneShot("Click");
+
         _storeClothesChooseProvider.ChooseByClothesTypeForWardrobe(type);
     }
 

@@ -32,6 +32,7 @@ public class ShopClothesVisualPresenter
     private void ActivateEvents()
     {
         _view.OnChooseToBuy += _model.ChooseShopClothes;
+        _view.OnClickLeftRight += _model.LeftRight;
 
         _model.OnSetOpenClothes += _view.SetOpenClothes;
         _model.OnSetCloseClothes += _view.SetCloseClothes;
@@ -45,6 +46,7 @@ public class ShopClothesVisualPresenter
     private void DeactivateEvents()
     {
         _view.OnChooseToBuy -= _model.ChooseShopClothes;
+        _view.OnClickLeftRight -= _model.LeftRight;
 
         _model.OnSetOpenClothes -= _view.SetOpenClothes;
         _model.OnSetCloseClothes -= _view.SetCloseClothes;

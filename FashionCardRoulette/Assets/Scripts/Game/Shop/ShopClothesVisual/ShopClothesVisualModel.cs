@@ -9,11 +9,14 @@ public class ShopClothesVisualModel
     private readonly IShopClothesProvider _shopClothesProvider;
     private readonly IShopClothesEventsProvider _shopClothesEventsProvider;
 
-    public ShopClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider, IShopClothesProvider shopClothesProvider, IShopClothesEventsProvider shopClothesEventsProvider)
+    private readonly ISoundProvider _soundProvider;
+
+    public ShopClothesVisualModel(IStoreClothesEventsProvider storeClothesEventsProvider, IShopClothesProvider shopClothesProvider, IShopClothesEventsProvider shopClothesEventsProvider, ISoundProvider soundProvider)
     {
         _storeClothesEventsProvider = storeClothesEventsProvider;
         _shopClothesProvider = shopClothesProvider;
         _shopClothesEventsProvider = shopClothesEventsProvider;
+        _soundProvider = soundProvider;
 
         _storeClothesEventsProvider.OnChooseCloseClothes += SetCloseClothes;
         _storeClothesEventsProvider.OnChooseOpenClothes += SetOpenClothes;
@@ -40,8 +43,15 @@ public class ShopClothesVisualModel
         _shopClothesEventsProvider.OnUnchooseClothes -= DeactivateClothes;
     }
 
+    public void LeftRight()
+    {
+        _soundProvider.PlayOneShot("Click");
+    }
+
     public void ChooseShopClothes(Clothes clothes)
     {
+        _soundProvider.PlayOneShot("Toggle");
+
         _shopClothesProvider.ChooseClothes(clothes);
     }
 
@@ -61,10 +71,12 @@ public class ShopClothesVisualModel
     {
         OnSetOpenClothes?.Invoke(clothes);
     }
+
     private void SetCloseClothes(Clothes clothes)
     {
         OnSetCloseClothes?.Invoke(clothes);
     }
+
     private void ClearClothes(ClothesType type)
     {
         _shopClothesProvider.AllDelete();

@@ -97,11 +97,11 @@ public class GameSceneEntryPoint : MonoBehaviour
         characterVisualPresenter = new CharacterVisualPresenter(new CharacterVisualModel(chooseCharacterPresenter), viewContainer.GetView<CharacterVisualView>());
 
         chooseShopClothesPresenter = new ChooseShopClothesPresenter(new ChooseShopClothesModel(chooseGenderClothesPresenter, storeClothesPresenter, soundPresenter), viewContainer.GetView<ChooseShopClothesView>());
-        shopClothesPresenter = new ShopClothesPresenter(new ShopClothesModel(bankPresenter, storeClothesPresenter), viewContainer.GetView<ShopClothesView>());
-        shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter, shopClothesPresenter, shopClothesPresenter), viewContainer.GetView<ShopClothesVisualView>());
+        shopClothesPresenter = new ShopClothesPresenter(new ShopClothesModel(bankPresenter, storeClothesPresenter, soundPresenter), viewContainer.GetView<ShopClothesView>());
+        shopClothesVisualPresenter = new ShopClothesVisualPresenter(new ShopClothesVisualModel(storeClothesPresenter, shopClothesPresenter, shopClothesPresenter, soundPresenter), viewContainer.GetView<ShopClothesVisualView>());
 
-        chooseWardrobeClothesPresenter = new ChooseWardrobeClothesPresenter(new ChooseWardrobeClothesModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ChooseWardrobeClothesView>());
-        wardrobeClothesVisualPresenter = new WardrobeClothesVisualPresenter(new WardrobeClothesVisualModel(storeClothesPresenter, storeClothesPresenter), viewContainer.GetView<WardrobeClothesVisualView>());
+        chooseWardrobeClothesPresenter = new ChooseWardrobeClothesPresenter(new ChooseWardrobeClothesModel(chooseGenderClothesPresenter, storeClothesPresenter, soundPresenter), viewContainer.GetView<ChooseWardrobeClothesView>());
+        wardrobeClothesVisualPresenter = new WardrobeClothesVisualPresenter(new WardrobeClothesVisualModel(storeClothesPresenter, storeClothesPresenter, soundPresenter), viewContainer.GetView<WardrobeClothesVisualView>());
         wardrobeFitClothesPresenter = new WardrobeFitClothesPresenter(new WardrobeFitClothesModel(storeClothesPresenter), viewContainer.GetView<WardrobeFitClothesView>());
 
         clothesVisualPresenter = new ClothesVisualPresenter(new ClothesVisualModel(chooseGenderClothesPresenter, storeClothesPresenter), viewContainer.GetView<ClothesVisualView>());
