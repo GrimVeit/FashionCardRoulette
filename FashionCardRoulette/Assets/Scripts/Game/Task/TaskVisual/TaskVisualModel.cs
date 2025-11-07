@@ -9,9 +9,9 @@ public class TaskVisualModel
     private List<(TaskType TaskType, TaskStatus Status, ITaskCondition TaskCondition)> tasksAll = new() 
     { 
         (TaskType.Easy, TaskStatus.InProgress, null), 
-        (TaskType.Easy, TaskStatus.Claimable, null), 
-        (TaskType.Easy, TaskStatus.Completed, null), 
-        (TaskType.Easy, TaskStatus.Failed, null) 
+        (TaskType.Medium, TaskStatus.InProgress, null), 
+        (TaskType.Hard, TaskStatus.InProgress, null), 
+        (TaskType.VeryHard, TaskStatus.InProgress, null) 
     };
 
     private readonly ITaskConditionStorageProvider _taskConditionStorageProvider;
