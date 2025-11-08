@@ -78,6 +78,8 @@ public class TaskVisualModel
         var task = tasksAll[taskId];
 
         OnSetClaimableTask?.Invoke(taskId);
+
+        _soundProvider.PlayOneShot("TaskGood");
     }
 
     public void SetFailedTask(int taskId)
@@ -87,6 +89,8 @@ public class TaskVisualModel
         var task = tasksAll[taskId];
 
         OnSetFailedTask?.Invoke(taskId);
+
+        _soundProvider.PlayOneShot("TaskBad");
     }
 
     public void SetCompletedTask(int taskId)

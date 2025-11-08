@@ -43,7 +43,9 @@ public class GameEntryPoint
     {
         yield return rootView.ShowLoadingScreen(0);
 
-        yield return LoadScene(Scenes.BOOT);
+        yield return new WaitForSeconds(0.4f);
+
+        //yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.MAIN_MENU);
 
         yield return new WaitForEndOfFrame();
@@ -62,7 +64,9 @@ public class GameEntryPoint
     {
         yield return rootView.ShowLoadingScreen(1);
 
-        yield return LoadScene(Scenes.BOOT);
+        yield return new WaitForSeconds(0.4f);
+
+        //yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.GAME);
 
         yield return new WaitForEndOfFrame();
