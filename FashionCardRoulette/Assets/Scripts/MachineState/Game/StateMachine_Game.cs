@@ -14,7 +14,7 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         IParticleEffectProvider particleEffectProvider,
         IStoreClothesEventsProvider storeClothesEventsProvider,
         IShopClothesEventsProvider shopClothesEventsProvider,
-        IWardrobeClothesEventsProvider wardrobeClothesEventsProvider, 
+        IWardrobeClothesEventsProvider wardrobeClothesEventsProvider,
         NumberValues numberValues,
         IChooseNumberEventsProvider chooseNumberEventsProvider,
         IChooseNumberProvider chooseNumberProvider,
@@ -32,7 +32,8 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         INumberSelectionActivatorProvider numberSelectionActivatorProvider,
         ISectorArrowProvider sectorArrowProvider,
         ISectorArrowEventsProvider sectorArrowEventsProvider,
-        IStoreNumberInfoProvider storeNumberInfoProvider)
+        IStoreNumberInfoProvider storeNumberInfoProvider,
+        ISoundProvider soundProvider)
     {
         states[typeof(ChooseGenderState_Game)] = new ChooseGenderState_Game(this, sceneRoot);
         states[typeof(ChooseCharacterState_Game)] = new ChooseCharacterState_Game(this, sceneRoot);
@@ -51,7 +52,7 @@ public class StateMachine_Game : IGlobalStateMachineProvider
         states[typeof(SetNumberState_Game)] = new SetNumberState_Game(this, sceneRoot, taskVisualEventsProvider, taskVisualProvider, rouletteStateProvider, numberTrashEventsProvider);
         states[typeof(TaskDescriptionState_Game)] = new TaskDescriptionState_Game(this, sceneRoot, claimEventsProvider);
         states[typeof(FromTaskDescriptionToMoreCoinsState_Game)] = new FromTaskDescriptionToMoreCoinsState_Game(this, sceneRoot);
-        states[typeof(MoreCoinsState_Game)] = new MoreCoinsState_Game(this, sceneRoot, videoProvider);
+        states[typeof(MoreCoinsState_Game)] = new MoreCoinsState_Game(this, sceneRoot, videoProvider, soundProvider);
 
 
 

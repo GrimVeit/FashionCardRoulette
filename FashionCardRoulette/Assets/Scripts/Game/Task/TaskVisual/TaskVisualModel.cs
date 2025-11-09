@@ -49,6 +49,8 @@ public class TaskVisualModel
         OnChooseCell_Value?.Invoke(taskId, cellId, _currentNumberValue);
 
         OnChooseCell?.Invoke();
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     public void ChooseTask(int taskId)
@@ -100,6 +102,8 @@ public class TaskVisualModel
         var task = tasksAll[taskId];
 
         OnSetCompletedTask?.Invoke(taskId);
+
+        _soundProvider.PlayOneShot("TaskComplete");
     }
 
     private void SetNumberValue(NumberValue numberValue)

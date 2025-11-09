@@ -109,7 +109,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
         chooseNumberPresenter = new ChooseNumberPresenter(new ChooseNumberModel(), viewContainer.GetView<ChooseNumberView>());
-        numberTrashPresenter = new NumberTrashPresenter(new NumberTrashModel(), viewContainer.GetView<NumberTrashView>());
+        numberTrashPresenter = new NumberTrashPresenter(new NumberTrashModel(soundPresenter), viewContainer.GetView<NumberTrashView>());
         taskConditionStoragePresenter = new TaskConditionStoragePresenter(new TaskConditionStorageModel());
         taskVisualPresenter = new TaskVisualPresenter(new TaskVisualModel(taskConditionStoragePresenter, chooseNumberPresenter, soundPresenter), viewContainer.GetView<TaskVisualView>());
         taskDescriptionPresenter = new TaskDescriptionPresenter(new TaskDescriptionModel(taskVisualPresenter, taskVisualPresenter, taskVisualPresenter, bankPresenter), viewContainer.GetView<TaskDescriptionView>());
@@ -150,7 +150,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             numberSelectionPresenter,
             sectorArrowPresenter,
             sectorArrowPresenter,
-            storeNumberPresenter);
+            storeNumberPresenter,
+            soundPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

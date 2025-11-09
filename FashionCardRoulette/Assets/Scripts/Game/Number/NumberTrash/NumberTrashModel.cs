@@ -9,6 +9,13 @@ public class NumberTrashModel
 
     private bool isTrashActive = true;
 
+    private readonly ISoundProvider _soundProvider;
+
+    public NumberTrashModel(ISoundProvider soundProvider)
+    {
+        _soundProvider = soundProvider;
+    }
+
     public void MoveToTrash()
     {
         if(!isTrashActive) return;
@@ -16,5 +23,7 @@ public class NumberTrashModel
         OnMoveToTrash?.Invoke();
 
         isTrashActive = false;
+
+        _soundProvider.PlayOneShot("NumberTrash");
     }
 }
