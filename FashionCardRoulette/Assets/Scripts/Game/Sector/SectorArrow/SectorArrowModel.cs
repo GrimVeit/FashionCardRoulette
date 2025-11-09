@@ -7,9 +7,12 @@ public class SectorArrowModel
 {
     private readonly IStoreNumberProvider _storeNumberProvider;
 
-    public SectorArrowModel(IStoreNumberProvider storeNumberProvider)
+    private readonly ISoundProvider _soundProvider;
+
+    public SectorArrowModel(IStoreNumberProvider storeNumberProvider, ISoundProvider soundProvider)
     {
         _storeNumberProvider = storeNumberProvider;
+        _soundProvider = soundProvider;
     }
 
     public void ActivateZone()
@@ -19,6 +22,8 @@ public class SectorArrowModel
 
     public void DeactivateZone()
     {
+        _soundProvider.PlayOneShot("Click");
+
         OnDeactivateZone?.Invoke();
     }
 

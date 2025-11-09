@@ -43,6 +43,7 @@ public class UIMainMenuRoot : UIRoot
         mainPanel.OnClickToLeaderboard += HandleClickToLeaderboard_Main;
         mainPanel.OnClickToWardrobe += HandleClickToWardrobe_Main;
         mainPanel.OnClickToPlay += HandleClickToPlay_Main;
+        mainPanel.OnClickToExit += HandleClickToExit_Main;
 
         wardrobePanel.OnClickToBack += HandleClickToBack_Wardrobe;
     }
@@ -57,6 +58,7 @@ public class UIMainMenuRoot : UIRoot
         mainPanel.OnClickToLeaderboard -= HandleClickToLeaderboard_Main;
         mainPanel.OnClickToWardrobe -= HandleClickToWardrobe_Main;
         mainPanel.OnClickToPlay -= HandleClickToPlay_Main;
+        mainPanel.OnClickToExit -= HandleClickToExit_Main;
 
         wardrobePanel.OnClickToBack -= HandleClickToBack_Wardrobe;
 
@@ -237,6 +239,7 @@ public class UIMainMenuRoot : UIRoot
     public event Action OnClickToLeaderboard_Main;
     public event Action OnClickToWardrobe_Main;
     public event Action OnClickToPlay_Main;
+    public event Action OnClickToExit_Main;
 
     private void HandleClickToLeaderboard_Main()
     {
@@ -257,6 +260,11 @@ public class UIMainMenuRoot : UIRoot
         _soundProvider.PlayOneShot("Click");
 
         OnClickToPlay_Main?.Invoke();
+    }
+
+    private void HandleClickToExit_Main()
+    {
+        OnClickToExit_Main?.Invoke();
     }
 
     #endregion

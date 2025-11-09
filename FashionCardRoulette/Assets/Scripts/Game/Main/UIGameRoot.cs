@@ -733,7 +733,7 @@ public class UIGameRoot : UIRoot
     {
         OnClickToSpin_Main?.Invoke();
 
-        _soundProvider.PlayOneShot("Click");
+        //_soundProvider.PlayOneShot("Click");
     }
 
     //------------------------------EXIT--------------------------//

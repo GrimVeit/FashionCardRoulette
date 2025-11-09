@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
@@ -119,11 +117,13 @@ public class MenuEntryPoint : MonoBehaviour
     private void ActivateTransitions()
     {
         sceneRoot.OnClickToPlay_Main += HandleClickToGame;
+        sceneRoot.OnClickToExit_Main += Exit;
     }
 
     private void DeactivateTransitions()
     {
         sceneRoot.OnClickToPlay_Main -= HandleClickToGame;
+        sceneRoot.OnClickToExit_Main -= Exit;
     }
 
     private void Deactivate()
@@ -132,6 +132,15 @@ public class MenuEntryPoint : MonoBehaviour
 
         sceneRoot.Deactivate();
         soundPresenter?.Dispose();
+    }
+
+    private void Exit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
+        Application.Quit();
     }
 
     private void Dispose()

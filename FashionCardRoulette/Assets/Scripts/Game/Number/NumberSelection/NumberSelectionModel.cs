@@ -12,6 +12,13 @@ public class NumberSelectionModel
         22, 18, 29, 7, 28, 12, 35, 3, 26
     };
 
+    private readonly ISoundProvider _soundProvider;
+
+    public NumberSelectionModel(ISoundProvider soundProvider)
+    {
+        _soundProvider = soundProvider;
+    }
+
     public void SelectNumbers(int number)
     {
         int index = _allNumbers.IndexOf(number);
@@ -32,6 +39,8 @@ public class NumberSelectionModel
         }
 
         OnSelectSevenNumbers?.Invoke(result);
+
+        _soundProvider.PlayOneShot("Click");
     }
 
     public void ActivateChoose()

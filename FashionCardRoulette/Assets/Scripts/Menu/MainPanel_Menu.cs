@@ -9,6 +9,7 @@ public class MainPanel_Menu : MovePanel
     [SerializeField] private Button buttonLeaderboard;
     [SerializeField] private Button buttonWardrobe;
     [SerializeField] private Button buttonPlay;
+    [SerializeField] private Button buttonExit;
 
     [SerializeField] private List<UIEffectCombination> uIEffectCombinations = new List<UIEffectCombination>();
 
@@ -19,6 +20,7 @@ public class MainPanel_Menu : MovePanel
         buttonLeaderboard.onClick.AddListener(() => OnClickToLeaderboard?.Invoke());
         buttonWardrobe.onClick.AddListener(() => OnClickToWardrobe?.Invoke());
         buttonPlay.onClick.AddListener(() => OnClickToPlay?.Invoke());
+        buttonExit.onClick.AddListener(() => OnClickToExit?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Initialize());
     }
@@ -30,6 +32,7 @@ public class MainPanel_Menu : MovePanel
         buttonLeaderboard.onClick.RemoveListener(() => OnClickToLeaderboard?.Invoke());
         buttonWardrobe.onClick.RemoveListener(() => OnClickToWardrobe?.Invoke());
         buttonPlay.onClick.RemoveListener(() => OnClickToPlay?.Invoke());
+        buttonExit.onClick.RemoveListener(() => OnClickToExit?.Invoke());
 
         uIEffectCombinations.ForEach(data => data.Dispose());
     }
@@ -53,6 +56,7 @@ public class MainPanel_Menu : MovePanel
     public event Action OnClickToLeaderboard;
     public event Action OnClickToWardrobe;
     public event Action OnClickToPlay;
+    public event Action OnClickToExit;
 
     #endregion
 }

@@ -120,12 +120,12 @@ public class GameSceneEntryPoint : MonoBehaviour
         rouletteStatePresenter = new RouletteStatePresenter(new RouletteStateModel(), viewContainer.GetView<RouletteStateView>());
         rouletteSpinCountPresenter = new RouletteSpinCountPresenter(new RouletteSpinCountModel(taskVisualPresenter), viewContainer.GetView<RouletteSpinCountView>());
 
-        numberSelectionPresenter = new NumberSelectionPresenter(new NumberSelectionModel(), viewContainer.GetView<NumberSelectionView>());
+        numberSelectionPresenter = new NumberSelectionPresenter(new NumberSelectionModel(soundPresenter), viewContainer.GetView<NumberSelectionView>());
         numberSelectionVisualPresenter = new NumberSelectionVisualPresenter(new NumberSelectionVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberSelectionVisualView>());
         numberBallVisualPresenter = new NumberBallVisualPresenter(new NumberBallVisualModel(numberSelectionPresenter), viewContainer.GetView<NumberBallVisualView>());
 
         storeNumberPresenter = new StoreNumberPresenter(new StoreNumberModel(numberSelectionPresenter));
-        sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(storeNumberPresenter), viewContainer.GetView<SectorArrowView>());
+        sectorArrowPresenter = new SectorArrowPresenter(new SectorArrowModel(storeNumberPresenter, soundPresenter), viewContainer.GetView<SectorArrowView>());
 
         stateMachine = new StateMachine_Game
             (sceneRoot, 

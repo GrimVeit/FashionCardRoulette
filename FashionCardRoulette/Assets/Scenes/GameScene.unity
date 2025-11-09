@@ -67803,6 +67803,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 2054917487}
   buttonCharacter: {fileID: 1447838258}
   buttonSpin: {fileID: 1526210848}
+  buttonExit: {fileID: 0}
   effectCombination: {fileID: 2054917488}
 --- !u!225 &2054917487
 CanvasGroup:
