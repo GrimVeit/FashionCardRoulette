@@ -36,7 +36,34 @@ public class GameEntryPoint
 
     private void Run()  
     {
-        coroutines.StartCoroutine(LoadAndStartMainMenu());
+        coroutines.StartCoroutine(LoadAndStartCheck());
+    }
+
+    private IEnumerator LoadAndStartCheck()
+    {
+        yield return LoadScene(Scenes.CHECKER);
+
+        yield return new WaitForEndOfFrame();
+
+        var sceneEntryPoint = Object.FindObjectOfType<CountryCheckerSceneEntryPoint>();
+
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.GoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartGame());
+        sceneEntryPoint.GoToOther += () => coroutines.StartCoroutine(LoadAndStartOther());
+    }
+
+    private IEnumerator LoadAndStartOther()
+    {
+        yield return LoadScene(Scenes.OTHER);
+
+        yield return new WaitForEndOfFrame();
+
+        var sceneEntryPoint = Object.FindObjectOfType<CountryCheckerSceneEntryPoint>();
+
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.GoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartGame());
     }
 
     private IEnumerator LoadAndStartMainMenu()
@@ -45,7 +72,6 @@ public class GameEntryPoint
 
         yield return new WaitForSeconds(0.4f);
 
-        //yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.MAIN_MENU);
 
         yield return new WaitForEndOfFrame();
@@ -66,7 +92,6 @@ public class GameEntryPoint
 
         yield return new WaitForSeconds(0.4f);
 
-        //yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.GAME);
 
         yield return new WaitForEndOfFrame();
