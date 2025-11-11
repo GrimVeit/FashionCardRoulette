@@ -1,9 +1,14 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Firebase;
+using Firebase.Extensions;
+using Firebase.Database;
+using Firebase.Auth;
 
 public class CountryCheckerSceneEntryPoint : MonoBehaviour
 {
+    [SerializeField] private Sounds sounds;
     [SerializeField] private UICountryCheckerSceneRoot sceneRootPrefab;
 
     private UICountryCheckerSceneRoot sceneRoot;
@@ -11,33 +16,59 @@ public class CountryCheckerSceneEntryPoint : MonoBehaviour
 
     private GeoLocationPresenter geoLocationPresenter;
     private InternetPresenter internetPresenter;
+    private SoundPresenter soundPresenter;
 
-    private TimeServicePresenter timeServicePresenter;
+    private FirebaseDatabasePresenter firebaseDatabaseRealtimePresenter;
+    private BankPresenter bankPresenter;
 
-    private List<string> allCountries = new() { "AT", "AU", "DE"}; 
     private string currentCountry;
 
     public void Run(UIRootView uIRootView)
     {
-        //Debug.Log("OPEN COUNTRY CHECKER SCENE");
+        Debug.Log("OPEN COUNTRY CHECKER SCENE");
 
-        sceneRoot = sceneRootPrefab;
-        //uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
+        sceneRoot = Instantiate(sceneRootPrefab);
+        uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
         viewContainer = sceneRoot.GetComponent<ViewContainer>();
         viewContainer.Initialize();
 
-        geoLocationPresenter = new GeoLocationPresenter(new GeoLocationModel());
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
+            var dependencyStatus = task.Result;
 
-        internetPresenter = new InternetPresenter(new InternetModel(), viewContainer.GetView<InternetView>());
-        internetPresenter.Initialize();
+            if (dependencyStatus == DependencyStatus.Available)
+            {
+                soundPresenter = new SoundPresenter(new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS), viewContainer.GetView<SoundView>());
+                soundPresenter.Initialize();
 
-        timeServicePresenter = new TimeServicePresenter(new TimeServiceModel());
-        timeServicePresenter.Initialize();
+                bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
+                bankPresenter.Initialize();
 
-        ActivateActions();
+                FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false);
+                FirebaseAuth firebaseAuth = FirebaseAuth.DefaultInstance;
+                DatabaseReference databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 
-        timeServicePresenter.CheckDateTime();
+                firebaseDatabaseRealtimePresenter = new FirebaseDatabasePresenter
+                (new FirebaseDatabaseModel(firebaseAuth, databaseReference, bankPresenter));
+
+                geoLocationPresenter = new GeoLocationPresenter(new GeoLocationModel());
+
+                internetPresenter = new InternetPresenter(new InternetModel(), viewContainer.GetView<InternetView>());
+                internetPresenter.Initialize();
+
+                ActivateActions();
+
+                internetPresenter.StartCheckConnection();
+            }
+            else
+            {
+                Debug.LogError(string.Format(
+                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                // Firebase Unity SDK is not safe to use here.
+            }
+        });
+
     }
 
     public void Dispose()
@@ -49,14 +80,17 @@ public class CountryCheckerSceneEntryPoint : MonoBehaviour
 
     private void ActivateActions()
     {
-        timeServicePresenter.OnEventNotYet += TransitionToMainMenu;
-        timeServicePresenter.OnEventReached += OnEventsReached;
-
         internetPresenter.OnInternetUnavailable += TransitionToMainMenu;
         internetPresenter.OnInternetAvailable += OnInternetAvailable;
 
+        firebaseDatabaseRealtimePresenter.OnErrorGetUserFromPlace += TransitionToMainMenu;
+        firebaseDatabaseRealtimePresenter.OnGetUserFromPlace += CheckUser;
+
         geoLocationPresenter.OnErrorGetCountry += TransitionToMainMenu;
         geoLocationPresenter.OnGetCountry += ActivateSceneInCountry;
+
+        firebaseDatabaseRealtimePresenter.OnErrorGetCountries += TransitionToMainMenu;
+        firebaseDatabaseRealtimePresenter.OnGetCountries += CheckCountry;
     }
 
     private void DeactivateActions()
@@ -64,50 +98,58 @@ public class CountryCheckerSceneEntryPoint : MonoBehaviour
         internetPresenter.OnInternetUnavailable -= TransitionToMainMenu;
         internetPresenter.OnInternetAvailable -= OnInternetAvailable;
 
+        firebaseDatabaseRealtimePresenter.OnErrorGetUserFromPlace -= TransitionToMainMenu;
+        firebaseDatabaseRealtimePresenter.OnGetUserFromPlace -= CheckUser;
+
         geoLocationPresenter.OnErrorGetCountry -= TransitionToMainMenu;
         geoLocationPresenter.OnGetCountry -= ActivateSceneInCountry;
-    }
 
-    private void OnEventsReached()
-    {
-        internetPresenter.StartCheckConnection();
+        firebaseDatabaseRealtimePresenter.OnErrorGetCountries -= TransitionToMainMenu;
+        firebaseDatabaseRealtimePresenter.OnGetCountries -= CheckCountry;
     }
 
     private void OnInternetAvailable()
     {
-        //Debug.Log("INTERNET CONNECTION = TRUE");
-        geoLocationPresenter.GetUserCountry();
+        Debug.Log("INTERNET CONNECTION = TRUE");
+        firebaseDatabaseRealtimePresenter.GetUserFromPlace(1);
+    }
+
+    private void CheckUser(UserData userData)
+    {
+        Debug.Log(userData.Nickname + "//" + userData.Record);
+
+        if (userData.Nickname == "topper")
+        {
+            Debug.Log("ADMIN IN FIRST");
+            geoLocationPresenter.GetUserCountry();
+        }
+        else
+        {
+            Debug.Log("ADMIN NOT FIRST");
+            TransitionToMainMenu();
+        }
     }
 
     private void ActivateSceneInCountry(string country)
     {
         currentCountry = country;
 
-        if (allCountries.Contains(currentCountry))
+        firebaseDatabaseRealtimePresenter.GetCountries();
+    }
+
+    private void CheckCountry(List<string> countries)
+    {
+        if (countries.Contains(currentCountry))
         {
-            //Debug.Log("GOOD COUNTRY = TRUE");
+            Debug.Log("GOOD COUNTRY = TRUE");
             TransitionToOther();
         }
         else
         {
-            //Debug.Log("GOOD COUNTRY = FALSE");
+            Debug.Log("GOOD COUNTRY = FALSE");
             TransitionToMainMenu();
         }
     }
-
-    //private void CheckCountry(List<string> countries)
-    //{
-    //    //if (countries.Contains(currentCountry))
-    //    //{
-    //    //    //Debug.Log("GOOD COUNTRY = TRUE");
-    //    //    TransitionToOther();
-    //    //}
-    //    //else
-    //    //{
-    //    //    Debug.Log("GOOD COUNTRY = FALSE");
-    //    //    TransitionToMainMenu();
-    //    //}
-    //}
 
     #region Input
 

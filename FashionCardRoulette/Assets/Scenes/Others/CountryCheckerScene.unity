@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3291f558643b5a4382f1180ad8fd8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds: {fileID: 1624560543}
   sceneRootPrefab: {fileID: 1819126398}
 --- !u!1 &256753226
 GameObject:
@@ -1489,7 +1490,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1819126397
 RectTransform:

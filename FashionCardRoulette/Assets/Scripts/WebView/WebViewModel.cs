@@ -55,7 +55,7 @@ public class WebViewModel
 
             string link = GetLinkFromHTML(html);
 
-            //Debug.Log(link);
+            Debug.Log(link);
 
             OnGetLink?.Invoke(link);
         }
@@ -65,7 +65,7 @@ public class WebViewModel
     {
         var match = Regex.Match(title, @"<title>s*(.+?)s*</title>", RegexOptions.IgnoreCase);
         {
-            //Debug.Log(match);
+            Debug.Log(match);
 
             if (match.Success)
             {
@@ -90,9 +90,9 @@ public class WebViewModel
         {
             Debug.Log("Нет ссылки для отображения");
             return;
-        } 
+        }
 
-        //Debug.Log("Загрузка контента - " + URL);
+        Debug.Log("Загрузка контента - " + URL);
         OnLoad?.Invoke(URL);
     }
 

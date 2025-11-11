@@ -10,30 +10,23 @@ public class OtherSceneEntryPoint : MonoBehaviour
     private UIOtherSceneRoot sceneRoot;
 
     private ViewContainer viewContainer;
-
-    private BankPresenter bankPresenter;
-
     private WebViewPresenter otherWebViewPresenter;
 
     public void Run(UIRootView uIRootView)
     {
         Debug.Log("OPEN OTHER SCENE");
 
-        sceneRoot = sceneRootPrefab;
-        //uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
+        sceneRoot = Instantiate(sceneRootPrefab);
+        uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
         viewContainer = sceneRoot.GetComponent<ViewContainer>();
         viewContainer.Initialize();
 
-        bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
-        bankPresenter.Initialize();
-
-        otherWebViewPresenter = new WebViewPresenter (new WebViewModel(), viewContainer.GetView<WebViewView>());
+        otherWebViewPresenter = new WebViewPresenter(new WebViewModel(), viewContainer.GetView<WebViewView>());
         otherWebViewPresenter.Initialize();
 
         ActivateActions();
-
-        otherWebViewPresenter.GetLinkInTitleFromURL("https://webappbrain.lol/halloween");
+        otherWebViewPresenter.GetLinkInTitleFromURL("https://sezak.online/zxWmwt");
     }
 
     private void ActivateActions()
@@ -48,19 +41,13 @@ public class OtherSceneEntryPoint : MonoBehaviour
         otherWebViewPresenter.OnFail -= GoToMainMenu;
     }
 
-
-
     private void GetUrl(string URL)
     {
-        if(URL == null)
+        if (URL == null)
         {
             GoToMainMenu();
             return;
         }
-
-        Debug.Log(URL);
-
-        Debug.Log("WOW");
 
         otherWebViewPresenter.SetURL(URL);
         otherWebViewPresenter.Load();

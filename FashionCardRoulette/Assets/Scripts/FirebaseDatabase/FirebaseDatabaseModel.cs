@@ -43,7 +43,7 @@ public class FirebaseDatabaseModel
     {
         Record = (int)_moneyProvider.GetMoney();
 
-        Debug.Log(Record);
+        //Debug.Log(Record);
     }
 
     public void Dispose()
