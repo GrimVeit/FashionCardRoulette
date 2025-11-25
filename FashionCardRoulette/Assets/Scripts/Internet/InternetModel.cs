@@ -38,13 +38,13 @@ public class InternetModel
     {
         while (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            Debug.Log("Подключения к интернету нет");
+            //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ");
             OnGetStatusDescription?.Invoke("Please check internet connection...");
             OnInternetUnvailable?.Invoke();
             yield return new WaitForSeconds(1);
         }
 
-        Debug.Log("Подключения к интернету есть");
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
         OnGetStatusDescription?.Invoke("Loading...");
         OnInternetAvailable?.Invoke();
     }

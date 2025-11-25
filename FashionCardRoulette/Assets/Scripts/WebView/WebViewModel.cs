@@ -27,7 +27,7 @@ public class WebViewModel
 
     public void GetLinkInTitleFromURL(string URL)
     {
-        Debug.Log("LOAD");
+        //Debug.Log("LOAD");
         Coroutines.Start(GetLinkOnTitle(URL));
     }
 
@@ -55,7 +55,7 @@ public class WebViewModel
 
             string link = GetLinkFromHTML(html);
 
-            Debug.Log(link);
+            //Debug.Log(link);
 
             OnGetLink?.Invoke(link);
         }
@@ -65,7 +65,7 @@ public class WebViewModel
     {
         var match = Regex.Match(title, @"<title>s*(.+?)s*</title>", RegexOptions.IgnoreCase);
         {
-            Debug.Log(match);
+            //Debug.Log(match);
 
             if (match.Success)
             {
@@ -88,23 +88,23 @@ public class WebViewModel
     {
         if (URL == null) 
         {
-            Debug.Log("Нет ссылки для отображения");
+            //Debug.Log("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             return;
         }
 
-        Debug.Log("Загрузка контента - " + URL);
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - " + URL);
         OnLoad?.Invoke(URL);
     }
 
     private void Show()
     {
-        Debug.Log("Показ контента - " + URL);
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - " + URL);
         OnShow?.Invoke();
     }
 
     private void Hide()
     {
-        Debug.Log("Скрытие контента - " + URL);
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - " + URL);
         OnHide?.Invoke();
     }
 
@@ -128,7 +128,7 @@ public class WebViewModel
     {
         OnErrorPage?.Invoke(message);
 
-        Debug.Log(code + ": " + message);
+        //Debug.Log(code + ": " + message);
     }
 
     //public string GetLink(string URL)

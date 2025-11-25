@@ -119,13 +119,13 @@ public class FirebaseAuthenticationModel
                     break;
             }
 
-            Debug.Log("Не удалось создать аккаунт - " + task.Exception);
+            //Debug.Log("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - " + task.Exception);
             soundProvider.PlayOneShot("SignUpError");
             OnSignUpError_Action?.Invoke();
             yield break;
         }
 
-        Debug.Log("Аккаунт создан");
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
         soundProvider.PlayOneShot("SignUpSuccess");
         OnSignUpMessage_Action?.Invoke("Success!");
         OnChangeUser?.Invoke(auth.CurrentUser.UserId);
@@ -141,7 +141,7 @@ public class FirebaseAuthenticationModel
 
         if (task.Exception != null)
         {
-            Debug.Log("Ошибка удаления аккаунта - " + task.Exception.Message);
+            //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - " + task.Exception.Message);
             yield break;
         }
 

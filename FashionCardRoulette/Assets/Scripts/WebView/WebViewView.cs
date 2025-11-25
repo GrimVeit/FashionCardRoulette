@@ -102,7 +102,7 @@ public class WebViewView : View, IIdentify
 
     public void OnStartDisplay()
     {
-        UnityEngine.Debug.Log("LOAD PAGE");
+        //UnityEngine.Debug.Log("LOAD PAGE");
 
         textLoading.text = "Loading page...";
     }
